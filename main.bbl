@@ -32,6 +32,14 @@
       \field{title}{A Robust Complementary Filter Approach for Attitude Estimation of Unmanned Aerial Vehicles using {AHRS}}
       \field{year}{2019}
     \endentry
+    \entry{ahrs_doc}{misc}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://ahrs.readthedocs.io/en/latest/}}
+      \field{note}{Accessed: 2025-09-06}
+      \field{title}{AHRS: Attitude and Heading Reference Systems}
+    \endentry
     \entry{akiba2019optuna}{inproceedings}{}
       \name{author}{5}{}{%
         {{hash=2939d0d5b491018f7cc7812609071a79}{%
@@ -585,6 +593,37 @@
       \field{pages}{56\bibrangedash 58}
       \range{pages}{3}
     \endentry
+    \entry{gallego2015compact}{article}{}
+      \name{author}{2}{}{%
+        {{hash=253706c922e85eb9b42b65fad6bfea0d}{%
+           family={Gallego},
+           familyi={G\bibinitperiod},
+           given={Guillermo},
+           giveni={G\bibinitperiod}}}%
+        {{hash=d58b5a986ec11f57dfe57d61fc0e30ac}{%
+           family={Yezzi},
+           familyi={Y\bibinitperiod},
+           given={Anthony},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c97200c4b674a9512624f2f3bbc687b9}
+      \strng{fullhash}{c97200c4b674a9512624f2f3bbc687b9}
+      \strng{bibnamehash}{c97200c4b674a9512624f2f3bbc687b9}
+      \strng{authorbibnamehash}{c97200c4b674a9512624f2f3bbc687b9}
+      \strng{authornamehash}{c97200c4b674a9512624f2f3bbc687b9}
+      \strng{authorfullhash}{c97200c4b674a9512624f2f3bbc687b9}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Mathematical Imaging and Vision}
+      \field{number}{3}
+      \field{title}{A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates}
+      \field{volume}{51}
+      \field{year}{2015}
+      \field{pages}{378\bibrangedash 388}
+      \range{pages}{11}
+    \endentry
     \entry{georgiou2013linearnonlinear}{proceedings}{}
       \name{author}{5}{}{%
         {{hash=68d0b7e5d429787d35133818b449ed19}{%
@@ -643,6 +682,40 @@
       \verb{url}
       \verb https://doi.org/10.1115/DETC2013-12906
       \endverb
+    \endentry
+    \entry{goodfellow2016deep}{book}{}
+      \name{author}{3}{}{%
+        {{hash=5d2585c11210cf1d4512e6e0a03ec315}{%
+           family={Goodfellow},
+           familyi={G\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+        {{hash=40a8e4774982146adc2688546f54efb2}{%
+           family={Bengio},
+           familyi={B\bibinitperiod},
+           given={Yoshua},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=ccec1ccd2e1aa86960eb2e872c6b7020}{%
+           family={Courville},
+           familyi={C\bibinitperiod},
+           given={Aaron},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{d17e6557c5836d2d978179999ea1037f}
+      \strng{fullhash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{bibnamehash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{authorbibnamehash}{3ae53fe582e8a815b118d26947eaa326}
+      \strng{authornamehash}{d17e6557c5836d2d978179999ea1037f}
+      \strng{authorfullhash}{3ae53fe582e8a815b118d26947eaa326}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Deep Learning}
+      \field{year}{2016}
     \endentry
     \entry{guo2017novel}{article}{}
       \name{author}{4}{}{%
@@ -1147,6 +1220,37 @@
       \endverb
       \keyw{Quaternions;Magnetic field measurement;Magnetic sensors;Filters;Magnetic separation;Earth;Testing;Gravity;Magnetometers;Accelerometers}
     \endentry
+    \entry{markley2007quaternion}{article}{}
+      \name{author}{2}{}{%
+        {{hash=d1abf4423327696d755c812e2ed525d9}{%
+           family={Markley},
+           familyi={M\bibinitperiod},
+           given={F.\bibnamedelimi Landis},
+           giveni={F\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=9ceeb8e5d5a22ad7a2269dbdcc66ceaf}{%
+           family={Mortari},
+           familyi={M\bibinitperiod},
+           given={Daniele},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{094a9be74759e9324c07158823ad09be}
+      \strng{fullhash}{094a9be74759e9324c07158823ad09be}
+      \strng{bibnamehash}{094a9be74759e9324c07158823ad09be}
+      \strng{authorbibnamehash}{094a9be74759e9324c07158823ad09be}
+      \strng{authornamehash}{094a9be74759e9324c07158823ad09be}
+      \strng{authorfullhash}{094a9be74759e9324c07158823ad09be}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Astronautical Sciences}
+      \field{number}{2--3}
+      \field{title}{Quaternion Attitude Estimation Using Vector Observations}
+      \field{volume}{48}
+      \field{year}{2007}
+      \field{pages}{359\bibrangedash 380}
+      \range{pages}{22}
+    \endentry
     \entry{maton2024indirectgainGA}{article}{}
       \name{author}{7}{}{%
         {{hash=d9de83c160bdb6e5c2d95d98522012f1}{%
@@ -1235,6 +1339,32 @@
       \strng{authorbibnamehash}{35669e817ad3a2dcfc627053ee07d76f}
       \strng{authornamehash}{35669e817ad3a2dcfc627053ee07d76f}
       \strng{authorfullhash}{35669e817ad3a2dcfc627053ee07d76f}
+      \field{extraname}{1}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Stochastic Models, Estimation, and Control: Volume 1}
+      \field{year}{1982}
+    \endentry
+    \entry{maybeck1982stochastic}{book}{}
+      \name{author}{1}{}{%
+        {{hash=35669e817ad3a2dcfc627053ee07d76f}{%
+           family={Maybeck},
+           familyi={M\bibinitperiod},
+           given={P.\bibnamedelimi S.},
+           giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{35669e817ad3a2dcfc627053ee07d76f}
+      \strng{fullhash}{35669e817ad3a2dcfc627053ee07d76f}
+      \strng{bibnamehash}{35669e817ad3a2dcfc627053ee07d76f}
+      \strng{authorbibnamehash}{35669e817ad3a2dcfc627053ee07d76f}
+      \strng{authornamehash}{35669e817ad3a2dcfc627053ee07d76f}
+      \strng{authorfullhash}{35669e817ad3a2dcfc627053ee07d76f}
+      \field{extraname}{2}
       \field{sortinit}{M}
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{labelnamesource}{author}

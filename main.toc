@@ -18,9 +18,9 @@
 \contentsline {section}{\numberline {3.2}Choice of the Machine Learning Model}{11}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Choice of Extreme Gradient Boosting Regression and Classification Models}{12}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Choice of Random Sample Consensus(RANSAC) for Regression}{12}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Modified Complementary Filter Design}{13}{section.3.3}%
+\contentsline {section}{\numberline {3.3}Modified Complementary Filter Design}{14}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Dataset Description}{14}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Gain($\alpha $) Estimation through Movement Prediction}{17}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Gain($\alpha $) Estimation through Movement Prediction}{15}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Noise Removal}{17}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Experimental Setup}{19}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Mechanical Platform (Turntable)}{19}{section.4.1}%
@@ -41,20 +41,24 @@
 \contentsline {subsection}{\numberline {5.3.3}Results of CF with $\alpha $-Toggling and Noise Removal on Individual Files}{30}{subsection.5.3.3}%
 \contentsline {section}{\numberline {5.4}Performance of Our Filter against other filters on the Mechanical Platform}{32}{section.5.4}%
 \contentsline {chapter}{\numberline {6}Interpretation Of Results}{35}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Results Without Denoising}{35}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Intuitive Reasoning Backed by Emperical Evidence}{35}{subsection.6.1.1}%
-\contentsline {section}{\numberline {6.2}Results With Denoising}{36}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Intuitive Reasoning Based on Emperical Evidence}{36}{subsection.6.2.1}%
-\contentsline {chapter}{\numberline {7}Shortcomings in our Approach}{37}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Future Works}{38}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Real-World Testing Approach}{38}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Challenges of Deploying XGBoost Models on Embedded Systems}{38}{section.8.2}%
-\contentsline {chapter}{References}{39}{chapter*.36}%
-\contentsline {chapter}{Appendices}{44}{section*.37}%
-\contentsline {chapter}{\numberline {A}Quaternion}{45}{appendix.1.A}%
-\contentsline {section}{\numberline {A.1}Quaternion Fundamentals}{45}{section.1.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}Basic Operations with Quaternions}{45}{subsection.1.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}Rotating a Vector Using a Quaternion}{46}{subsection.1.A.1.2}%
-\contentsline {section}{\numberline {A.2}Absolute Distance}{46}{section.1.A.2}%
-\contentsline {subsection}{\numberline {A.2.1}Properties}{47}{subsection.1.A.2.1}%
-\contentsline {subsection}{\numberline {A.2.2}Use Cases}{47}{subsection.1.A.2.2}%
+\contentsline {section}{\numberline {6.1}Results on the BROAD Dataset}{35}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Results Without Denoising}{35}{subsection.6.1.1}%
+\contentsline {subsubsection}{Intuitive Reasoning Backed by Emperical Evidence}{35}{section*.36}%
+\contentsline {subsection}{\numberline {6.1.2}Results With Denoising}{36}{subsection.6.1.2}%
+\contentsline {subsubsection}{Intuitive Reasoning Based on Emperical Evidence}{36}{section*.37}%
+\contentsline {section}{\numberline {6.2}Results of Tests on the Turntable}{37}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Shortcomings in our Approach}{38}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Algorithmic and Computational Limitations}{38}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Experimental Platform and Evaluation}{39}{section.7.2}%
+\contentsline {chapter}{\numberline {8}Future Works}{41}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Real-World Testing Approach}{41}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Challenges of Deploying XGBoost Models on Embedded Systems}{41}{section.8.2}%
+\contentsline {chapter}{References}{42}{chapter*.38}%
+\contentsline {chapter}{Appendices}{48}{section*.39}%
+\contentsline {chapter}{\numberline {A}Quaternion}{49}{appendix.1.A}%
+\contentsline {section}{\numberline {A.1}Quaternion Fundamentals}{49}{section.1.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Basic Operations with Quaternions}{49}{subsection.1.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Rotating a Vector Using a Quaternion}{50}{subsection.1.A.1.2}%
+\contentsline {section}{\numberline {A.2}Absolute Distance}{50}{section.1.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}Properties}{51}{subsection.1.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Use Cases}{51}{subsection.1.A.2.2}%

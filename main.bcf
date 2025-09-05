@@ -2474,6 +2474,13 @@
     <bcf:citekey order="110" intorder="1">aqua_ref</bcf:citekey>
     <bcf:citekey order="111" intorder="1">ekf_ref</bcf:citekey>
     <bcf:citekey order="112" intorder="1">madgwick2011estimation</bcf:citekey>
+    <bcf:citekey order="113" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="114" intorder="1">gallego2015compact</bcf:citekey>
+    <bcf:citekey order="115" intorder="1">goodfellow2016deep</bcf:citekey>
+    <bcf:citekey order="116" intorder="1">maybeck1982stochastic</bcf:citekey>
+    <bcf:citekey order="117" intorder="1">BROAD</bcf:citekey>
+    <bcf:citekey order="118" intorder="1">ahrs_doc</bcf:citekey>
+    <bcf:citekey order="119" intorder="1">markley2007quaternion</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

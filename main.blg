@@ -1,18 +1,18 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is 'main.blg'
-[127] biber-MSWIN64:340> INFO - === 
-[159] Biber.pm:419> INFO - Reading 'main.bcf'
-[283] Biber.pm:979> INFO - Found 49 citekeys in bib section 0
+[122] biber-MSWIN64:340> INFO - === 
+[156] Biber.pm:419> INFO - Reading 'main.bcf'
+[284] Biber.pm:979> INFO - Found 54 citekeys in bib section 0
 [298] Biber.pm:4419> INFO - Processing section 0
-[314] Biber.pm:4610> INFO - Looking for bibtex file 'citations.bib' for section 0
-[371] bibtex.pm:1713> INFO - LaTeX decoding ...
-[467] bibtex.pm:1519> INFO - Found BibTeX data source 'citations.bib'
-[732] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[732] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[732] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[733] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
-[789] bbl.pm:660> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[823] bbl.pm:763> INFO - Output to main.bbl
-[825] Biber.pm:131> WARN - Duplicate entry key: 'chen2016xgboost' in file 'citations.bib', skipping ...
-[826] Biber.pm:131> WARN - Duplicate entry key: 'chen2016xgboost' in file 'citations.bib', skipping ...
-[826] Biber.pm:133> INFO - WARNINGS: 2
+[313] Biber.pm:4610> INFO - Looking for bibtex file 'citations.bib' for section 0
+[372] bibtex.pm:1713> INFO - LaTeX decoding ...
+[468] bibtex.pm:1519> INFO - Found BibTeX data source 'citations.bib'
+[739] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[740] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[740] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[740] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[800] bbl.pm:660> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[837] bbl.pm:763> INFO - Output to main.bbl
+[838] Biber.pm:131> WARN - Duplicate entry key: 'chen2016xgboost' in file 'citations.bib', skipping ...
+[838] Biber.pm:131> WARN - Duplicate entry key: 'chen2016xgboost' in file 'citations.bib', skipping ...
+[838] Biber.pm:133> INFO - WARNINGS: 2

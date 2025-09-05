@@ -592,7 +592,7 @@ of the results are shown in \autoref{section:mechanical_platform_result}. The gr
 \end{figure}
 
 
-\begin{table}[h!]
+\begin{table}[h!] \label{tab:motion_protocols}
 \centering
 \caption{Summary of motion protocols applied to the turntable}
     \begin{tabular}{|c|p{10cm}|}
@@ -1099,16 +1099,18 @@ max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... &
 
 \chapter{Interpretation Of Results} \label{chapter:discussion}
 
-In this chapter, the results achieved in \autoref{chapter:results} will be interpreted in detail. The results we have acheived so far is promising, and it is able to outperform standard Madgwick filter implementation in fast motion scenarios which was one of our goals initially.
+In this chapter, the results achieved in \autoref{chapter:results} will be interpreted in detail. The results we have acheived so far is promising, and it is able to outperform standard Madgwick filter implementation in fast motion scenarios which was one of our goals initially. But the promising results come with compromises. The results are promising only in the dataset simulations and also fail 
+to reasonably convert in the tests run on the mechanical platform as shown in \autoref{section:mechanical_platform_result}. 
 
-\section{Results Without Denoising}
+\section{Results on the BROAD Dataset}
+\subsection{Results Without Denoising}
 In \autoref{result:meanerrortoggle} and \autoref{result:varerrortoggle} we can observe spikes in the orange line graph
 which represent the Madgwick Filter. Our proposed filter (in Green) is able to avoid high spikes in files \texttt{15\_undisturbed\_fast\_translation\_A},\texttt{23\_undisturbed\_fast\_combined\_360s} and in \texttt{27\_disturbed\_phone\_vibration\_B} 
 in comparisions of mean error in \autoref{result:meanerrortoggle}. This indicates that in fast motion scenarios the toggling of $\alpha$ 
 has a positive effect on the error in our proposed filter avoiding higher mean error. In case of variance comparison
 in \autoref{result:varerrortoggle} we see that our proposed(Green line) has the least variance among all three.
 
-\subsection{Intuitive Reasoning Backed by Emperical Evidence}
+\subsubsection{Intuitive Reasoning Backed by Emperical Evidence}
 Here we suggest why $\alpha$-toggling might result in a better performance.
 \begin{itemize}
     \item Toggling the $\alpha$ is done in scenarios when there is movement. When the model predicts there is some movement 
@@ -1117,7 +1119,7 @@ Here we suggest why $\alpha$-toggling might result in a better performance.
 \end{itemize}
 
 
-\section{Results With Denoising}
+\subsection{Results With Denoising}
 
 The results shown after denoising is much more promising than the results without denoising. In 
 \autoref{tab:error_statistics_cvset_mean} and \autoref{tab:error_statistics_cvset_variance} we can observe 
@@ -1133,7 +1135,7 @@ If we observe the error graphed vs iterations for \texttt{15\_undisturbed\_fast\
 Madgwick Filter's error steadily rises where our proposed complementary filter stays close to zero. For the file \autoref{fig:18_undisturbed_fast_translation_with_breaks_B},
 we observe that Madgwick filter performs marginally better.
 
-\subsection{Intuitive Reasoning Based on Emperical Evidence}
+\subsubsection{Intuitive Reasoning Based on Emperical Evidence}
 
 \begin{itemize}
     \item As noise is subtracted from the accelerometer and magnetometer readings, the extraneous linear acceleration is subtracted, as a 
@@ -1143,15 +1145,51 @@ we observe that Madgwick filter performs marginally better.
     \texttt{15\_undisturbed\_fast\_translation\_A} the Madgwick filter is not able to stabilize itself,as there are no breaks and hence our filter performs better.
 \end{itemize}
 
-\chapter{Shortcomings in our Approach}
-Our approach is data driven, thus it would require us more time and memory complexity to perform inference from our models, which will nullify the mathematical simplicity of the complementary filter.
+\section{Results of Tests on the Turntable}
+
+The results obtained from experiments on the physical turntable were less promising compared to those generated using the dataset. As discussed in \autoref{section:mechanical_platform_result}, the proposed filter performs comparably to other contemporary orientation filters. However, it exhibits a significantly higher computational cost (see \autoref{tab:resource_consumption}) due to the incorporation of machine learning (ML) based algorithms.
 
 \begin{itemize}
-    \item \textbf{Size of the model:} The inference time of a tree based model is $O(log(n))$ where $n$ is the number of nodes in the tree. The inference time is thus bound by the depth of the tree which was limited to 15. Thus for 6 variables and 15 estimators we would need $15*6*6$ decisions. This is not a large number , but the cause of concern would be the memory complexity as the trees of the XGBoost models are observed to be very wide.
-    \item \textbf{Cost of Matrix Exponentiation:} Matrix exponentiation is used to rotate the vectors.
-    \item  \textbf{Training Time:} Training with RANSAC requires considerable amount of time.
-    \item \textbf{Generalizability:} The models perform well in test set compared to the cv set.
+    \item With the ML module enabled, the filter achieves a performance level similar to the version with ML disabled. 
+    \item The toggle ML algorithm appears to fail in reliably predicting motion events, which limits its effectiveness in reducing computational overhead.
+    \item Our algorithm performs similar in all the three movement scenarios described in Table \ref{tab:motion_protocols}. 
+    \item Our proposed filter performs comparatively better with a lower $\alpha$ value.
 \end{itemize}
+
+
+\chapter{Shortcomings in our Approach}
+
+Our approach is data driven, thus it requires more time and memory complexity to perform inference from our models, which reduces the mathematical simplicity of the complementary filter.
+
+\section{Algorithmic and Computational Limitations}
+
+In addition to the experimental shortcomings, the proposed approach faces several algorithmic and computational challenges, primarily due to its data-driven design and reliance on machine learning models. These limitations are summarized as follows:
+
+\begin{itemize}
+    \item \textbf{Size of the Model:} The inference time of tree-based ensemble models, such as XGBoost, is theoretically $O(\log(n))$, where $n$ denotes the number of nodes per tree. In practice, inference complexity is bounded by the maximum tree depth, which was limited to 15 in our implementation. For 6 input variables and 15 estimators, approximately $15 \times 6 \times 6$ decision operations are required per inference step. While this number is not prohibitively large, the memory footprint becomes problematic because XGBoost trees tend to be wide, requiring substantial storage of split thresholds and leaf values \cite{chen2016xgboost}. This memory demand could be critical in embedded or resource-constrained environments.
+    
+    \item \textbf{Cost of Matrix Exponentiation:} Orientation estimation requires rotation of vectors using rotation matrices derived from quaternions. Efficient computation often involves matrix exponentiation or repeated multiplication, which is computationally expensive, especially when executed in real time on embedded processors. Although various approximations and fast algorithms exist \cite{gallego2015compact}, their incorporation requires careful error analysis to ensure that orientation accuracy is not compromised.
+    
+    \item \textbf{Training Time:} Training with RANSAC (Random Sample Consensus) significantly increases the overall computational cost. While RANSAC improves robustness to outliers, its iterative nature and repeated model fitting make the training pipeline time-consuming. This limits scalability when experimenting with larger datasets or tuning hyperparameters for better performance.
+    
+    \item \textbf{Generalizability:} The trained models demonstrated stronger performance on the test set compared to the cross-validation set, suggesting potential overfitting or dataset bias. This raises concerns about the model’s ability to generalize to unseen scenarios or different sensor conditions. Over-reliance on a specific dataset distribution may lead to degraded performance when deployed on live hardware with varying noise, dynamics, or environmental factors \cite{goodfellow2016deep}.
+\end{itemize}
+
+
+\section{Experimental Platform and Evaluation}
+
+During the evaluation of the orientation filters on the mechanical turntable, several limitations and open issues were identified. These are discussed below:
+
+\begin{itemize}
+    \item \textbf{Quaternion Initialization:} The tested filters do not employ a standardized method for initializing the quaternion estimate at startup. Differences in initialization strategies can introduce systematic biases in the early stages of estimation, particularly affecting filters such as the EKF, which rely heavily on linearization around the initial state \cite{maybeck1982stochastic}. A careful analysis of consistent initialization methods is required to reduce the initial error and improve comparability between filters.
+    
+    \item \textbf{Mismatch in Training Data for ML Models:} The machine learning models were trained using data generated following the methodologies outlined by the authors of the BROAD dataset \cite{BROAD}. However, discrepancies between this dataset and the live data acquired from the Raspberry Pi–based experimental platform may have led to poor generalization. Sensor noise characteristics, sampling rates, and motion profiles can differ significantly between datasets and live experiments, leading to unreliable inference. Future work should focus on domain adaptation techniques or re-training the models using data collected directly from the experimental hardware.
+    
+    \item \textbf{Trust in the AHRS Python Library:} The AHRS Python library \cite{ahrs_doc} was used to implement several of the orientation filters, including AQUA, EKF, and Madgwick. While the library is well-documented and widely adopted for research prototyping, there is a lack of independent validation studies confirming that its implementations are consistent with the original algorithm specifications. Without rigorous benchmarking against reference implementations, there remains uncertainty regarding the correctness of the results produced by these filters.
+    
+    \item \textbf{Rigidity of the Absolute Distance Metric:} The evaluation employed the quaternion absolute distance metric to quantify the deviation of estimated orientations from the ground-truth quaternion. While this metric is mathematically sound and commonly used in orientation estimation research \cite{markley2007quaternion}, it may be overly strict in practice. Small angular discrepancies can result in disproportionately large values under this metric, potentially exaggerating the reported errors across all filters. Alternative evaluation metrics, such as angular difference about specific axes or application-dependent error tolerances, may provide a more nuanced picture of filter performance.
+\end{itemize}
+
 
 
 
