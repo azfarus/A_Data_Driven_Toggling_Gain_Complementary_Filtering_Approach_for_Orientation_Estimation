@@ -1,0 +1,27 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Categorization of BROAD Dataset Trials}}{15}{table.caption.7}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Summary of motion protocols applied to the turntable}}{22}{table.caption.11}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Dataset Generation to Predict Movement}}{23}{table.caption.12}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Choice of Ranges of Hyperparams for \textit {Optuna Study(For Movement)} }}{23}{table.caption.13}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Dataset Generation to Predict Noise}}{24}{table.caption.14}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Hyperparameter Search Space for XGBoost Regressor with RANSAC}}{24}{table.caption.15}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Final Hyperparameters for XGB RANSAC and Model Evaluation Results}}{26}{table.caption.16}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Final Hyperparameters for Movement Prediction XGB Classfier}}{27}{table.caption.17}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Mean Error Statistics across the \texttt {cv\_set}}}{29}{table.caption.20}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Variance of Error Statistics across the \texttt {cv\_set}}}{29}{table.caption.21}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Static error metrics (°) per axis when ML denoising is active.}}{32}{table.caption.28}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Static error metrics (°) per axis when ML denoising is not active.}}{32}{table.caption.29}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Quasi Static error metrics (°) per axis when ML denoising is active.}}{33}{table.caption.30}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Quasi Static error metrics (°) per axis when ML denoising is not active.}}{33}{table.caption.31}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces Dynamic error metrics (°) per axis when ML denoising is active.}}{33}{table.caption.32}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces Dynamic error metrics (°) per axis when ML denoising is not active.}}{34}{table.caption.33}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces Resource consumption per filter on RPI: average CPU (\%) and memory (MB).}}{34}{table.caption.34}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Long-term drift over \(T\) hours (°/h).}}{34}{table.caption.35}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
