@@ -1157,18 +1157,46 @@ Our approach is data driven, thus it would require us more time and memory compl
 
 
 \chapter{Future Works} \label{chapter:futureWorks}
-Placeholder
+Our current approach offers significant improvements in orientation estimation by integrating data-driven approaches with complementary filtering techniques. However, as with any research, there remain numerous opportunities to expand, improve, and apply these methods in broader contexts. The following subsections discuss possible future directions in more detail.
 
-\section{Real-World Testing Approach}
+\section{Real-World Deployment and Extended Testing}
+While this thesis primarily evaluates the proposed algorithms on the BROAD dataset and a controlled mechanical turntable setup, real-world deployments present additional challenges. Future work should focus on implementing the algorithm on portable devices such as smartphones, 
+drones, or wearable sensors, and then testing it across diverse environments including indoor, outdoor, urban, and industrial settings. Real-world data will inevitably contain more complex disturbances, unexpected motion patterns, and magnetic interference, providing a more stringent test of the algorithm’s robustness and adaptability. Continuous monitoring over extended periods could also reveal long-term drift behaviors and system stability under typical usage conditions.
 
-Placeholder
+Building and deploying custom hardware based on embedded microcontrollers or small form-factor single board computers (e.g., ESP32, Raspberry Pi) would lay the groundwork for practical applications. This would help uncover challenges related to sensor calibration, sensor placement, power constraints, and wireless data transmission that are less obvious in simulations or lab setups.
 
 
-\section{Challenges of Deploying XGBoost Models on Embedded Systems}
+\section{Further Optimization of Machine Learning Models for Embedded Systems}
+One of the key challenges identified is the resource demand of the current XGBoost models, especially on low-memory and low-power embedded platforms. Future research should investigate techniques for model compression and acceleration, such as pruning, quantization, and knowledge distillation. These methods reduce model size and computation without drastically sacrificing accuracy.
 
-Deploying machine learning models, more specifically complex models like XGBoost, onto embedded systems presents significant challenges, especially in terms of model size and computational efficiency. XGBoost is known for its high performance in classification and regression tasks, which requires substantial amount of memory and computational resources, making it difficult to deploy on embedded platforms with limited capacity.
+Alternatively, experimenting with other lightweight and interpretable models like decision trees, linear models with feature engineering, or hybrid heuristic approaches could offer better trade-offs between inference speed, memory pressure, and prediction reliability. Developing customized inference engines or hardware accelerators specialized for tree-based models might also help enable real-time execution on microcontrollers with limited flash and RAM.
 
-In our case, our produced model by XGBoost requires 25 MB of flash memory while ESP32 is equipped with only 4 MB of flash memory at max. To address these challenges, we plan to further optimization for the model so that we will be able to deploy the model on ESP32 else we have to deploy it on Raspberry Pi.
+\section{Online and Adaptive Learning Approaches}
+Currently, the models are trained offline using pre-collected datasets and applied without updates during operation. Future research could explore online learning or incremental training where the model continues to adapt in real time based on new sensor data. This could allow the system to cope better with sensor aging, environmental changes, or new motion types without manual retraining.
+
+Adaptive algorithms could leverage unsupervised or semi-supervised learning to detect drifts in sensor behavior or novel disturbance patterns and dynamically update the fusion gain or noise compensation parameters. Such self-tuning models would enhance long-term reliability and reduce maintenance requirements.
+
+\section{Integration of Additional Sensor Modalities}
+While this thesis focuses on fusing accelerometer, gyroscope, and magnetometer data (MARG), adding complementary sensor modalities could further improve orientation accuracy and robustness. For instance, integrating GPS or ultra-wideband (UWB) sensors could offer absolute position or heading references to correct drift.
+
+Vision-based sensors like cameras or depth sensors could provide rich environmental context and aid in occlusion detection or loop closure in navigation scenarios. Incorporating barometric pressure sensors could help improve altitude estimation which indirectly influences orientation filters. Future work can explore multi-sensor fusion algorithms that intelligently weight sensor inputs based on context and confidence levels.
+
+\section{Enhanced Noise and Disturbance Modeling}
+Though this work reduces noise via a data-driven regression model, further improvements could be achieved by developing more advanced noise models. Future research might consider modeling temporal noise correlations using recurrent neural networks or probabilistic graphical models to capture sequential dependencies.
+
+Domain-specific noise types, such as vibration noise on drones or magnetic disturbances in industrial environments, could be separately characterized and mitigated. Investigating robust statistics or outlier detection mechanisms integrated with sensor fusion may help reject spurious sensor inputs and further enhance filtering performance.
+
+\section{Exploration of Alternative Data-Driven Fusion Architectures}
+The approach in this thesis uses a hybrid of classical complementary filtering and tree-based machine learning models. Future work could investigate end-to-end deep learning architectures that directly regress orientation quaternions or rotation matrices from raw sensor sequences. Approaches using convolutional neural networks (CNNs), recurrent networks (RNNs), transformers, or attention mechanisms have shown promising results in recent literature.
+
+However, these models often require large labeled datasets and heavy computational resources, so approaches combining classical filters with learned corrections or uncertainty-aware models might strike the best balance. Research can explore explainability and interpretability of such models to maintain trust in safety-critical applications.
+
+\section{Comprehensive Performance Benchmarking and Standardization}
+To better understand the trade-offs and advantages of the proposed algorithms, large-scale benchmarking on standardized datasets with various metrics (accuracy, latency, resource usage, robustness) needs to be conducted. Extending experiments to multiple IMU platforms and sensor qualities would highlight generalizability and scalability.
+
+\\
+By pursuing these research directions, future work can build upon the foundation laid in this thesis to develop even more accurate, efficient, and adaptive orientation estimation systems suitable for real-world applications across robotics, augmented reality, autonomous vehicles, and wearable technologies.
+
 
 
 
