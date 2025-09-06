@@ -530,7 +530,7 @@ which provides standalone operation. The detailed specifications of the turntabl
 \end{itemize}
 
 
-\subsection{Electronics & Sensors}
+\subsection{Electronics \& Sensors}
 The inertial sensing subsystem is based on the InvenSense/TDK MPU-9250, which integrates a tri-axial accelerometer, gyroscope, and the AK8963 tri-axial magnetometer. Each sensing axis employs 16-bit ADCs, ensuring adequate dynamic range for motion tracking. The IMU was mounted on a 3D-printed cube positioned at the edge of the turntable disk. Directly beneath the ring connecting the disk to the bearing, the AS5600 magnetic angle encoder was fixed, enabling precise alignment between inertial measurements and ground-truth angular position.
 
 \begin{itemize}
@@ -1157,45 +1157,60 @@ Our approach is data driven, thus it would require us more time and memory compl
 
 
 \chapter{Future Works} \label{chapter:futureWorks}
-Our current approach offers significant improvements in orientation estimation by integrating data-driven approaches with complementary filtering techniques. However, as with any research, there remain numerous opportunities to expand, improve, and apply these methods in broader contexts. The following subsections discuss possible future directions in more detail.
 
-\section{Real-World Deployment and Extended Testing}
-While this thesis primarily evaluates the proposed algorithms on the BROAD dataset and a controlled mechanical turntable setup, real-world deployments present additional challenges. Future work should focus on implementing the algorithm on portable devices such as smartphones, 
-drones, or wearable sensors, and then testing it across diverse environments including indoor, outdoor, urban, and industrial settings. Real-world data will inevitably contain more complex disturbances, unexpected motion patterns, and magnetic interference, providing a more stringent test of the algorithm’s robustness and adaptability. Continuous monitoring over extended periods could also reveal long-term drift behaviors and system stability under typical usage conditions.
+This thesis has explored and implemented data-driven orientation estimation methods by combining machine learning models with complementary filtering techniques. Although the results have shown clear improvements compared to traditional approaches, there remain several limitations. This chapter discusses the challenges found and suggests possible directions for future research to improve the system’s performance, ease of use, and real-world relevance.
 
-Building and deploying custom hardware based on embedded microcontrollers or small form-factor single board computers (e.g., ESP32, Raspberry Pi) would lay the groundwork for practical applications. This would help uncover challenges related to sensor calibration, sensor placement, power constraints, and wireless data transmission that are less obvious in simulations or lab setups.
+\section{Areas for Improvement}
 
+\textbf{Algorithm and Computational Efficiency:}  
+The tree-based models we use, like XGBoost, require significant memory and processing power. This can be a problem, especially on small devices with limited resources. Also, matrix exponentiation used for orientation calculations needs a lot of computation, making real-time operation difficult on embedded platforms.
 
-\section{Further Optimization of Machine Learning Models for Embedded Systems}
-One of the key challenges identified is the resource demand of the current XGBoost models, especially on low-memory and low-power embedded platforms. Future research should investigate techniques for model compression and acceleration, such as pruning, quantization, and knowledge distillation. These methods reduce model size and computation without drastically sacrificing accuracy.
+\textbf{Training Time and Scalability:}  
+Using RANSAC during training helps handle outliers but also increases training time. This slows down scaling to larger datasets or thorough hyperparameter tuning. Additionally, because the models are trained on specific datasets, they might not generalize well to new, unseen data.
 
-Alternatively, experimenting with other lightweight and interpretable models like decision trees, linear models with feature engineering, or hybrid heuristic approaches could offer better trade-offs between inference speed, memory pressure, and prediction reliability. Developing customized inference engines or hardware accelerators specialized for tree-based models might also help enable real-time execution on microcontrollers with limited flash and RAM.
+\textbf{Mismatch Between Training and Live Data:}  
+The data used to train the models, like the BROAD dataset, differs in noise characteristics and motion from the live data collected during experiments. Such differences can reduce the model’s accuracy when used in real-life conditions.
 
-\section{Online and Adaptive Learning Approaches}
-Currently, the models are trained offline using pre-collected datasets and applied without updates during operation. Future research could explore online learning or incremental training where the model continues to adapt in real time based on new sensor data. This could allow the system to cope better with sensor aging, environmental changes, or new motion types without manual retraining.
+\textbf{Evaluation Metrics:}  
+The quaternion absolute distance used to measure performance might be too strict, exaggerating small orientation errors. More suitable metrics that consider practical application needs should be explored.
 
-Adaptive algorithms could leverage unsupervised or semi-supervised learning to detect drifts in sensor behavior or novel disturbance patterns and dynamically update the fusion gain or noise compensation parameters. Such self-tuning models would enhance long-term reliability and reduce maintenance requirements.
+\section{Proposed Future Directions}
 
-\section{Integration of Additional Sensor Modalities}
-While this thesis focuses on fusing accelerometer, gyroscope, and magnetometer data (MARG), adding complementary sensor modalities could further improve orientation accuracy and robustness. For instance, integrating GPS or ultra-wideband (UWB) sensors could offer absolute position or heading references to correct drift.
+\subsection{Improve Computational Efficiency}
 
-Vision-based sensors like cameras or depth sensors could provide rich environmental context and aid in occlusion detection or loop closure in navigation scenarios. Incorporating barometric pressure sensors could help improve altitude estimation which indirectly influences orientation filters. Future work can explore multi-sensor fusion algorithms that intelligently weight sensor inputs based on context and confidence levels.
+To better suit embedded and low-power devices, work should focus on reducing memory use and speeding up inference. This can be done by pruning large models, using quantization to lower numerical precision, or applying knowledge distillation to create smaller models that perform similarly. Exploring simpler models like decision trees or linear models, possibly enhanced by smart feature design, could also help. Designing specialized hardware to accelerate machine learning computations could make real-time operation feasible on tiny devices.
 
-\section{Enhanced Noise and Disturbance Modeling}
-Though this work reduces noise via a data-driven regression model, further improvements could be achieved by developing more advanced noise models. Future research might consider modeling temporal noise correlations using recurrent neural networks or probabilistic graphical models to capture sequential dependencies.
+\subsection{Online and Adaptive Learning}
 
-Domain-specific noise types, such as vibration noise on drones or magnetic disturbances in industrial environments, could be separately characterized and mitigated. Investigating robust statistics or outlier detection mechanisms integrated with sensor fusion may help reject spurious sensor inputs and further enhance filtering performance.
+Currently, models are trained once offline and not updated during use. Future research might explore online learning, where models continually update themselves based on new sensor data. This would help the system adapt to sensor aging, changing environments, or new types of motion, making it more robust and reducing the need for manual retraining. Adaptive algorithms that adjust parameters in real time based on sensor readings may further improve long-term performance.
 
-\section{Exploration of Alternative Data-Driven Fusion Architectures}
-The approach in this thesis uses a hybrid of classical complementary filtering and tree-based machine learning models. Future work could investigate end-to-end deep learning architectures that directly regress orientation quaternions or rotation matrices from raw sensor sequences. Approaches using convolutional neural networks (CNNs), recurrent networks (RNNs), transformers, or attention mechanisms have shown promising results in recent literature.
+\subsection{Multi-Sensor Fusion}
 
-However, these models often require large labeled datasets and heavy computational resources, so approaches combining classical filters with learned corrections or uncertainty-aware models might strike the best balance. Research can explore explainability and interpretability of such models to maintain trust in safety-critical applications.
+Adding other sensors to the system could increase accuracy and robustness. For example, GPS or ultra-wideband sensors can provide absolute position and heading to help correct drift. Cameras or depth sensors can offer environmental context useful for navigation and avoiding occlusions. Barometric pressure sensors might improve altitude estimation, indirectly helping orientation estimation. Future work should investigate fusion methods that weigh sensor data intelligently depending on context and sensor reliability.
 
-\section{Comprehensive Performance Benchmarking and Standardization}
-To better understand the trade-offs and advantages of the proposed algorithms, large-scale benchmarking on standardized datasets with various metrics (accuracy, latency, resource usage, robustness) needs to be conducted. Extending experiments to multiple IMU platforms and sensor qualities would highlight generalizability and scalability.
+\subsection{Better Noise and Disturbance Models}
 
-\\
-By pursuing these research directions, future work can build upon the foundation laid in this thesis to develop even more accurate, efficient, and adaptive orientation estimation systems suitable for real-world applications across robotics, augmented reality, autonomous vehicles, and wearable technologies.
+Although noise has been reduced using regression models, there's still room for improvement, especially for time-dependent noise patterns.
+
+Techniques like recurrent neural networks or probabilistic models may capture temporal correlations better. Domain-specific noise, such as vibrations in drones or magnetic interference in factories, should also be studied. Combining robust statistics and outlier detection with sensor fusion algorithms might reduce unwanted noise even more.
+
+\subsection{Deep Learning End-to-End Models}
+
+Instead of hybrid systems, future research could look at deep learning models that directly map raw sensor inputs to orientation estimates. Models such as convolutional neural networks, recurrent neural networks, or transformers are promising, but they need large labeled datasets and heavy computing power. Hybrid models that combine deep learning with classical filtering might deliver a good balance between accuracy and computational cost while maintaining interpretability.
+
+\subsection{Comprehensive Benchmarking and Evaluation}
+
+More testing of orientation algorithms on different datasets, IMU hardware, and sensor setups is needed to fully understand their strengths and weaknesses.
+
+Developing a standard set of performance metrics that cover accuracy, computational load, latency, robustness, and resource use would allow fair comparison between methods and promote best practices.
+
+\subsection{Real-World Deployment and Testing}
+
+The current work mainly tests the method on controlled datasets and setups. Future research should implement these algorithms on real-world devices like smartphones, drones, or wearables. Testing in various real environments will better show how the system handles real-life disturbances, sensor noise, and motion complexity. Long-term trials will reveal drift behavior and system stability over time.
+
+\subsection{Standardization of Tools and Validation}
+
+The AHRS Python library used in this thesis has not been fully validated with respect to reference implementations. Future work should include thorough validation of this and similar libraries. Establishing consistent testing protocols and evaluation standards will enable reliable comparison of orientation estimation methods and advance the research field.
 
 
 
@@ -1208,6 +1223,8 @@ By pursuing these research directions, future work can build upon the foundation
 
 
 %-------------------------- BACK MATTER --------------------------%
+
+\sloppy  % Make the spacing more flexible to prevent overfull boxes
 
 % Print the references used throughout the document, mandatory
 \printbib
