@@ -501,7 +501,7 @@ Here we describe the training procedure of the model that removes noise. The gro
 
 
 
-\section{Evaluation on the Dataset}
+\section{Evaluation on the Dataset}\label{sec:eval_on_dataset}
 
 The proposed filter algorithm was evaluated using the BROAD dataset \cite{BROAD}. Two configurations of the filter were tested: one with the machine learning (ML)-based denoising module enabled, and another with the ML module disabled. For comparison, the standard implementation of the Madgwick filter \cite{madgwick2011estimation} was also included in the evaluation.  
 
@@ -516,7 +516,7 @@ where $\hat{q}$ denotes the estimated quaternion, $q_{gt}$ denotes the ground-tr
 
 \section{Evaluation on the Mechanical Turntable}
 
-The evaluation on the mechanical turntable follows the same metrics as the dataset-based evaluation described in Section~\ref{sec:evaluation_dataset}. The turntable, whose design is detailed in Section~\ref{sec:turntable}, enables controlled single-axis rotational motion. The ground-truth orientation is obtained from the AS5600 angle encoder, which provides angular measurements that are converted into quaternions for comparison.  
+The evaluation on the mechanical turntable follows the same metrics as the dataset-based evaluation described in Section~\ref{sec:eval_on_dataset}. The turntable, whose design is detailed in \autoref{section:turntable}, enables controlled single-axis rotational motion. The ground-truth orientation is obtained from the AS5600 angle encoder, which provides angular measurements that are converted into quaternions for comparison.  
 
 The evaluation procedure can be summarized as follows:
 \begin{itemize}
@@ -622,17 +622,18 @@ of the results are shown in \autoref{section:mechanical_platform_result}. The gr
 \end{figure}
 
 
-\begin{table}[h!] \label{tab:motion_protocols}
-\centering
-\caption{Summary of motion protocols applied to the turntable}
+\begin{table}[h!] 
+    \centering
+    \caption{Summary of motion protocols applied to the turntable}
+    \label{tab:motion_protocols}
     \begin{tabular}{|c|p{10cm}|}
-    \hline
-    \textbf{Motion Type} & \textbf{Description} \\
-    \hline
-    Static & No movement; turntable held stationary. \\
-    \hline
-    Quasi-static & Rotation from $0^{\circ}$ to $180^{\circ}$ clockwise, then $0^{\circ}$ to $180^{\circ}$ counterclockwise; break; repeated once (total of two cycles). \\
-    \hline
+        \hline
+        \textbf{Motion Type} & \textbf{Description} \\
+        \hline
+        Static & No movement; turntable held stationary. \\
+        \hline
+        Quasi-static & Rotation from $0^{\circ}$ to $180^{\circ}$ clockwise, then $0^{\circ}$ to $180^{\circ}$ counterclockwise; break; repeated once (total of two cycles). \\
+        \hline
     Dynamic & Continuous full rotations: 3 turns, break, 4 turns, break, 5 turns. \\
     \hline
     \end{tabular}
@@ -650,7 +651,8 @@ In this part we discuss the training process of the XGBoost Classifier model to 
     \item BROAD dataset has 39 recordings. All the 39 recordings are concatenated one after another and a concatenated dataset containing all records from 39 recordings are formed. The setup for input features \verb|X| and the output feature \verb|y| goes as: \\
     \begin{table}[htbp]
     \centering
-    \caption{Dataset Generation to Predict Movement}    \label{tab:sensor_readings}
+    \caption{Dataset Generation to Predict Movement}
+    \label{tab:sensor_readings}
         \begin{adjustbox}{max width=0.8\textwidth}
             \begin{tabular}{| p{0.45\textwidth} | p{0.45\textwidth} |}
             \hline
