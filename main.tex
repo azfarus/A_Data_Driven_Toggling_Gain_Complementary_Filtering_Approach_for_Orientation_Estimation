@@ -599,6 +599,13 @@ of the results are shown in \autoref{section:mechanical_platform_result}. The gr
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
+        \includegraphics[width=\textwidth]{Turntable_top.jpg}
+        \caption{Turntable(Top View)}
+        \label{fig:real turntable}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
         \includegraphics[width=\textwidth]{Turntable_fusion.png}
         \caption{Fusion360 model of the turntable}
         \label{fig:turntable_fusion}
@@ -606,15 +613,8 @@ of the results are shown in \autoref{section:mechanical_platform_result}. The gr
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Turntable_fusion.png}
-        \caption{Actual Constructed Turntable}
-        \label{fig:real turntable}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Turntable_fusion.png}
-        \caption{With the disk Removed}
+        \includegraphics[width=\textwidth]{Turntable_side.jpg}
+        \caption{Turntable(Side View)}
         \label{fig:no disk}
     \end{subfigure}
     \caption{Overview of the turntable setup with key components highlighted.}
@@ -748,6 +748,30 @@ After implementation, the filter was fed with sensor readings from  \texttt{cv\_
     e_i = Quat_{abs\_dist}(q_{gti},q_{esti})
 \end{equation}
 More information about the metric is provided in \autoref{appendix:quaternion-distance}. We compare the mean of all $e_i$ found over a particular recording for various standard filters such as the Madgwick and the Complementary filter to our proposed filter.
+
+\subsubsection{Choice of the Optimal Hyperparameters}\label{subsubsec:hyperparams}
+
+The selection of hyperparameters for the proposed filter was carried out through a combination of empirical analysis and grid search. The final choices were informed by sensor characteristics (e.g., gyroscope drift) and systematic parameter tuning. The procedure is summarized below:
+
+\begin{itemize}
+    \item \textbf{Alpha ($\alpha$):} This parameter was selected based on the observed gyroscope drift. A lower gyroscope drift allows for a smaller $\alpha$, thereby placing greater trust in the gyroscope signal. In practice, $\alpha$ was tuned in the range $[0.0001,\,0.001]$, with the optimal value determined as $\alpha = 0.001$ for stable performance.
+    
+    \item \textbf{Cycles while alpha included,($d_h$):} Determined through grid search, the high-pass filter threshold was optimized to $d_h = 120$. This choice provided the best trade-off between responsiveness to dynamic motion and robustness against noise.
+    
+    \item \textbf{Cycles while alpha excluded,($d_l$):} Similarly, the grid search yielded an optimal value of $d_l = 60$ for the low-pass filter threshold, ensuring smooth filtering of quasi-static orientation components.
+\end{itemize}
+
+The results of the grid search procedure used to identify the optimal $d_h$ and $d_l$ parameters are illustrated in \autoref{fig:gridsearch}, which shows the error(in Degrees, metric was defined in \autoref{appendix:quaternion-distance}) surface as a function of the threshold parameters.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/DH_DL_surface.png}
+    \caption{Grid search results for hyperparameter tuning of $d_h$ and $d_l$. The optimal configuration corresponds to $d_h = 120$ and $d_l = 60$.}
+    \label{fig:gridsearch}
+\end{figure}
+
+
+
 
 
 
@@ -934,7 +958,7 @@ This subsection illustrates the performance of the filter on a particular record
     \label{fig:31_disturbed_stationary_magnet_D}
 \end{figure}
 
-\section{Performance of Our Filter against other filters on the Mechanical Platform} \label{section:mechanical_platform_result}
+\section{Performance of Proposed Filter against other filters on the Mechanical Platform} \label{section:mechanical_platform_result}
 Here the results of running our proposed filter is tested along with the performaces of 
 other standard existing filters - \emph{AQUA} \cite{aqua_ref}, \emph{EKF} \cite{ekf_ref} and the 
 MadgWick Gradient Descent filter \cite{madgwick2011estimation}. 
@@ -1188,7 +1212,7 @@ The results obtained from experiments on the physical turntable were less promis
 \end{itemize}
 
 
-\chapter{Shortcomings in our Approach}
+\chapter{Shortcomings}\label{chapter:shortcomings}
 
 Our approach is data driven, thus it requires more time and memory complexity to perform inference from our models, which reduces the mathematical simplicity of the complementary filter.
 
@@ -1230,6 +1254,8 @@ During the evaluation of the orientation filters on the mechanical turntable, se
 This thesis has explored and implemented data-driven orientation estimation methods by combining machine learning models with complementary filtering techniques. Although the results have shown clear improvements compared to traditional approaches, there remain several limitations. This chapter discusses the challenges found and suggests possible directions for future research to improve the system’s performance, ease of use, and real-world relevance.
 
 \section{Areas for Improvement}
+
+Some of the shortcomings were mentioned in \autoref{chapter:shortcomings}. The areas for improvement are highlighted in this section and in the latter section we propose some improvement pathways moving forward.
 
 \textbf{Algorithm and Computational Efficiency:}  
 The tree-based models we use, like XGBoost, require significant memory and processing power. This can be a problem, especially on small devices with limited resources. Also, matrix exponentiation used for orientation calculations needs a lot of computation, making real-time operation difficult on embedded platforms.
