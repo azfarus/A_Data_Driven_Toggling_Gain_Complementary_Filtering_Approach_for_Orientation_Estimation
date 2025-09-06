@@ -244,6 +244,8 @@ We will go through four steps, where we introduce our mathematical background fo
     \item Training Dataset
     \item Training the ML model for movement prediction
     \item Training the ML model for noise prediction
+    \item Evaluation of the proposed filter on the BROAD \cite{BROAD} dataset.
+    \item Evaluation of the proposed filter on the Mechanical Turntable platform as described in \autoref{section:turntable}.
 \end{itemize}
 
 These steps are elaborated in later sections.
@@ -497,9 +499,37 @@ Here we describe the training procedure of the model that removes noise. The gro
     \item An XGBoost Regression model\cite{chen2016xgboost} is to be trained with input features $X$ being the raw MARG sensor readings and the output feature $y$ being the six components of the $a_{gt}$ and $m_{gt}$ vectors. The training dataset contains may contain all the MARG sensor readings from all the recordings, each sensor reading corresponds to a ground truth quaternion $q_{gt}$ represented as \texttt{opt\_quat} in the datasets. Each of the $q_{gt}$ is used to generate $a_{gt}$ and $m_{gt}$ vectors used for the regression model training. The loss function used is the generic \textit{Mean Squared Error Loss function} \cite{bickel2015mathematical}. The trained model is to be used to do noise prediction in \autoref{CFalgo} where the noise is subtracted from the sensor readings.
 \end{itemize}
 
-\chapter{Experimental Setup} \label{chapter:setup}
 
-\section{Mechanical Platform (Turntable)}
+
+\section{Evaluation on the Dataset}
+
+The proposed filter algorithm was evaluated using the BROAD dataset \cite{BROAD}. Two configurations of the filter were tested: one with the machine learning (ML)-based denoising module enabled, and another with the ML module disabled. For comparison, the standard implementation of the Madgwick filter \cite{madgwick2011estimation} was also included in the evaluation.  
+
+The BROAD dataset provides ground-truth orientation in the form of quaternions. From these ground-truth quaternions, the error between the estimated orientation and the true orientation was computed using the quaternion absolute distance metric (see Appendix~\ref{appendix:quaternion-distance}). The error is expressed in radians and is formally defined as:
+
+\begin{equation}
+    \label{eq:quat_error}
+    e_{\theta} = d_{Q}\left(\hat{q}, q_{gt}\right)
+\end{equation}
+
+where $\hat{q}$ denotes the estimated quaternion, $q_{gt}$ denotes the ground-truth quaternion, and $d_{Q}(\cdot,\cdot)$ represents the quaternion absolute distance metric. This metric provides a scalar angular error that quantifies the rotational difference between the estimated and ground-truth orientations.
+
+\section{Evaluation on the Mechanical Turntable}
+
+The evaluation on the mechanical turntable follows the same metrics as the dataset-based evaluation described in Section~\ref{sec:evaluation_dataset}. The turntable, whose design is detailed in Section~\ref{sec:turntable}, enables controlled single-axis rotational motion. The ground-truth orientation is obtained from the AS5600 angle encoder, which provides angular measurements that are converted into quaternions for comparison.  
+
+The evaluation procedure can be summarized as follows:
+\begin{itemize}
+    \item \textbf{Ground Truth Acquisition:} The AS5600 absolute magnetic encoder is used to record the turntable angle. These measurements are transformed into ground-truth quaternions. 
+    \item \textbf{Parallel Filter Execution:} Multiple orientation filters were executed simultaneously, including AQUA \cite{aqua_ref}, EKF \cite{maybeck1982stochastic}, Madgwick \cite{madgwick2011estimation}, and the proposed filter. Each filter estimated orientation from the MPU-9250 MARG sensor data acquired through the Raspberry Pi. 
+    \item \textbf{Error Metric:} For each filter, the quaternion absolute distance (see Appendix~\ref{appendix:quaternion-distance}) was computed between the estimated quaternion $\hat{q}$ and the ground-truth quaternion $q_{gt}$. This scalar error, expressed in radians, quantifies the rotational difference. 
+    \item \textbf{Result Visualization:} The error traces over time were plotted and are reported in the Results section (Section~\ref{section:mechanical_platform_result}), enabling direct comparison of filter performance. 
+\end{itemize}
+
+
+\chapter{Experimental Setup}\label{chapter:setup}
+
+\section{Mechanical Platform (Turntable)}\label{section:turntable}
 
 \subsection{Turntable Setup}
 
@@ -910,8 +940,10 @@ other standard existing filters - \emph{AQUA} \cite{aqua_ref}, \emph{EKF} \cite{
 MadgWick Gradient Descent filter \cite{madgwick2011estimation}. 
 
 
- 
-\begin{table*}[ht]
+\subsection{Static Error Statistics}
+
+
+\begin{table}[H]
 \centering
 \caption{Static error metrics (°) per axis when ML denoising is active.}
 \label{tab:static_ml}
@@ -932,14 +964,11 @@ min & 0.000457 & 0.000624 & 4.670 & ... & ... & ... & ... & ... & ... & ... & ..
 max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 
 
-
-
-
-\begin{table*}[ht]
+\begin{table}[H]
 \centering
 \caption{Static error metrics (°) per axis when ML denoising is not active.}
 \label{tab:static_no_ml}
@@ -960,10 +989,11 @@ min & 0.000457 & 0.000624 & 4.670 & ... & ... & ... & ... & ... & ... & ... & ..
 max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 
-\begin{table*}[ht]
+\subsection{Quasi Static Error Statistics}
+\begin{table}[H]
 \centering
 \caption{Quasi Static error metrics (°) per axis when ML denoising is active.}
 \label{tab:quasi_ml}
@@ -984,10 +1014,10 @@ min & 0.000457 & 0.000624 & 4.670 & ... & ... & ... & ... & ... & ... & ... & ..
 max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 
-\begin{table*}[ht]
+\begin{table}[H]
 \centering
 \caption{Quasi Static error metrics (°) per axis when ML denoising is not active.}
 \label{tab:quasi_no_ml}
@@ -1008,10 +1038,11 @@ min & 0.000457 & 0.000624 & 4.670 & ... & ... & ... & ... & ... & ... & ... & ..
 max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 
-\begin{table*}[ht]
+\subsection{Dynamic Error Statistics}
+\begin{table}[H]
 \centering
 \caption{Dynamic error metrics (°) per axis when ML denoising is active.}
 \label{tab:dynamic_ml}
@@ -1032,10 +1063,10 @@ min & 0.000457 & 0.000624 & 4.670 & ... & ... & ... & ... & ... & ... & ... & ..
 max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 
-\begin{table*}[ht]
+\begin{table}[H]
 \centering
 \caption{Dynamic error metrics (°) per axis when ML denoising is not active.}
 \label{tab:dynamic_no_ml}
@@ -1056,11 +1087,11 @@ min & 0.000457 & 0.000624 & 4.670 & ... & ... & ... & ... & ... & ... & ... & ..
 max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... & ... \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 
-
-\begin{table}[ht]
+\subsection{Resource Consumption Statistics}
+\begin{table}[H]
   \centering
   \caption{Resource consumption per filter on RPI: average CPU (\%) and memory (MB).}
   \label{tab:resource_consumption}
@@ -1077,7 +1108,7 @@ max & 42.025 & 52.562 & 84.391 & ... & ... & ... & ... & ... & ... & ... & ... &
   \end{tabular}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[H]
   \centering
   \caption{Long-term drift over \(T\) hours (°/h).}
   \label{tab:long_term_drift}

@@ -2457,41 +2457,47 @@
     <bcf:citekey order="82" intorder="1">wang2020mems</bcf:citekey>
     <bcf:citekey order="83" intorder="1">golroudbari2023cnn6DOF</bcf:citekey>
     <bcf:citekey order="84" intorder="1">vertzberger2022adaptive</bcf:citekey>
-    <bcf:citekey order="85" intorder="1">overfitTrees</bcf:citekey>
-    <bcf:citekey order="86" intorder="1">fischler1981random</bcf:citekey>
-    <bcf:citekey order="87" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="85" intorder="1">BROAD</bcf:citekey>
+    <bcf:citekey order="86" intorder="1">overfitTrees</bcf:citekey>
+    <bcf:citekey order="87" intorder="1">fischler1981random</bcf:citekey>
     <bcf:citekey order="88" intorder="1">chen2016xgboost</bcf:citekey>
     <bcf:citekey order="89" intorder="1">chen2016xgboost</bcf:citekey>
-    <bcf:citekey order="90" intorder="1">ke2017lightgbm</bcf:citekey>
-    <bcf:citekey order="91" intorder="1">chen2016xgboost</bcf:citekey>
-    <bcf:citekey order="92" intorder="1">fischler1981random</bcf:citekey>
-    <bcf:citekey order="93" intorder="1">lopez2017ransac</bcf:citekey>
-    <bcf:citekey order="94" intorder="1">denoising</bcf:citekey>
-    <bcf:citekey order="95" intorder="1">vertzberger2022adaptive</bcf:citekey>
-    <bcf:citekey order="96" intorder="1">black1964passive</bcf:citekey>
-    <bcf:citekey order="97" intorder="1">cariow2016hardware</bcf:citekey>
-    <bcf:citekey order="98" intorder="1">zhao2016time</bcf:citekey>
-    <bcf:citekey order="99" intorder="1">BROAD</bcf:citekey>
-    <bcf:citekey order="100" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="90" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="91" intorder="1">ke2017lightgbm</bcf:citekey>
+    <bcf:citekey order="92" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="93" intorder="1">fischler1981random</bcf:citekey>
+    <bcf:citekey order="94" intorder="1">lopez2017ransac</bcf:citekey>
+    <bcf:citekey order="95" intorder="1">denoising</bcf:citekey>
+    <bcf:citekey order="96" intorder="1">vertzberger2022adaptive</bcf:citekey>
+    <bcf:citekey order="97" intorder="1">black1964passive</bcf:citekey>
+    <bcf:citekey order="98" intorder="1">cariow2016hardware</bcf:citekey>
+    <bcf:citekey order="99" intorder="1">zhao2016time</bcf:citekey>
+    <bcf:citekey order="100" intorder="1">BROAD</bcf:citekey>
     <bcf:citekey order="101" intorder="1">chen2016xgboost</bcf:citekey>
-    <bcf:citekey order="102" intorder="1">bickel2015mathematical</bcf:citekey>
-    <bcf:citekey order="103" intorder="1">BROAD</bcf:citekey>
-    <bcf:citekey order="104" intorder="1">absoluteDistance</bcf:citekey>
-    <bcf:citekey order="105" intorder="1">akiba2019optuna</bcf:citekey>
-    <bcf:citekey order="106" intorder="1">labatut2012accuracy</bcf:citekey>
-    <bcf:citekey order="107" intorder="1">fischler1981random</bcf:citekey>
-    <bcf:citekey order="108" intorder="1">akiba2019optuna</bcf:citekey>
-    <bcf:citekey order="109" intorder="1">labatut2012accuracy</bcf:citekey>
-    <bcf:citekey order="110" intorder="1">aqua_ref</bcf:citekey>
-    <bcf:citekey order="111" intorder="1">ekf_ref</bcf:citekey>
-    <bcf:citekey order="112" intorder="1">madgwick2011estimation</bcf:citekey>
-    <bcf:citekey order="113" intorder="1">chen2016xgboost</bcf:citekey>
-    <bcf:citekey order="114" intorder="1">gallego2015compact</bcf:citekey>
-    <bcf:citekey order="115" intorder="1">goodfellow2016deep</bcf:citekey>
-    <bcf:citekey order="116" intorder="1">maybeck1982stochastic</bcf:citekey>
-    <bcf:citekey order="117" intorder="1">BROAD</bcf:citekey>
-    <bcf:citekey order="118" intorder="1">ahrs_doc</bcf:citekey>
-    <bcf:citekey order="119" intorder="1">markley2007quaternion</bcf:citekey>
+    <bcf:citekey order="102" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="103" intorder="1">bickel2015mathematical</bcf:citekey>
+    <bcf:citekey order="104" intorder="1">BROAD</bcf:citekey>
+    <bcf:citekey order="105" intorder="1">madgwick2011estimation</bcf:citekey>
+    <bcf:citekey order="106" intorder="1">aqua_ref</bcf:citekey>
+    <bcf:citekey order="107" intorder="1">maybeck1982stochastic</bcf:citekey>
+    <bcf:citekey order="108" intorder="1">madgwick2011estimation</bcf:citekey>
+    <bcf:citekey order="109" intorder="1">BROAD</bcf:citekey>
+    <bcf:citekey order="110" intorder="1">absoluteDistance</bcf:citekey>
+    <bcf:citekey order="111" intorder="1">akiba2019optuna</bcf:citekey>
+    <bcf:citekey order="112" intorder="1">labatut2012accuracy</bcf:citekey>
+    <bcf:citekey order="113" intorder="1">fischler1981random</bcf:citekey>
+    <bcf:citekey order="114" intorder="1">akiba2019optuna</bcf:citekey>
+    <bcf:citekey order="115" intorder="1">labatut2012accuracy</bcf:citekey>
+    <bcf:citekey order="116" intorder="1">aqua_ref</bcf:citekey>
+    <bcf:citekey order="117" intorder="1">ekf_ref</bcf:citekey>
+    <bcf:citekey order="118" intorder="1">madgwick2011estimation</bcf:citekey>
+    <bcf:citekey order="119" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="120" intorder="1">gallego2015compact</bcf:citekey>
+    <bcf:citekey order="121" intorder="1">goodfellow2016deep</bcf:citekey>
+    <bcf:citekey order="122" intorder="1">maybeck1982stochastic</bcf:citekey>
+    <bcf:citekey order="123" intorder="1">BROAD</bcf:citekey>
+    <bcf:citekey order="124" intorder="1">ahrs_doc</bcf:citekey>
+    <bcf:citekey order="125" intorder="1">markley2007quaternion</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

@@ -1388,7 +1388,7 @@
       \verb https://doi.org/10.1080/21642583.2024.2343303
       \endverb
     \endentry
-    \entry{ekf_ref}{book}{}{}
+    \entry{maybeck1982stochastic}{book}{}{}
       \name{author}{1}{}{%
         {{hash=35669e817ad3a2dcfc627053ee07d76f}{%
            family={Maybeck},
@@ -1415,7 +1415,7 @@
       \field{title}{Stochastic Models, Estimation, and Control: Volume 1}
       \field{year}{1982}
     \endentry
-    \entry{maybeck1982stochastic}{book}{}{}
+    \entry{ekf_ref}{book}{}{}
       \name{author}{1}{}{%
         {{hash=35669e817ad3a2dcfc627053ee07d76f}{%
            family={Maybeck},

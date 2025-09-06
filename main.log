@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  6 SEP 2025 19:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  6 SEP 2025 21:28
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1366,7 +1366,7 @@ Overfull \hbox (24.0pt too wide) in paragraph at lines 55--55
 ! Misplaced alignment tab character &.
 <argument> ...rt {\numberline {4.1.2}Electronics &
                                                    Sensors}\Hy@toclinkend 
-l.28 ...ectronics & Sensors}{20}{subsection.4.1.2}
+l.30 ...ectronics & Sensors}{21}{subsection.4.1.2}
                                                   %
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1483,13 +1483,13 @@ Chapter 3.
 [11
 
 ]
-Overfull \hbox (0.59996pt too wide) in paragraph at lines 258--258
+Overfull \hbox (0.59996pt too wide) in paragraph at lines 260--260
 []\T1/stix2/b/n/14.4 Choice of Ex-treme Gra-di-ent Boost-ing Re-gres-sion and C
 las-
  []
 
 
-Overfull \hbox (0.67812pt too wide) in paragraph at lines 264--265
+Overfull \hbox (0.67812pt too wide) in paragraph at lines 266--267
 \T1/stix2/m/n/12 in-cludes L1 and L2 reg-u-lar-iza-tion terms, which help pre-v
 ent over-fit-ting^^Va com-
  []
@@ -1498,9 +1498,9 @@ ent over-fit-ting^^Va com-
 
 [12]
 Package svg Info: Last page of `./svg-inkscape/ransac_figure_svg-tex.pdf' is 1 
-on input line 281.
+on input line 283.
  (svg-inkscape/ransac_figure_svg-tex.pdf_tex
-<./svg-inkscape/ransac_figure_svg-tex.pdf, id=637, page=1, 317.68687pt x 295.10
+<./svg-inkscape/ransac_figure_svg-tex.pdf, id=670, page=1, 317.68687pt x 295.10
 25pt>
 File: ./svg-inkscape/ransac_figure_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/ransac_figure_svg-tex.pdf, page 1>
@@ -1508,7 +1508,7 @@ Package pdftex.def Info: ./svg-inkscape/ransac_figure_svg-tex.pdf , page1 used
 on input line 56.
 (pdftex.def)             Requested size: 213.39568pt x 198.23096pt.
 )
-Overfull \hbox (0.8462pt too wide) in paragraph at lines 291--292
+Overfull \hbox (0.8462pt too wide) in paragraph at lines 293--294
 []\T1/stix2/b/n/12 Complementary Strengths\T1/stix2/m/n/12 : While XG-Boost ex-
 cels at cap-tur-ing com-plex, non-
  []
@@ -1517,10 +1517,10 @@ cels at cap-tur-ing com-plex, non-
 
 [13 <./svg-inkscape/ransac_figure_svg-tex.pdf>]
 Package svg Info: Last page of `./svg-inkscape/filter_diagram_svg-tex.pdf' is 1
- on input line 318.
+ on input line 320.
 
 (svg-inkscape/filter_diagram_svg-tex.pdf_tex
-<./svg-inkscape/filter_diagram_svg-tex.pdf, id=655, page=1, 1236.49454pt x 408.
+<./svg-inkscape/filter_diagram_svg-tex.pdf, id=687, page=1, 1236.49454pt x 408.
 53801pt>
 File: ./svg-inkscape/filter_diagram_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/filter_diagram_svg-tex.pdf, page 1>
@@ -1528,41 +1528,41 @@ Package pdftex.def Info: ./svg-inkscape/filter_diagram_svg-tex.pdf , page1 used
  on input line 56.
 (pdftex.def)             Requested size: 341.43437pt x 112.80647pt.
 )
-Overfull \hbox (63.8283pt too wide) in paragraph at lines 324--325
+Overfull \hbox (63.8283pt too wide) in paragraph at lines 326--327
 \T1/stix2/m/n/12 dataset we are us-ing is the Berlin Ro-bust Ori-en-ta-tion Es-
 ti-ma-tion As-sess-ment Dataset(BROAD)[[]28[]]. 
  []
 
 
 
-[14 <./svg-inkscape/filter_diagram_svg-tex.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 351--351
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 353--353
 []|\T1/stix2/m/n/12 Vibrating Smart-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 353--353
+Underfull \hbox (badness 10000) in paragraph at lines 355--355
 []|\T1/stix2/m/n/12 Attached Mag-net
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 355--355
+Underfull \hbox (badness 10000) in paragraph at lines 357--357
 []|\T1/stix2/m/n/12 Mixed (Dis-turbed
  []
 
-<figures/dataset.png, id=673, 277.78781pt x 188.20313pt>
+<figures/dataset.png, id=703, 277.78781pt x 188.20313pt>
 File: figures/dataset.png Graphic file (type png)
 <use figures/dataset.png>
-Package pdftex.def Info: figures/dataset.png  used on input line 367.
+Package pdftex.def Info: figures/dataset.png  used on input line 369.
 (pdftex.def)             Requested size: 192.0548pt x 130.11874pt.
-<figures/imu_hardware_mount.png, id=675, 1591.9475pt x 1120.185pt>
+<figures/imu_hardware_mount.png, id=705, 1591.9475pt x 1120.185pt>
 File: figures/imu_hardware_mount.png Graphic file (type png)
 <use figures/imu_hardware_mount.png>
-Package pdftex.def Info: figures/imu_hardware_mount.png  used on input line 374
+Package pdftex.def Info: figures/imu_hardware_mount.png  used on input line 376
 .
 (pdftex.def)             Requested size: 192.0548pt x 135.13428pt.
 
-Underfull \hbox (badness 4316) in paragraph at lines 375--375
+Underfull \hbox (badness 4316) in paragraph at lines 377--377
 []\T1/stix2/b/n/10.95 (b) |\T1/stix2/m/n/10.95 3D printed hard-ware de-vice wit
 h
  []
@@ -1570,7 +1570,7 @@ h
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.441 \Return
+l.443 \Return
              {$orientationEstimates$}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1582,7 +1582,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.441 \Return
+l.443 \Return
              {$orientationEstimates$}
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1591,26 +1591,26 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.441 \Return
+l.443 \Return
              {$orientationEstimates$}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 447.
+(hyperref)                removing `math shift' on input line 449.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 447.
+(hyperref)                removing `\alpha' on input line 449.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 447.
+(hyperref)                removing `math shift' on input line 449.
 
 
 
-[15]
+[15 <./svg-inkscape/filter_diagram_svg-tex.pdf>]
 
 [16{C:/Program Files/MiKTeX/fonts/enc/dvips/stix2-type1/stix2-mathex.enc}{C:/Pr
 ogram Files/MiKTeX/fonts/enc/dvips/stix2-type1/stix2-mathrm-bold.enc}]
@@ -1620,22 +1620,45 @@ rogram Files/MiKTeX/fonts/enc/dvips/stix2-type1/stix2-mathsf.enc} <./figures/da
 taset.png> <./figures/imu_hardware_mount.png (PNG copy)>]
 
 [18]
+
+LaTeX Warning: Reference `sec:evaluation_dataset' on page 19 undefined on input
+ line 519.
+
+
+LaTeX Warning: Reference `sec:turntable' on page 19 undefined on input line 519
+.
+
+
+Overfull \hbox (12.12617pt too wide) in paragraph at lines 525--526
+[]\T1/stix2/b/n/12 Error Met-ric: \T1/stix2/m/n/12 For each fil-ter, the quater
+-nion ab-so-lute dis-tance (see Ap-pendix []A.2[])
+ []
+
+
+Overfull \hbox (0.19084pt too wide) in paragraph at lines 525--526
+\T1/stix2/m/n/12 was com-puted be-tween the es-ti-mated quater-nion $[]$ and th
+e ground-truth quater-
+ []
+
+
+
+[19]
 Chapter 4.
 
-Overfull \hbox (1.7581pt too wide) in paragraph at lines 515--516
+Overfull \hbox (1.7581pt too wide) in paragraph at lines 545--546
 []\T1/stix2/b/n/12 Actuation: \T1/stix2/m/n/12 There is no elec-tri-cal ac-tu-a
 -tion built into the turntable, rather move-
  []
 
 
 
-[19
+[20
 
 ]
 ! Misplaced alignment tab character &.
 <argument> Electronics &
                          Sensors
-l.533 \subsection{Electronics & Sensors}
+l.563 \subsection{Electronics & Sensors}
                                         
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1646,387 +1669,367 @@ might try typing `S' now just to see what is salvageable.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `alignment tab' on input line 533.
+(hyperref)                removing `alignment tab' on input line 563.
 
 
 
-[20]
-Overfull \hbox (1.57942pt too wide) in paragraph at lines 560--561
+[21]
+Overfull \hbox (1.57942pt too wide) in paragraph at lines 590--591
 \T1/stix2/m/n/12 spond-ing to dif-fer-ent ori-en-ta-tion es-ti-ma-tion al-go-ri
 thms: the pro-posed fil-ter, the AQUA
  []
 
 
-Overfull \hbox (1.78082pt too wide) in paragraph at lines 562--563
+Overfull \hbox (1.78082pt too wide) in paragraph at lines 592--593
 \T1/stix2/m/n/12 the I$[]$C pro-to-col, cap-tur-ing tri-axial ac-celerom-e-ter,
  gy-ro-scope, and mag-ne-tome-ter data.
  []
 
 
-Overfull \hbox (5.16267pt too wide) in paragraph at lines 564--566
+Overfull \hbox (5.16267pt too wide) in paragraph at lines 594--596
 []\T1/stix2/m/n/12 During run-time, the es-ti-mated quater-nions from the four 
 fil-ters, along with the ground-
  []
 
 
 
-[21]
-<figures/Turntable_fusion.png, id=760, 787.44188pt x 552.56438pt>
+[22]
+<figures/Turntable_fusion.png, id=807, 787.44188pt x 552.56438pt>
 File: figures/Turntable_fusion.png Graphic file (type png)
 <use figures/Turntable_fusion.png>
-Package pdftex.def Info: figures/Turntable_fusion.png  used on input line 572.
+Package pdftex.def Info: figures/Turntable_fusion.png  used on input line 602.
 (pdftex.def)             Requested size: 128.0387pt x 89.84544pt.
 File: figures/Turntable_fusion.png Graphic file (type png)
 <use figures/Turntable_fusion.png>
-Package pdftex.def Info: figures/Turntable_fusion.png  used on input line 579.
+Package pdftex.def Info: figures/Turntable_fusion.png  used on input line 609.
 (pdftex.def)             Requested size: 128.0387pt x 89.84544pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 580--580
+Underfull \hbox (badness 10000) in paragraph at lines 610--610
 []\T1/stix2/b/n/10.95 (b) |\T1/stix2/m/n/10.95 Ac-tual Con-structed
  []
 
 File: figures/Turntable_fusion.png Graphic file (type png)
 <use figures/Turntable_fusion.png>
-Package pdftex.def Info: figures/Turntable_fusion.png  used on input line 586.
+Package pdftex.def Info: figures/Turntable_fusion.png  used on input line 616.
 (pdftex.def)             Requested size: 128.0387pt x 89.84544pt.
 
-Underfull \hbox (badness 2376) in paragraph at lines 629--629
+Underfull \hbox (badness 2376) in paragraph at lines 659--659
 []|\T1/stix2/m/n/12 All record-s/sam-ples of MARG sen-
  []
 
 
-Underfull \hbox (badness 1590) in paragraph at lines 629--629
+Underfull \hbox (badness 1590) in paragraph at lines 659--659
 \T1/stix2/m/n/12 sor read-ings from the con-cate-nated
  []
 
 
 
-[22 <./figures/Turntable_fusion.png>]
-Underfull \hbox (badness 2376) in paragraph at lines 673--673
+[23 <./figures/Turntable_fusion.png>]
+Underfull \hbox (badness 2376) in paragraph at lines 703--703
 []|\T1/stix2/m/n/12 All record-s/sam-ples of MARG sen-
  []
 
 
-Underfull \hbox (badness 1590) in paragraph at lines 673--673
+Underfull \hbox (badness 1590) in paragraph at lines 703--703
 \T1/stix2/m/n/12 sor read-ings from the con-cate-nated
- []
-
-
-
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 693--694
-[]|\T1/stix2/m/n/12 Subsample ra-tio of
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 696--697
-[]|\T1/stix2/m/n/12 Number of boost-ing
- []
-
-
-Underfull \hbox (badness 4205) in paragraph at lines 699--700
-[]|\T1/stix2/m/n/12 Subsample ra-tio of the
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 700--701
-[]|\T1/stix2/m/n/12 Minimum num-ber of
- []
-
-
-Underfull \hbox (badness 1546) in paragraph at lines 700--701
-\T1/stix2/m/n/12 sam-ples for a model to
- []
-
-
-Underfull \hbox (badness 7379) in paragraph at lines 700--701
-\T1/stix2/m/n/12 be con-sid-ered valid in
  []
 
 
 
 [24]
+Underfull \hbox (badness 10000) in paragraph at lines 723--724
+[]|\T1/stix2/m/n/12 Subsample ra-tio of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 726--727
+[]|\T1/stix2/m/n/12 Number of boost-ing
+ []
+
+
+Underfull \hbox (badness 4205) in paragraph at lines 729--730
+[]|\T1/stix2/m/n/12 Subsample ra-tio of the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 730--731
+[]|\T1/stix2/m/n/12 Minimum num-ber of
+ []
+
+
+Underfull \hbox (badness 1546) in paragraph at lines 730--731
+\T1/stix2/m/n/12 sam-ples for a model to
+ []
+
+
+Underfull \hbox (badness 7379) in paragraph at lines 730--731
+\T1/stix2/m/n/12 be con-sid-ered valid in
+ []
+
+
 
 [25]
+
+[26]
 Chapter 5.
 
-Underfull \hbox (badness 10000) in paragraph at lines 772--772
+Underfull \hbox (badness 10000) in paragraph at lines 802--802
 []|\T1/lmtt/m/n/12 Movement Prediction
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 772--772
+Underfull \hbox (badness 10000) in paragraph at lines 802--802
 \T1/lmtt/m/n/12 accuracy over the
  []
 
 
 
-[26
+[27
 
 ]
-<figures/mean_for_39_files.png, id=816, 863.8674pt x 518.4168pt>
+<figures/mean_for_39_files.png, id=863, 863.8674pt x 518.4168pt>
 File: figures/mean_for_39_files.png Graphic file (type png)
 <use figures/mean_for_39_files.png>
-Package pdftex.def Info: figures/mean_for_39_files.png  used on input line 792.
+Package pdftex.def Info: figures/mean_for_39_files.png  used on input line 822.
 
 (pdftex.def)             Requested size: 384.1096pt x 230.50885pt.
 
 
-[27]
-<figures/variance_toggle.png, id=822, 1922.382pt x 980.463pt>
+[28]
+<figures/variance_toggle.png, id=869, 1922.382pt x 980.463pt>
 File: figures/variance_toggle.png Graphic file (type png)
 <use figures/variance_toggle.png>
-Package pdftex.def Info: figures/variance_toggle.png  used on input line 799.
+Package pdftex.def Info: figures/variance_toggle.png  used on input line 829.
 (pdftex.def)             Requested size: 426.79135pt x 217.66237pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 804.
+(hyperref)                removing `math shift' on input line 834.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 804.
+(hyperref)                removing `\alpha' on input line 834.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 804.
+(hyperref)                removing `math shift' on input line 834.
 
 
 
-[28 <./figures/mean_for_39_files.png> <./figures/variance_toggle.png>]
-Underfull \hbox (badness 7291) in paragraph at lines 823--823
+[29 <./figures/mean_for_39_files.png> <./figures/variance_toggle.png>]
+Underfull \hbox (badness 7291) in paragraph at lines 853--853
 []|\T1/stix2/m/n/12 31 dis-turbed sta-tion-ary
  []
 
 
-Overfull \hbox (7.3182pt too wide) in paragraph at lines 811--826
+Overfull \hbox (7.3182pt too wide) in paragraph at lines 841--856
  [][] 
  []
 
 
-Underfull \hbox (badness 7291) in paragraph at lines 844--844
+Underfull \hbox (badness 7291) in paragraph at lines 874--874
 []|\T1/stix2/m/n/12 31 dis-turbed sta-tion-ary
  []
 
 
-Overfull \hbox (7.3182pt too wide) in paragraph at lines 832--847
+Overfull \hbox (7.3182pt too wide) in paragraph at lines 862--877
  [][] 
  []
 
-<figures/rmnoise_chart.png, id=833, 544.434pt x 339.1872pt>
+<figures/rmnoise_chart.png, id=880, 544.434pt x 339.1872pt>
 File: figures/rmnoise_chart.png Graphic file (type png)
 <use figures/rmnoise_chart.png>
-Package pdftex.def Info: figures/rmnoise_chart.png  used on input line 851.
+Package pdftex.def Info: figures/rmnoise_chart.png  used on input line 881.
 (pdftex.def)             Requested size: 320.0935pt x 199.43036pt.
 
 
-[29]
+[30]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 857.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 857.
+(hyperref)                removing `math shift' on input line 887.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 857.
+(hyperref)                removing `\alpha' on input line 887.
 
 
-Overfull \hbox (11.89095pt too wide) in paragraph at lines 862--863
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 887.
+
+
+Overfull \hbox (11.89095pt too wide) in paragraph at lines 892--893
 []\T1/stix2/m/n/12 Their dis-tance is cal-cu-lated ac-cord-ing to the pro-cess 
 men-tioned in []sub-sec-tion 4.2.3[][]. 
  []
 
-<figures/9_undisturbed_fast_rotation_with_breaks_B.png, id=846, 1157.0427pt x 3
+<figures/9_undisturbed_fast_rotation_with_breaks_B.png, id=893, 1157.0427pt x 3
 64.9635pt>
 File: figures/9_undisturbed_fast_rotation_with_breaks_B.png Graphic file (type 
 png)
 <use figures/9_undisturbed_fast_rotation_with_breaks_B.png>
 Package pdftex.def Info: figures/9_undisturbed_fast_rotation_with_breaks_B.png 
- used on input line 874.
+ used on input line 904.
 (pdftex.def)             Requested size: 384.1096pt x 121.15671pt.
 
 
-[30 <./figures/rmnoise_chart.png>]
-<figures/15_undisturbed_fast_translation_A.png, id=852, 1163.547pt x 364.9635pt
+[31 <./figures/rmnoise_chart.png>]
+<figures/15_undisturbed_fast_translation_A.png, id=899, 1163.547pt x 364.9635pt
 >
 File: figures/15_undisturbed_fast_translation_A.png Graphic file (type png)
 <use figures/15_undisturbed_fast_translation_A.png>
 Package pdftex.def Info: figures/15_undisturbed_fast_translation_A.png  used on
- input line 881.
+ input line 911.
 (pdftex.def)             Requested size: 384.1096pt x 120.48286pt.
-<figures/18_undisturbed_fast_translation_with_breaks_B.png, id=853, 1154.1519pt
+<figures/18_undisturbed_fast_translation_with_breaks_B.png, id=900, 1154.1519pt
  x 364.9635pt>
 File: figures/18_undisturbed_fast_translation_with_breaks_B.png Graphic file (t
 ype png)
 <use figures/18_undisturbed_fast_translation_with_breaks_B.png>
 Package pdftex.def Info: figures/18_undisturbed_fast_translation_with_breaks_B.
-png  used on input line 888.
+png  used on input line 918.
 (pdftex.def)             Requested size: 384.1096pt x 121.463pt.
-<figures/23_undisturbed_fast_combined_360s.png, id=854, 1154.1519pt x 364.9635p
+<figures/23_undisturbed_fast_combined_360s.png, id=901, 1154.1519pt x 364.9635p
 t>
 File: figures/23_undisturbed_fast_combined_360s.png Graphic file (type png)
 <use figures/23_undisturbed_fast_combined_360s.png>
 Package pdftex.def Info: figures/23_undisturbed_fast_combined_360s.png  used on
- input line 895.
+ input line 925.
 (pdftex.def)             Requested size: 384.1096pt x 121.463pt.
-<figures/31_disturbed_stationary_magnet_D.png, id=855, 1154.1519pt x 364.9635pt
+<figures/31_disturbed_stationary_magnet_D.png, id=902, 1154.1519pt x 364.9635pt
 >
 File: figures/31_disturbed_stationary_magnet_D.png Graphic file (type png)
 <use figures/31_disturbed_stationary_magnet_D.png>
 Package pdftex.def Info: figures/31_disturbed_stationary_magnet_D.png  used on 
-input line 902.
+input line 932.
 (pdftex.def)             Requested size: 384.1096pt x 121.463pt.
 
 
-[31 <./figures/9_undisturbed_fast_rotation_with_breaks_B.png> <./figures/15_und
+[32 <./figures/9_undisturbed_fast_rotation_with_breaks_B.png> <./figures/15_und
 isturbed_fast_translation_A.png> <./figures/18_undisturbed_fast_translation_wit
 h_breaks_B.png> <./figures/23_undisturbed_fast_combined_360s.png>]
 
-[32 <./figures/31_disturbed_stationary_magnet_D.png>]
-
-[33]
+[33 <./figures/31_disturbed_stationary_magnet_D.png>]
 
 [34]
+
+[35]
+
+[36]
 Chapter 6.
 
-Overfull \hbox (18.67183pt too wide) in paragraph at lines 1107--1112
+Overfull \hbox (18.67183pt too wide) in paragraph at lines 1138--1143
 \T1/stix2/m/n/12 in files \T1/lmtt/m/n/12 15_undisturbed_fast_translation_A\T1/
 stix2/m/n/12 ,\T1/lmtt/m/n/12 23_undisturbed_fast_combined_360s
  []
 
 
 
-[35
+[37
 
 ]
-Overfull \hbox (27.65154pt too wide) in paragraph at lines 1130--1133
+Overfull \hbox (27.65154pt too wide) in paragraph at lines 1161--1164
 \T1/stix2/m/n/12 i-ble in en-tries 2 and 4 which cor-re-spond to the files \T1/
 lmtt/m/n/12 15_undisturbed_fast_translation_A
  []
 
 
-Overfull \hbox (10.6955pt too wide) in paragraph at lines 1134--1137
+Overfull \hbox (10.6955pt too wide) in paragraph at lines 1165--1168
 []\T1/stix2/m/n/12 If we ob-serve the er-ror graphed vs it-er-a-tions for \T1/l
 mtt/m/n/12 15_undisturbed_fast_translation_A
  []
 
 
-Overfull \hbox (1.7054pt too wide) in paragraph at lines 1143--1146
+Overfull \hbox (1.7054pt too wide) in paragraph at lines 1174--1177
 \T1/lmtt/m/n/12 18_undisturbed_fast_translation_with_breaks_B \T1/stix2/m/n/12 
 the Madg-wick fil-ter per-
  []
 
 
 
-[36]
+[38]
 
-Package caption Warning: \label without proper reference on input line 595.
+Package caption Warning: \label without proper reference on input line 625.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tab:motion_protocols' on page 37 undefined on input l
-ine 1155.
+LaTeX Warning: Reference `tab:motion_protocols' on page 39 undefined on input l
+ine 1186.
 
 
 
-[37]
+[39]
 Chapter 7.
 
 
-[38
+[40
 
 ]
 
-[39]
-Overfull \hbox (12.3709pt too wide) in paragraph at lines 1190--1191
+[41]
+Overfull \hbox (12.3709pt too wide) in paragraph at lines 1221--1222
 []\T1/stix2/b/n/12 Rigidity of the Ab-so-lute Dis-tance Met-ric: \T1/stix2/m/n/
 12 The eval-u-a-tion em-ployed the quater-
  []
 
 
 
-[40]
+[42]
 Chapter 8.
 
 
-[41
+[43
 
 ]
-Overfull \hbox (8.52617pt too wide) in paragraph at lines 1223--1223
+Overfull \hbox (8.52617pt too wide) in paragraph at lines 1254--1254
 []\T1/stix2/m/n/12 T. Ak-iba, S. Sano, T. Yanase, T. Ohta, and M. Koyama, ``Op-
 tuna: A next-generation
  []
 
 
-Overfull \hbox (15.83289pt too wide) in paragraph at lines 1223--1223
+Overfull \hbox (15.83289pt too wide) in paragraph at lines 1254--1254
 \T1/stix2/m/n/12 hy-per-pa-ram-e-ter op-ti-miza-tion frame-work,'' in \T1/stix2
 /m/it/12 Pro-ceed-ings of the 25th ACM SIGKDD
  []
 
 
-Overfull \hbox (2.63748pt too wide) in paragraph at lines 1223--1223
+Overfull \hbox (2.63748pt too wide) in paragraph at lines 1254--1254
 \T1/stix2/m/it/12 In-ter-na-tional Con-fer-ence on Knowl-edge Dis-cov-ery & Dat
 a Min-ing\T1/stix2/m/n/12 , 2019, pp. 2623^^U
  []
 
 
 Package biblatex Warning: No driver for 'unknown'.
-(biblatex)                Using fallback driver on input line 1223.
+(biblatex)                Using fallback driver on input line 1254.
 
 
 
-[42
+[44
 
 {C:/Program Files/MiKTeX/fonts/enc/dvips/stix2-type1/stix2-t1sc.enc}]
-Overfull \hbox (67.38156pt too wide) in paragraph at lines 1223--1223
+Overfull \hbox (67.38156pt too wide) in paragraph at lines 1254--1254
 \T1/stix2/m/n/12 V004T08A051. \T1/stix2/m/sc/12 doi\T1/stix2/m/n/12 : []$\T1/lm
 tt/m/n/12 10 . 1115 / DETC2013 -[] 12906$[]\T1/stix2/m/n/12 . eprint: []$\T1/lm
 tt/m/n/12 https : / / asmedigitalcollection .
  []
 
 
-Overfull \hbox (20.3847pt too wide) in paragraph at lines 1223--1223
+Overfull \hbox (20.3847pt too wide) in paragraph at lines 1254--1254
 \T1/lmtt/m/n/12 asme . org / IDETC -[] CIE / proceedings -[] pdf / IDETC -[] CI
 E2013 / 55911 / V004T08A051 /
  []
 
 
 
-[43]
-Overfull \hbox (20.32324pt too wide) in paragraph at lines 1223--1223
+[45]
+Overfull \hbox (20.32324pt too wide) in paragraph at lines 1254--1254
 []\T1/stix2/m/n/12 S. O. H. Madg-wick, S. Wil-son, R. Turk, J. Bur-ridge, C. Ka
 -p-atos, and R. Vaidyanathan,
  []
 
 
-Overfull \hbox (2.17365pt too wide) in paragraph at lines 1223--1223
+Overfull \hbox (2.17365pt too wide) in paragraph at lines 1254--1254
 []\T1/stix2/m/n/12 J. Marins, X. Yun, E. Bach-mann, R. McGhee, and M. Zyda, ``A
 n ex-tended kalman
- []
-
-
-
-[44]
-
-[45]
-Overfull \hbox (1.79213pt too wide) in paragraph at lines 1223--1223
-[]\T1/stix2/m/n/12 D. Tedaldi, A. Pretto, and E. Menegatti, ``A ro-bust and eas
-y to im-ple-ment method
- []
-
-
-Overfull \hbox (0.95872pt too wide) in paragraph at lines 1223--1223
-[]\T1/stix2/m/n/12 R. G. Valenti, I. Dryanovski, and J. Xiao, ``Keep-ing a good
- at-ti-tude: A quaternion-
- []
-
-
-Overfull \hbox (53.03012pt too wide) in paragraph at lines 1223--1223
-[]\T1/stix2/m/n/12 S. Zhao, ``Time deriva-tive of ro-ta-tion ma-tri-ces: A tu-t
-o-rial,'' \T1/stix2/m/it/12 arXiv preprint arXiv:1609.06088\T1/stix2/m/n/12 ,
  []
 
 
@@ -2034,39 +2037,61 @@ o-rial,'' \T1/stix2/m/it/12 arXiv preprint arXiv:1609.06088\T1/stix2/m/n/12 ,
 [46]
 
 [47]
+Overfull \hbox (1.79213pt too wide) in paragraph at lines 1254--1254
+[]\T1/stix2/m/n/12 D. Tedaldi, A. Pretto, and E. Menegatti, ``A ro-bust and eas
+y to im-ple-ment method
+ []
 
-[48
+
+Overfull \hbox (0.95872pt too wide) in paragraph at lines 1254--1254
+[]\T1/stix2/m/n/12 R. G. Valenti, I. Dryanovski, and J. Xiao, ``Keep-ing a good
+ at-ti-tude: A quaternion-
+ []
+
+
+Overfull \hbox (53.03012pt too wide) in paragraph at lines 1254--1254
+[]\T1/stix2/m/n/12 S. Zhao, ``Time deriva-tive of ro-ta-tion ma-tri-ces: A tu-t
+o-rial,'' \T1/stix2/m/it/12 arXiv preprint arXiv:1609.06088\T1/stix2/m/n/12 ,
+ []
+
+
+
+[48]
+
+[49]
+
+[50
 
 
 ]
 Appendix A.
 
 
-[49
+[51
 
 {C:/Program Files/MiKTeX/fonts/enc/dvips/stix2-type1/stix2-mathbb.enc}]
-Overfull \hbox (8.64749pt too wide) in paragraph at lines 1292--1293
+Overfull \hbox (8.64749pt too wide) in paragraph at lines 1323--1324
 []\T1/stix2/m/n/12 The quater-nion ro-ta-tion for-mula en-sures a smooth and gi
 mbal-lock-free ro-ta-tion, which
  []
 
 
-Overfull \hbox (12.14334pt too wide) in paragraph at lines 1292--1293
+Overfull \hbox (12.14334pt too wide) in paragraph at lines 1323--1324
 \T1/stix2/m/n/12 is par-tic-u-larly ad-van-ta-geous in 3D ap-pli-ca-tions such 
 as ori-en-ta-tion track-ing and robotics. 
  []
 
 
-Overfull \hbox (8.44342pt too wide) in paragraph at lines 1296--1297
+Overfull \hbox (8.44342pt too wide) in paragraph at lines 1327--1328
 \T1/stix2/m/n/12 In this sec-tion, we de-scribe the com-pu-ta-tion of the \T1/s
 tix2/m/it/12 Quater-nion Ab-so-lute Dis-tance \T1/stix2/m/n/12 (QAD),
  []
 
 
 
-[50]
+[52]
 
-[51] (main.aux)
+[53] (main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
@@ -2076,16 +2101,16 @@ L3 programming layer <2025-03-26>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 409455D3ABF7E3454B159307060F22FA;13321.
+(rerunfilecheck)             Checksum: 2C0B55B66EA07C3A1F76F727A5027371;14577.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34376 strings out of 469958
- 615438 string characters out of 5479880
- 1626250 words of memory out of 5000000
- 60394 multiletter control sequences out of 15000+600000
+ 34391 strings out of 469958
+ 615623 string characters out of 5479880
+ 1601366 words of memory out of 5000000
+ 60400 multiletter control sequences out of 15000+600000
  799961 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,18n,93p,2753b,1542s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2100,9 +2125,9 @@ iles/MiKTeX/fonts/type1/public/stix2-type1/STIX2Text-BoldItalic.pfb><C:/Program
 iles/MiKTeX/fonts/type1/public/stix2-type1/STIX2Text-Regular.pfb><C:/Program Fi
 les/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Program Files/MiKTeX/fonts/type
 1/public/lm/lmtt8.pfb>
-Output written on main.pdf (62 pages, 3269068 bytes).
+Output written on main.pdf (64 pages, 3280789 bytes).
 PDF statistics:
- 1168 PDF objects out of 1200 (max. 8388607)
- 258 named destinations out of 1000 (max. 500000)
- 584 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1219 PDF objects out of 1440 (max. 8388607)
+ 267 named destinations out of 1000 (max. 500000)
+ 632 words of extra memory for PDF output out of 10000 (max. 10000000)
 
