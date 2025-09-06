@@ -12,3 +12,7 @@ main.lot
 main.out
 main.run.xml
 main.toc
+figures
+citations.bib
+compile.bat
+frontmatter.sty
