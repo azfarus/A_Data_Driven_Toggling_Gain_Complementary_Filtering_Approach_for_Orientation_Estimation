@@ -1111,17 +1111,17 @@ max   & 81.02 & 81.02 & 80.66 & 81.03 & 81.02 & 75.59 & 81.97 & 81.36 & 82.20 & 
 \subsection{Resource Consumption Statistics}
 \begin{table}[H]
   \centering
-  \caption{Resource consumption per filter on RPI: average CPU (\%) and memory (MB).}
-  \label{tab:resource_consumption}
+  \caption{Static Error Resource consumption per filter on RPI: average CPU (\%) and memory (MB).}
+  \label{tab:resource_consumption_static}
   \begin{tabular}{lcc}
     \toprule
     Filter & CPU Usage (\%) & Memory Usage (MB) \\
     \midrule
-    Proposed (ML)     & \([\,\cdot\,]\) & \([\,\cdot\,]\) \\
-    Proposed (-ML)    & \([\,\cdot\,]\) & \([\,\cdot\,]\) \\
-    Madgwick           & \([\,\cdot\,]\) & \([\,\cdot\,]\) \\
-    EKF                & \([\,\cdot\,]\) & \([\,\cdot\,]\) \\
-    Aqua               & \([\,\cdot\,]\) & \([\,\cdot\,]\) \\
+    Proposed (ML)     & 58.6 & 145.65 \\
+    Proposed (-ML)    & 54.5 & 120.35 \\
+    Madgwick           & 1.75 & 59.75 \\
+    EKF                & 3.12 & 59.77 \\
+    Aqua               & 2.32 & 59.69 \\
     \bottomrule
   \end{tabular}
 \end{table}
