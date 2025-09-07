@@ -3,6 +3,7 @@
 \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
 \usepackage{adjustbox}
 \usepackage{svg}
+\usepackage{float}
 
 % The iutbscthesis uses biblatex for bibliography management.
 % You can learn the basics of biblatex from:
@@ -1426,6 +1427,144 @@ Quaternion Absolute Distance is frequently used in:
     \item Motion capture and sensor fusion
     \item Evaluating the accuracy of inertial tracking algorithms
 \end{itemize}
+
+\chapter{Graphs}
+
+\section{Different Types of Errors}
+
+\subsection{Dynamic Error}
+
+\begin{figure}[H]
+    \centering
+    
+    % Left column: with ML
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/dynamic_ml_x.png}
+            \caption*{X-axis}
+        \end{subfigure}\\[1em]
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/dynamic_ml_y.png}
+            \caption*{Y-axis}
+        \end{subfigure}\\[1em]
+
+        % \begin{subfigure}{\linewidth}
+        %     \includegraphics[width=\linewidth]{graph_appendix/z_axis/dynamic_ml_z.png}
+        %     \caption*{Z-axis}
+        % \end{subfigure}\\[0.4em]
+
+        {\small Dynamic Errors with Denoising}
+    \end{minipage}
+    \hfill
+    % Right column: without ML
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/dynamic_no_ml_x.png}
+            \caption*{X-axis}
+        \end{subfigure}\\[1em]
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/dynamic_no_ml_y.png}
+            \caption*{Y-axis}
+        \end{subfigure}\\[1em]
+
+        % \begin{subfigure}{\linewidth}
+        %     \includegraphics[width=\linewidth]{graph_appendix/z_axis/dynamic_no_ml_z.png}
+        %     \caption*{Z-axis}
+        % \end{subfigure}\\[0.4em]
+
+        {\small Dynamic Errors without Denoising}
+    \end{minipage}
+    
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    
+    % Left column: with ML
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/dynamic_ml_z.png}
+            \caption*{Z-axis}
+        \end{subfigure}\\[1em]
+
+        {\small Dynamic Errors with Denoising}
+    \end{minipage}
+    \hfill
+    % Right column: without ML
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/dynamic_no_ml_z.png}
+            \caption*{Z-axis}
+        \end{subfigure}\\[1em]
+
+        {\small Dynamic Errors without Denoising}
+    \end{minipage}
+    
+\end{figure}
+
+\subsection{Quasi-static Error}
+
+\begin{figure}[H]
+    \centering
+    
+    % Left column: with ML
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/quasi_static_ml_x.png}
+            \caption*{X-axis}
+        \end{subfigure}\\[0.5em]
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/quasi_static_ml_y.png}
+            \caption*{Y-axis}
+        \end{subfigure}\\[0.5em]
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/quasi_static_ml_z.png}
+            \caption*{Z-axis}
+        \end{subfigure}\\[1em]
+
+        {\small Quasi-static Errors with Denoising}
+    \end{minipage}
+    \hfill
+    % Right column: without ML
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/quasi_static_no_ml_x.png}
+            \caption*{X-axis}
+        \end{subfigure}\\[0.5em]
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/quasi_static_no_ml_y.png}
+            \caption*{Y-axis}
+        \end{subfigure}\\[0.5em]
+
+        \begin{subfigure}{\linewidth}
+            \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/quasi_static_no_ml_z.png}
+            \caption*{Z-axis}
+        \end{subfigure}\\[1em]
+
+        {\small Quasi-static Errors without Denoising}
+    \end{minipage}
+    
+\end{figure}
+
+
+
 \end{appendices}
 
 \end{document}
