@@ -996,7 +996,7 @@ max & 25.53 & 81.03 & 13.986 & 81.03  \\
 \begin{table}[H]
 \centering
 \caption{Static error metrics (°) per axis when ML denoising is not active.}
-\label{tab:static_ml}
+\label{tab:static_no_ml}
 \begin{tabular}{l
   *{4}{ccc}
 }
@@ -1208,6 +1208,90 @@ The results obtained from experiments on the physical turntable were less promis
     \item Our algorithm performs similar in all the three movement scenarios described in Table \ref{tab:motion_protocols}. 
     \item Our proposed filter performs comparatively better with a lower $\alpha$ value.
 \end{itemize}
+
+\subsection{Results without ML}\label{subsec:withoutML}
+
+The tests without the machine learning module provides important insights into the comparative performance of different filters. The results have been summarized in \autoref{tab:dynamic_no_ml},\autoref{tab:quasi_no_ml} and \autoref{tab:static_no_ml}. The observations can be summarized as follows:
+
+\begin{itemize}
+    \item \textbf{Proposed Toggling Engine:} 
+    \begin{itemize}
+        \item Maintains consistently low error throughout the dynamic rotation sequence in the Z axis.
+        \item Demonstrates robustness in handling fast rotational changes without large fluctuations.
+        \item Unfortunately, the X and Y axes fail to show similar results which might be caused due to improper setup.
+    \end{itemize}
+
+    \item \textbf{AQUA Filter:} 
+    \begin{itemize}
+        \item Exhibits high error spikes during dynamic rotational scenarios.
+        \item The spikes indicate sensitivity to rapid orientation changes, reducing reliability in dynamic conditions.
+    \end{itemize}
+
+    \item \textbf{Madgwick Filter:} 
+    \begin{itemize}
+        \item Shows a steady accumulation of error over time rather than sudden spikes.
+    \end{itemize}
+
+    \item \textbf{Overall Conclusion:} 
+    \begin{itemize}
+        \item The toggling engine provides the most balanced performance, avoiding both error spikes (seen in AQUA) and steady drift (seen in Madgwick). But this result is only visible in the Z-axis testing and not in the graphs of X and Y axes. Refer to  \autoref{appendix:graph} for the graphs.
+        \item These results confirm the effectiveness of the toggling mechanism, even without machine learning, in ensuring reliable orientation estimation in dynamic conditions.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Results with ML}
+
+The evaluation with the machine learning (ML) based noise removal enabled reveals a different trend compared to the results without ML. The results have been summarized in \autoref{tab:dynamic_ml},\autoref{tab:quasi_ml} and \autoref{tab:static_ml}. The observations can be summarized as follows:
+
+\begin{itemize}
+    \item \textbf{Proposed Filter with ML:}
+    \begin{itemize}
+        \item Exhibits high deviation during dynamic motion, with noticeable error spikes.
+        \item Once the spikes occur, the error often remains elevated instead of returning to baseline levels.
+        \item This suggests that the ML-based noise removal mechanism may be overcompensating or failing to adapt effectively to certain dynamic conditions.
+    \end{itemize}
+
+    \item \textbf{Other Filters (AQUA, EKF, Madgwick):}
+    \begin{itemize}
+        \item Show similar performance patterns to those observed without ML in \autoref{subsec:withoutML}.
+        \item None of these filters exhibit the persistent deviation spikes that are observed in the ML-enabled proposed filter.
+        \item Their error remains bounded within expected ranges, although with the same limitations (e.g., AQUA spikes, Madgwick drift) as previously noted.
+    \end{itemize}
+
+    \item \textbf{Overall Implication:}
+    \begin{itemize}
+        \item While the integration of ML-based noise removal was intended to improve robustness, in practice it introduces instability under dynamic conditions.
+        \item The behavior indicates a possible mismatch between the training data distribution of the ML model and the real-world data collected from the experimental setup.
+        \item Further refinement, such as domain adaptation or hybrid approaches, may be necessary to stabilize the ML contribution to the filter.
+    \end{itemize}
+\end{itemize}
+
+\subsection{CPU and Memory Usage}
+
+The computational demands of the proposed filter are noticeably higher compared to traditional orientation filters.Summary of the computational statistics is found in \autoref{tab:resource_consumption}. This limitation arises from multiple contributing factors:
+
+\begin{itemize}
+    \item \textbf{Impact of Machine Learning Models:}  
+    The integration of machine learning models for noise removal significantly increases CPU usage and memory consumption. These models require the storage of multiple decision trees and the traversal of tree structures during inference, which is computationally expensive in comparison to lightweight mathematical filter updates.
+
+    \item \textbf{CPU Usage Without ML:}  
+    Even with the ML-based denoising turned off, the CPU utilization remains elevated. This is primarily due to the multithreading mechanisms employed by \texttt{NumPy} and other underlying linear algebra libraries (e.g., BLAS, OpenBLAS). These libraries parallelize computations across multiple cores, which, although efficient for large matrix operations, results in unnecessary overhead for smaller real-time filter updates.
+
+    \item \textbf{Memory Overhead:}  
+    The storage of ML models (e.g., wide XGBoost trees) contributes to memory complexity. Additionally, intermediate matrices and arrays created during runtime accumulate memory usage, even in scenarios where the ML module is disabled.
+
+    \item \textbf{Future Work:}  
+    To address these issues, future development should focus on:
+    \begin{itemize}
+        \item Deriving a fully mathematical formulation of the filter that reduces dependency on large external libraries.
+        \item Implementing optimized linear algebra routines tailored to the filter rather than relying on general-purpose libraries such as \texttt{NumPy}.
+        \item Exploring lightweight ML surrogates (e.g., compact neural networks or reduced tree ensembles) if ML-based denoising is to be retained.
+    \end{itemize}
+\end{itemize}
+
+
+
+
 
 
 \chapter{Shortcomings}\label{chapter:shortcomings}
@@ -1423,7 +1507,7 @@ Quaternion Absolute Distance is frequently used in:
     \item Evaluating the accuracy of inertial tracking algorithms
 \end{itemize}
 
-\chapter{Graphs}
+\chapter{Graphs}\label{appendix:graph}
 
 \section{Different Types of Errors}
 
@@ -1439,17 +1523,14 @@ Quaternion Absolute Distance is frequently used in:
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/dynamic_ml_x.png}
             \caption*{X-axis}
+            \label{fig:dynamic_ml_x}
         \end{subfigure}\\[1em]
 
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/dynamic_ml_y.png}
             \caption*{Y-axis}
+            \label{fig:dynamic_ml_y}
         \end{subfigure}\\[1em]
-
-        % \begin{subfigure}{\linewidth}
-        %     \includegraphics[width=\linewidth]{graph_appendix/z_axis/dynamic_ml_z.png}
-        %     \caption*{Z-axis}
-        % \end{subfigure}\\[0.4em]
 
         {\small Dynamic Errors with Denoising}
     \end{minipage}
@@ -1461,21 +1542,20 @@ Quaternion Absolute Distance is frequently used in:
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/dynamic_no_ml_x.png}
             \caption*{X-axis}
+            \label{fig:dynamic_no_ml_x}
         \end{subfigure}\\[1em]
 
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/dynamic_no_ml_y.png}
             \caption*{Y-axis}
+            \label{fig:dynamic_no_ml_y}
         \end{subfigure}\\[1em]
-
-        % \begin{subfigure}{\linewidth}
-        %     \includegraphics[width=\linewidth]{graph_appendix/z_axis/dynamic_no_ml_z.png}
-        %     \caption*{Z-axis}
-        % \end{subfigure}\\[0.4em]
 
         {\small Dynamic Errors without Denoising}
     \end{minipage}
     
+    \caption{Dynamic Errors (X and Y axes) with and without denoising}
+    \label{fig:dynamic}
 \end{figure}
 
 \begin{figure}[H]
@@ -1488,6 +1568,7 @@ Quaternion Absolute Distance is frequently used in:
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/dynamic_ml_z.png}
             \caption*{Z-axis}
+            \label{fig:dynamic_ml_z}
         \end{subfigure}\\[1em]
 
         {\small Dynamic Errors with Denoising}
@@ -1500,11 +1581,14 @@ Quaternion Absolute Distance is frequently used in:
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/dynamic_no_ml_z.png}
             \caption*{Z-axis}
+            \label{fig:dynamic_no_ml_z}
         \end{subfigure}\\[1em]
 
         {\small Dynamic Errors without Denoising}
     \end{minipage}
     
+    \caption{Dynamic Errors (Z axis) with and without denoising}
+    \label{fig:dynamic_z}
 \end{figure}
 
 \subsection{Quasi-static Error}
@@ -1519,16 +1603,19 @@ Quaternion Absolute Distance is frequently used in:
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/quasi_static_ml_x.png}
             \caption*{X-axis}
+            \label{fig:quasi_static_ml_x}
         \end{subfigure}\\[0.5em]
 
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/quasi_static_ml_y.png}
             \caption*{Y-axis}
+            \label{fig:quasi_static_ml_y}
         \end{subfigure}\\[0.5em]
 
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/quasi_static_ml_z.png}
             \caption*{Z-axis}
+            \label{fig:quasi_static_ml_z}
         \end{subfigure}\\[1em]
 
         {\small Quasi-static Errors with Denoising}
@@ -1541,22 +1628,28 @@ Quaternion Absolute Distance is frequently used in:
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/x_axis/quasi_static_no_ml_x.png}
             \caption*{X-axis}
+            \label{fig:quasi_static_no_ml_x}
         \end{subfigure}\\[0.5em]
 
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/y_axis/quasi_static_no_ml_y.png}
             \caption*{Y-axis}
+            \label{fig:quasi_static_no_ml_y}
         \end{subfigure}\\[0.5em]
 
         \begin{subfigure}{\linewidth}
             \includegraphics[width=\linewidth]{figures/graph_appendix/z_axis/quasi_static_no_ml_z.png}
             \caption*{Z-axis}
+            \label{fig:quasi_static_no_ml_z}
         \end{subfigure}\\[1em]
 
         {\small Quasi-static Errors without Denoising}
     \end{minipage}
     
+    \caption{Quasi-static Errors with and without denoising}
+    \label{fig:quasi_static}
 \end{figure}
+
 
 
 
