@@ -542,7 +542,7 @@ The disk carries the electronics, including a Raspberry Pi 5, an MPU9250 MARG se
 which provides standalone operation. The detailed specifications of the turntable are summarized below.
 
 \begin{itemize}
-    \item \textbf{Turntable geometry:} Diameter [XX\,cm], 3D printed PLA/ABS material, mass [YY\,g].
+    \item \textbf{Turntable geometry:} Diameter [28\,cm], 3D printed PLA/ABS material, mass [1.5\,kg] approximately with everything mounted on the platform.
     \item \textbf{Actuation:} There is no electrical actuation built into the turntable, rather movement is executed by manually rotating the turntable.
     \item \textbf{Mechanical construction:} 
     \begin{itemize}
@@ -553,7 +553,7 @@ which provides standalone operation. The detailed specifications of the turntabl
     \item \textbf{Ground-truth sensing:} \textbf{Ground-truth sensing:} AS5600 absolute magnetic encoder with the following characteristics:
         \begin{itemize}
         \item Resolution: 12-bit (4096 positions per revolution, $\approx 0.087^{\circ}$ per step).
-        \item Angular accuracy: typically $\pm 0.5^{\circ}$ to $\pm 1^{\circ}$, depending on magnet alignment and air gap.
+        \item Angular accuracy: typically $\pm 0.4^{\circ}$ as shown \href{https://www.adafruit.com/product/6357}{here}, depending on magnet alignment and air gap.
         \item Maximum angular deviation: up to $\pm 1.4^{\circ}$ worst-case under misalignment or offset conditions.
         \item Latency: on the order of 1–2\,ms (limited by I$^2$C polling rate or PWM readout frequency).
         \item Output interfaces: I$^2$C, PWM, or analog voltage.
@@ -1001,7 +1001,7 @@ max & 25.53 & 81.03 & 13.986 & 81.03  \\
   *{4}{ccc}
 }
 \toprule
-Metric & Proposed (ML) & Madgwick & Aqua & EKF \\
+Metric & Proposed (-ML) & Madgwick & Aqua & EKF \\
 \midrule
 mean & 14.99 & 79.75 & 5.18 & 73.73  \\
 std & 1.06 & 7.615 & 0.296 & 6.45  \\
