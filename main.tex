@@ -34,7 +34,7 @@
 \program{BACHELOR OF SCIENCE IN COMPUTER SCIENCE AND ENGINEERING}
 
 % Date (day, month name, and year) when the presentation took place, mandatory
-\defensedate{29}{May}{2025}
+\defensedate{29}{September}{2025}
 
 \graphicspath{{figures/}}
 
@@ -91,18 +91,14 @@
 
 % Write your abstract here.
 \begin{abstract}
-One of the three goals of an Inertial Navigation System(INS) is to estimate the 3D orientation of
-INS given accelerometer, magnetometer and angular rate gyroscope readings. Complementary fusion 
+One of the  goals of an Inertial Navigation System (INS) is to estimate the 3D orientation of
+a body under motion based on given accelerometer, magnetometer and angular rate gyroscope readings. Complementary fusion 
 is one of the most robust, mathematically simple and fast algorithms for fusing the accelerometer,
 magnetometer and angular rate gyroscope readings to estimate the 3D orientation. But complementary
 fusion of sensor data suffers from linear accelerations and constant gain problems. This thesis aims 
 to solve the aforementioned issues in a data driven approach. Our thesis proposes a data driven toggling
-scheme for the gain parameter and also proposes a data driven noise removal approach through a tree based
-machine learning model. The variable gain decides trust of fusion between the sensors and the 
-denoising ensures extraneous linear accelerations and magnetic disturbances are eleminated. Furthermore, the 
-proposed algorithm is tested on a real-world dataset, and also we look forward to construct a device
-to further test our proposed algorithm on a real-world scenario.
-\end{abstract}
+scheme for the gain parameter and also proposes a data driven noise removal approach, either of which is implemented through tree based
+machine learning models. In this work, we introduce two contributions for robust orientation estimation using raw inertial and magnetic sensor data. First, we propose a tree-based Extreme Gradient Boosting (XGB) model that effectively denoises raw gyroscope, accelerometer, and magnetometer signals. Second, we present a tree-based movement detection model that dynamically adapts fusion process through $\alpha$-toggling, enabling improved robustness to linear accelerations and magnetic interference. Together, these contributions establish a data-driven fusion framework that enhances reliability beyond traditional fixed-gain filters. The proposed approach is validated on a real-world dataset and further evaluated using a custom-built mechanical turntable, providing controlled testing conditions for systematic performance assessment.
 
 %-------------------------- MAIN BODY --------------------------%
 % Switch to arabic page numbering
@@ -110,42 +106,43 @@ to further test our proposed algorithm on a real-world scenario.
 
 \chapter{Introduction}
 
-\section{Inertial Navigation and MARG Sensors} \label{introINSMARG}
-Inertial Navigation refers the process of determining the \textit{position}, \textit{velocity} and \textit{orientation} of an object to relative to its initial navigation parameters, without the assistance of any position fixing devices located externally \cite{el2020inertial}. Any system estimating position, orientation or velocity of an object using Inertial Sensing is referred to as the Inertial Navigation System(INS). 
-\par
-The INS uses a multitude of sensors to predict the position, orientation or the velocity. Two of these sensors are common to almost all of these systems, which are the Gravity Sensor(senses the direction of gravitational acceleration vector) and the Gyrosope(Angular Rate Sensor). Optionally some systems include the Magnetometer sensor(senses the direction of the Magnetic North)\cite{nawrat2012inertial}.Together they are referred to as the \textbf{MARG} sensors.
-\par
-The INS faces significant amount of challenges while solving its 3 problems - \textbf{position estimation},\textbf{veloicty estimation} and \textbf{orientation estimation}. Low cost MARG sensors are subject to electrical disturbances and noises \cite{guo2017novel}\cite{hu2014robust}.The angular-rate sensor is subject to random noises and drift( a phenomenon where low frequency noises integrate over time and skew the estimates)\cite{guo2017novel}. Accelerometers suffer from linear-accelerations, where the linear acceleration becomes harder to distinguish from the gravitational vector\cite{hu2014robust}.
 
-\section{Orientation Estimation and MARG Sensors}
-Orientation Estimation is one of the 3 problems that an INS has to solve. 
-Orientation of a 3d object could be represented by Euler Angles, 
-Rotation Matrices, or quaternions\cite{attitudeREpresntation}. An 
-orientation estimation algorithm is fed with the MARG sensor readings 
-and it estimates the orientation of an object in 3D space, representing 
-it in Euler angles, quaternions or through a rotation matrix.
-\par
-Any orientation estimation algorithm has to overcome the shortcomings of MARG 
-sensors mentioned in \ref{introINSMARG}. Some popular algorithms are the Madgwick 
-filter\cite{madgwick2011estimation}, Mahony filter\cite{mahony2008nonlinear}, EKF 
-filter\cite{EKF}, Complementary filter\cite{compfilter}. Each algorithm employs 
-distinct methodologies to mitigate the effects of sensor disturbances and enhance 
-orientation estimation accuracy.
+\section{Inertial Navigation} \label{introINS}
+Inertial Navigation refers to the process of determining the \textit{position}, \textit{velocity}, and \textit{orientation} of an object relative to its initial navigation parameters, without relying on any externally located position-fixing devices \cite{el2020inertial}. Any system that estimates these quantities using inertial sensing is referred to as an Inertial Navigation System (INS).  
 
-Our focus in this thesis would be to work with orientation estimation through the utilization of
-MARG sensor readings.
+An INS offers continuous and self-contained navigation capability, making it highly valuable in environments where external references such as GPS are unavailable, unreliable, or intentionally denied. This includes underwater operations, subterranean exploration, and urban canyons where signal blockage is common.  
+
+However, the performance of INS is significantly limited by inherent challenges. Since the system operates by integrating motion information over time, even small measurement errors accumulate, leading to a gradual but inevitable degradation of accuracy. This phenomenon, commonly referred to as \textit{drift}, causes the estimates of position, velocity, and orientation to diverge from the true values. Low-cost implementations are especially vulnerable, as their sensors are prone to noise, bias instability, and other disturbances that exacerbate long-term error growth. These limitations make error mitigation and robustness central concerns in the design of practical INS solutions.
+
+
+\section{Inertial Navigation and MARG Sensors} \label{introMARG}
+To address the challenges of error accumulation in Inertial Navigation, modern systems often employ multiple sensors to jointly estimate position, velocity, and orientation. Two sensors are common to almost all such systems: the accelerometer, which measures the direction of the gravitational acceleration vector, and the gyroscope, which measures angular velocity. Additionally, some systems incorporate a magnetometer to sense the direction of magnetic north\cite{nawrat2012inertial}. Together, these three sensors form the \textbf{MARG} (\textbf{M}agnetometer \textbf{A}ccelerometer \textbf{R}ate-\textbf{G}yro) sensor suite.  
+
+Each of these sensors contributes unique information, but also comes with inherent limitations. Gyroscopes provide accurate short-term orientation changes, but suffer from drift over time. Accelerometers, on the other hand, offer a stable long-term reference by sensing gravity, yet are easily corrupted by linear accelerations, making it difficult to separate gravitational effects from translational motion. Magnetometers provide an absolute reference for heading estimation relative to magnetic north, but are highly susceptible to distortions caused by nearby ferromagnetic materials and electromagnetic interference.  
+
+By fusing the outputs of these sensors, a MARG-based system can leverage their complementary strengths while compensating for individual weaknesses. For instance, gyroscopes can smooth out the short-term noise of accelerometers and magnetometers, while accelerometers and magnetometers can correct the long-term drift of gyroscopes. This sensor fusion approach has made MARG systems particularly attractive for low-cost, portable, and real-time orientation and navigation applications.
+ 
+
+
+\section{Orientation Estimation and MARG Sensors} \label{orientationMARG}
+Orientation estimation is one of the three fundamental challenges (\emph{position},\emph{velocity}, and \emph{orientation estimation}) that an Inertial Navigation System (INS) must address. The orientation of a 3D object can be mathematically expressed using Euler angles, rotation matrices, or quaternions \cite{attitudeREpresntation}. An orientation estimation algorithm processes the raw measurements from MARG sensors and produces an orientation estimate in one of these representations.  
+
+As discussed in Section~\ref{introMARG}, individual MARG sensors suffer from inherent limitations such as drift, noise, linear acceleration sensitivity, and magnetic disturbances. To overcome these issues, orientation estimation relies on sensor fusion filters that combine the complementary strengths of the sensors while compensating for their weaknesses. Standard algorithms such as the Madgwick filter \cite{madgwick2011estimation}, Mahony filter \cite{mahony2008nonlinear}, Extended Kalman Filter (EKF) \cite{EKF}, and Complementary filter \cite{compfilter} are widely used in practice. Each employs a distinct methodology to fuse sensor data and mitigate the effects of disturbances, thereby improving orientation estimation accuracy and robustness.  
+
+In this thesis, we build upon these established approaches by proposing a data-driven fusion filter. Instead of relying solely on analytical models of sensor error, our method leverages machine learning techniques to learn the patterns of noise and disturbances directly from data. By doing so, we aim to enhance orientation estimation performance beyond the capabilities of standard model-based fusion filters.
+
 
 \section{Orientation Estimation through Complementary Fusion}\label{section:CF}
 
-The complementary filter is one of the most basic form of fusion where the orientation estimates of the Angular Rate-Gyros are fused with the estimates generated from the accelerometer and if available the magnetometer.
-The basic complementary filtering\cite{forbes2015fundamentals}\cite{euston2008complementary} is represented as:
+The Complementary Filter (CF) is one of the most basic forms of sensor fusion, where the orientation estimates from the angular rate gyroscopes are combined with the estimates generated from the accelerometer and, if available, the magnetometer.  
+The basic complementary filtering approach \cite{forbes2015fundamentals, euston2008complementary} is represented as:  
+
 \begin{equation}
-    R = (1-\alpha)R_g + \alpha R_{am}
+    R = (1 - \alpha)R_g + \alpha R_{am}
 \end{equation}
-Where $R$ is the rotation estimation, $R_g$ is the rotation estimation from the 
-rate-gyros and $R_{am}$ is the rotation estimate from the accelerometer 
-and the magnetometer.$R$ being the rotation estimate can be represented in multiple forms
-such as Euler angles, quaternion or as a rotation matrix.
+
+where $R$ is the final rotation estimate, $R_g$ is the rotation estimate from the gyroscopes, and $R_{am}$ is the rotation estimate from the accelerometer and magnetometer. The rotation estimate $R$ can be represented in multiple forms, such as Euler angles, quaternions, or rotation matrices.
+
 \par
 \subsection{Key Strengths of CF}
 \begin{itemize}
@@ -159,18 +156,19 @@ such as Euler angles, quaternion or as a rotation matrix.
 \end{itemize}
 
 
-\section{Our Goal- Overcoming the negatives of CF: A data driven approach}
-\par
-As discussed in \autoref{section:CF}, complementary filters (CF) offer notable 
-advantages over existing orientation estimation algorithms. 
-The objective of this thesis is to address the limitations of CF by utilizing data-driven approaches. Specifically, our goals are to:
+\section{Our Goal: Overcoming the Limitations of Complementary Filters Using a Data-Driven Approach} \label{ourGoal}
+Complementary filters (CF) provide a simple and computationally efficient method for fusing MARG sensor data for orientation estimation. However, as discussed in \autoref{section:CF}, CF is limited in handling sensor noise and varying dynamic conditions, particularly under high linear accelerations or magnetic disturbances. The objective of this work is to overcome these limitations by leveraging data-driven models to enhance the robustness and accuracy of CF.  
+
+The main contributions of this thesis are as follows:  
 
 \begin{itemize}
-    \item Develop an ML model to dynamically adjust the parameter $\alpha$ based on MARG sensor measurements, enabling differentiation between low and high linear acceleration scenarios.Such methods have been studied in previous researches in \cite{vertzberger2022adaptive}.
-    \item Train a predictive model to estimate and compensate for noise in MARG sensor data. Similar approaches found as \cite{denoising} and \cite{noiseremoval2}.
-\end{itemize}
+    \item \textbf{Noise Compensation via XGB Ensemble:} We introduce an Extreme Gradient Boosting (XGB) based ensemble model to predict and remove noise from gyroscope and normalized accelerometer-magnetometer (AccelMag) data. While tree-based models have been extensively used in other domains, their application for denoising MARG sensor data in orientation estimation is novel. The model efficiently learns complex noise patterns, providing a clean input for the complementary filter.  
 
-Through these improvements, we aim to improve the performance of CF, mitigating its weaknesses and placing it as a robust and competitive algorithm for orientation estimation.
+    \item \textbf{Adaptive Alpha Fusion via Movement Prediction:} We propose a data-driven approach to dynamically toggle the CF parameter $\alpha$. A decision tree-based predictor detects periods of movement, and based on its output, $\alpha$ is modulated: it is turned off for certain iterations and kept on for others, effectively translating the alpha variation into the frequency domain. This adaptive fusion strategy allows the filter to respond optimally to both static and dynamic conditions, enhancing accuracy and stability.  
+\end{itemize}  
+
+Together, these contributions place the complementary filter on a data-driven foundation, mitigating its traditional weaknesses and making it a more robust and competitive algorithm for real-world orientation estimation tasks.
+
 
 
 \section{Organization}
@@ -239,7 +237,7 @@ Neural networks (CNN, LSTM, BiLSTM) being used in \cite{golroudbari2023cnn6DOF} 
 In this chapter, we propose a data-driven methodology designed to overcome the limitations of the Complementary Filter (CF). Thus the following section will correspond to chronological steps executed to improve the $\alpha$ prediction and noise elimination.
 
 \section{Research Design}
-We will go through four steps, where we introduce our mathematical background for the filter design and model training. The steps are listed below:
+We will go through six steps, where we introduce our mathematical background for the filter design and model training. The steps are listed below:
 \begin{itemize}
     \item Modified Complementary Filter Design based on the works of \cite{vertzberger2022adaptive}.
     \item Training Dataset
@@ -253,10 +251,12 @@ These steps are elaborated in later sections.
 
 \section{Choice of the Machine Learning Model}
 
-For our research, it is important that we run the model in every iteration to remove noises from the sensor readings and prediction of movement. Thus we need a model which will have very little inference time. Thus a tree based model would best suit our needs.
+For our research, it is critical that the models run in every iteration to both denoise sensor readings and predict movement. This requirement necessitates models with very low inference time, making tree-based approaches particularly well-suited for our needs.  
 
-\par
-Also it is imperative that we have improved bias-variance tradeoff and our model is robust to outliers. Tree based models are prone to overfitting\cite{overfitTrees}. Thus we would need a robust learning method to minimize overfitting of the XGBoost trees. Thus RANSAC(Random Sample Consensus)\cite{fischler1981random}  algorithm would be our preffered choice for this thesis.
+Additionally, it is essential that the models maintain a favorable bias-variance tradeoff and demonstrate robustness to outliers. While tree-based models can be prone to overfitting\cite{overfitTrees}, employing a robust learning strategy is necessary to mitigate this risk. In this work, we adopt the RANSAC (Random Sample Consensus) algorithm \cite{fischler1981random} to enhance the robustness of the XGBoost trees. 
+
+A detailed discussion of the reasoning behind the choice of these models is provided later in this section.
+
 
 \subsection{Choice of Extreme Gradient Boosting Regression and Classification Models}
 XGBoost (Extreme Gradient Boosting) has become a preferred choice for both regression and classification tasks due to its robust performance, scalability, and advanced regularization techniques. The key reasons include:
@@ -273,9 +273,10 @@ XGBoost (Extreme Gradient Boosting) has become a preferred choice for both regre
     \item \textbf{Flexibility:} It supports a variety of objective functions and custom loss functions, making it suitable for a wide range of regression and classification problems \cite{chen2016xgboost}.
 \end{itemize}
 
-\subsection{Choice of Random Sample Consensus(RANSAC) for Regression}
+\subsection{Choice of Random Sample Consensus (RANSAC) for Regression}
 
-Random Sample Consensus (RANSAC) is an iterative algorithm designed to estimate the parameters of a mathematical model from a dataset that may contain outliers. RANSAC operates by selecting random subsets of the data to fit a model and then determining the number of inliers—data points that fit the model within a predefined tolerance. The model with the highest number of inliers is considered the best fit. This approach is particularly effective in scenarios where the dataset is contaminated with outliers, as it focuses on the consensus of the inlier data points while disregarding the outliers \cite{fischler1981random}.
+Random Sample Consensus (RANSAC) is an iterative algorithm designed to estimate the parameters of a mathematical model from a dataset that may contain outliers. RANSAC operates by selecting random subsets of the data to fit a model and then determining the number of inliers—data points that fit the model within a predefined tolerance. The model with the highest number of inliers is considered the best fit. The Random Sample Consensus (RANSAC) algorithm is effective in producing stable model estimates by focusing on a consensus subset of the data\cite{fischler1981random}. In terms of variance in the BROAD dataset, this approach reduces the variability of parameter estimates, leading to more reliable and robust models that better capture the underlying data distribution.
+
 
  XGBoost can be sensitive to outliers in the training data, which may lead to overfitting and reduced generalization performance. Integrating RANSAC with an XGBoost regressor combines the strengths of both methodologies to enhance model robustness and predictive performance. The regression training pipeline with RANSAC is visualized in \autoref{fig:ransac_pipeline}:
 
@@ -294,11 +295,11 @@ Random Sample Consensus (RANSAC) is an iterative algorithm designed to estimate 
     \item \textbf{Complementary Strengths}: While XGBoost excels at capturing complex, non-linear relationships in data, RANSAC provides a mechanism to mitigate the influence of outliers, resulting in a more robust and accurate model.
 \end{itemize}
 
-This hybrid approach has been explored in various studies, demonstrating its effectiveness in improving model performance in the presence of outliers \cite{lopez2017ransac}.
+This hybrid approach has been explored in \cite{lopez2017ransac}, demonstrating its effectiveness in improving model performance in the presence of outliers.
     
 
 \section{Modified Complementary Filter Design} \label{section:MDCF}
-The complementary filter algorithm we incorporated in our thesis is described in this section. The CF filter featured here incorporates a gain parameter $\alpha$ which would be generated by a \textit{Toggling Engine} mentioned in \autoref{section:MovementPred}. The algorithm also supports noise removal if a trained model is provided \cite{denoising}.The algorithm is a built on the works of \cite{vertzberger2022adaptive} where we have added the magnetometer readings, modified the $\alpha$ prediction and introduced noise removal. Some information about the algorithm:
+The complementary filter algorithm we incorporated in our thesis is described in this section. The CF filter featured here incorporates a gain parameter $\alpha$ which would be generated by a \textit{Toggling Engine} mentioned in \autoref{section:MovementPred}. The algorithm also supports noise removal if a trained model is provided\cite{denoising}.The algorithm represents orientation using vector-based measurements from the accelerometer and magnetometer. The raw accelerometer vectors are fused with the gyroscope-based rotation from the previous estimate, following the approach in \cite{vertzberger2022adaptive}. In contrast to this prior work, we extend the method by incorporating magnetometer readings, refining the prediction of the fusion parameter $\alpha$, and introducing a dedicated noise removal step.The full algorithm description of our proposed filter can be found in algorithm-\ref{CFalgo}. Some information about the algorithm:
 \begin{itemize}
     \item The algorithm uses the $a_{pred}$ and $m_{pred}$ (predicted gravity and north vectors respectively) to describe the orientation. This representation can be interchanged to quaternion or a rotation matrix\cite{black1964passive}\cite{cariow2016hardware}. 
     \item The sensor readings are formatted as $(3,1)$ column vectors:
@@ -314,27 +315,27 @@ The complementary filter algorithm we incorporated in our thesis is described in
     Where $\Omega_{\times}$ is the skew-symmetric operator and $\delta t$ is the sampling rate.
 \end{itemize}
 
-The algorithm is described in \autoref{CFalgo}. The algorithm is represented through the flow diagram in \autoref{Filter Diagram} 
+The algorithm is represented through the flow diagram in \autoref{Filter Diagram} 
 
 \begin{figure}
     \centering
     \includesvg[width=0.8\linewidth]{figures/filter_diagram.svg}
-    \caption{Filter Diagram}
+    \caption{Filter Diagram\footnotemark{} for our proposed Data Driven Toggling Gain CF.}
     \label{Filter Diagram}
 \end{figure}
 
 \section{Dataset Description} \label{section:dataset}
-This section describes the dataset we are currently utilizing to train our models. The dataset we are using is the Berlin Robust Orientation Estimation Assessment Dataset(BROAD)\cite{BROAD}. 
+This section describes the dataset we are currently utilizing to train our models. The dataset we are using is the Berlin Robust Orientation Estimation Assessment Dataset (BROAD)\cite{BROAD}. 
 
 The BROAD dataset contains 39 recordings or trial. Each of the trial contains a time series of MARG sensor data readings along with the boolean parameter \texttt{movement} and the position\texttt{(opt\_pos)} and the orientation\texttt{(opt\_quat)} information of each timestamp gathered from the Optitrack OMC system at 120Hz. 
 
-The MARG sensor readings come from a custom 3D printed device on which an Inertial Measurement Unit(IMU) is mounted. The IMU was a commercially available nine-axis inertial sensor (myon aktos-t, myon AG) recording 9 sensor reading at a sampling rate of 286Hz. The hardware device is shown in \autoref{fig:IMUhardware}. The trials in the dataset are generated through the motion of the 3d printed device through different pre-defined motion parameters which is elaborated in \hyperlink{https://www.mdpi.com/2306-5729/6/7/72}{the paper for BROAD dataset}. A breif categorization of the types of recording is shown in \autoref{tab:broad_trial_categories}. This categorization is based on the type of physical motion the 3D printed hardware goes through while undergoing a pre-defined motion trajectory while recording the trial.
+The MARG sensor readings come from a custom 3D printed device on which an Inertial Measurement Unit (IMU) is mounted. The IMU was a commercially available nine-axis inertial sensor (myon aktos-t, myon AG) recording 9 sensor reading at a sampling rate of 286Hz. The hardware device is shown in \autoref{fig:IMUhardware}. The trials in the dataset are generated through the motion of the 3D printed device through different pre-defined motion parameters which is elaborated in \hyperlink{https://www.mdpi.com/2306-5729/6/7/72}{the paper for BROAD dataset}. A brief categorization of the types of recording is shown in \autoref{tab:broad_trial_categories}. This categorization is based on the type of physical motion the 3D printed hardware goes through while undergoing a pre-defined motion trajectory while recording the trial.
 
 
 \begin{table}[htbp]
-\centering
-\caption{Categorization of BROAD Dataset Trials}
-\label{tab:broad_trial_categories}
+    \centering
+    \caption{Categorization of BROAD Dataset Trials}
+    \label{tab:broad_trial_categories}
     \begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|l|}
         \hline
         \textbf{Motion Type} & \textbf{Speed} & \textbf{Trial/recording Indexes}  \\
@@ -357,10 +358,11 @@ The MARG sensor readings come from a custom 3D printed device on which an Inerti
         Office Environment & -- & 37, 38  \\
         Mixed (Disturbed and Undisturbed) & -- & 39 \\
         \hline
-
+        
     \end{tabular}
 \end{table}
 
+\footnotetext{The colors in the diagram have no significance.}
 
 \begin{figure}
     \centering
@@ -383,14 +385,14 @@ The MARG sensor readings come from a custom 3D printed device on which an Inerti
 
 
 \begin{algorithm} 
-\caption{Modified CF algorithm} \label{CFalgo}
-\DontPrintSemicolon
-\SetAlgoLined
+\caption{Modified CF algorithm}\label{CFalgo}
+\footnotesize{}
+\SetAlgoLined{}
 \SetAlgoNlRelativeSize{-1} % smaller line numbers
 \SetNlSty{textbf}{}    % change line number style
-\linespread{0.5}  
+% \linespread{0.5}  
 
-\KwIn{MARG sensor readings = $\{(g_1,a_1,m_1),(g_2,a_2,m_2),....\}$ , Toggling Engine , Noise Model , Alpha: $\alpha$, Duty Cycle Params: $d_l$ and $d_h$ }
+\KwIn{MARG sensor readings = $\{(g_1,a_1,m_1),(g_2,a_2,m_2),....\}$, Toggling Engine, Noise Model, Alpha: $\alpha$, Duty Cycle Params: $d_l$ and $d_h$ }
 \KwOut{Predicted gravity and north vectors $a_{pred}$ and $m_{pred}$}
 \vspace{12pt}
 Calibration sample count: $N=500$\\
@@ -446,7 +448,7 @@ Append $a_{pred}$ and $m_{pred}$ to $orientationEstimates$\\
 
 
 
-
+\newpage
 \section{Gain($\alpha$) Estimation through Movement Prediction} \label{section:MovementPred}
 
 Here we describe the working principle of the \textit{Toggling Engine}. The $\alpha$ parameter is initially set to be a constant value. The toggling engine is responsible for toggling the alpha in presence of movement. Detailed steps:
@@ -498,6 +500,7 @@ Here we describe the training procedure of the model that removes noise. The gro
         m_{gt} = q_{gt}^{-1} \cdot m_{avg} \cdot q_{gt}
     \end{equation}
     \item An XGBoost Regression model\cite{chen2016xgboost} is to be trained with input features $X$ being the raw MARG sensor readings and the output feature $y$ being the six components of the $a_{gt}$ and $m_{gt}$ vectors. The training dataset contains may contain all the MARG sensor readings from all the recordings, each sensor reading corresponds to a ground truth quaternion $q_{gt}$ represented as \texttt{opt\_quat} in the datasets. Each of the $q_{gt}$ is used to generate $a_{gt}$ and $m_{gt}$ vectors used for the regression model training. The loss function used is the generic \textit{Mean Squared Error Loss function} \cite{bickel2015mathematical}. The trained model is to be used to do noise prediction in \autoref{CFalgo} where the noise is subtracted from the sensor readings.
+    \item The noise prediction is done based on recordings in the BROAD dataset\cite{BROAD}.Thus there exists a possibility of the noise removal algorithm being biased towards the sensor setup shown in \autoref{fig:IMUhardware} which has been used to record the readings in the BROAD dataset.
 \end{itemize}
 
 
@@ -506,14 +509,14 @@ Here we describe the training procedure of the model that removes noise. The gro
 
 The proposed filter algorithm was evaluated using the BROAD dataset \cite{BROAD}. Two configurations of the filter were tested: one with the machine learning (ML)-based denoising module enabled, and another with the ML module disabled. For comparison, the standard implementation of the Madgwick filter \cite{madgwick2011estimation} was also included in the evaluation.  
 
-The BROAD dataset provides ground-truth orientation in the form of quaternions. From these ground-truth quaternions, the error between the estimated orientation and the true orientation was computed using the quaternion absolute distance metric (see Appendix~\ref{appendix:quaternion-distance}). The error is expressed in radians and is formally defined as:
+The BROAD dataset provides ground-truth orientation in the form of quaternions. From these ground-truth quaternions, the error between the estimated orientation and the true orientation was computed using the quaternion absolute distance metric. The error is expressed in radians and is formally defined as:
 
 \begin{equation}
     \label{eq:quat_error}
     e_{\theta} = d_{Q}\left(\hat{q}, q_{gt}\right)
 \end{equation}
 
-where $\hat{q}$ denotes the estimated quaternion, $q_{gt}$ denotes the ground-truth quaternion, and $d_{Q}(\cdot,\cdot)$ represents the quaternion absolute distance metric. This metric provides a scalar angular error that quantifies the rotational difference between the estimated and ground-truth orientations.
+where $\hat{q}$ denotes the estimated quaternion, $q_{gt}$ denotes the ground-truth quaternion, and $d_{Q}(\cdot,\cdot)$ represents the quaternion absolute distance metric. The detailed formula can be found in \autoref{appendix:quaternion-distance}. This metric provides a scalar angular error that quantifies the rotational difference between the estimated and ground-truth orientations.
 
 \section{Evaluation on the Mechanical Turntable}
 
@@ -522,7 +525,7 @@ The evaluation on the mechanical turntable follows the same metrics as the datas
 The evaluation procedure can be summarized as follows:
 \begin{itemize}
     \item \textbf{Ground Truth Acquisition:} The AS5600 absolute magnetic encoder is used to record the turntable angle. These measurements are transformed into ground-truth quaternions. 
-    \item \textbf{Parallel Filter Execution:} Multiple orientation filters were executed simultaneously, including AQUA \cite{aqua_ref}, EKF \cite{maybeck1982stochastic}, Madgwick \cite{madgwick2011estimation}, and the proposed filter. Each filter estimated orientation from the MPU-9250 MARG sensor data acquired through the Raspberry Pi. 
+    \item \textbf{Parallel Filter Execution:} Multiple orientation filters were executed simultaneously, including AQUA \cite{aqua_ref}, EKF \cite{maybeck1982stochastic}, Madgwick \cite{madgwick2011estimation}, and the proposed filter. Each filter estimated orientation from the MPU-9250 MARG sensor data acquired through a Raspberry Pi. 
     \item \textbf{Error Metric:} For each filter, the quaternion absolute distance (see Appendix~\ref{appendix:quaternion-distance}) was computed between the estimated quaternion $\hat{q}$ and the ground-truth quaternion $q_{gt}$. This scalar error, expressed in radians, quantifies the rotational difference. 
     \item \textbf{Result Visualization:} The error traces over time were plotted and are reported in the Results section (Section~\ref{section:mechanical_platform_result}), enabling direct comparison of filter performance. 
 \end{itemize}
@@ -550,7 +553,7 @@ which provides standalone operation. The detailed specifications of the turntabl
         \item Box-shaped 3D printed housing supporting the bearing.
         \item Platform with embedded magnet for AS5600 encoder.
     \end{itemize}
-    \item \textbf{Ground-truth sensing:} \textbf{Ground-truth sensing:} AS5600 absolute magnetic encoder with the following characteristics:
+    \item \textbf{Ground-truth sensing:} AS5600 absolute magnetic encoder with the following characteristics:
         \begin{itemize}
         \item Resolution: 12-bit (4096 positions per revolution, $\approx 0.087^{\circ}$ per step).
         \item Angular accuracy: typically $\pm 0.4^{\circ}$ as shown \href{https://www.adafruit.com/product/6357}{here}, depending on magnet alignment and air gap.
