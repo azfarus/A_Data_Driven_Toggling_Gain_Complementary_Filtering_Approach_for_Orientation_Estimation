@@ -4,6 +4,7 @@
 \usepackage{adjustbox}
 \usepackage{svg}
 \usepackage{float}
+\usepackage{url}
 
 % The iutbscthesis uses biblatex for bibliography management.
 % You can learn the basics of biblatex from:
@@ -258,7 +259,7 @@ Additionally, it is essential that the models maintain a favorable bias-variance
 A detailed discussion of the reasoning behind the choice of these models is provided later in this section.
 
 
-\subsection{Choice of Extreme Gradient Boosting Regression and Classification Models}
+\subsection{Choice of Extreme Gradient Boosting Regression and Classification Models}\label{subsec:choice_of_model}
 XGBoost (Extreme Gradient Boosting) has become a preferred choice for both regression and classification tasks due to its robust performance, scalability, and advanced regularization techniques. The key reasons include:
 
 \begin{itemize}
@@ -533,9 +534,26 @@ The evaluation procedure can be summarized as follows:
 
 \chapter{Experimental Setup}\label{chapter:setup}
 
+
 \section{Mechanical Platform (Turntable)}\label{section:turntable}
 
-\subsection{Turntable Setup}
+\subsection{Electronics and Sensors}\label{subsec:sensors}
+The inertial sensing subsystem employed in this work is based on the InvenSense/TDK MPU-9250, which integrates a tri-axial accelerometer, gyroscope, and the AK8963 tri-axial magnetometer. Each sensing axis utilizes a 16-bit ADC, providing sufficient dynamic range for motion tracking. In addition, an AS5600 magnetic angle encoder was used to obtain ground-truth angular position measurements. Data acquisition and processing were handled by a Raspberry Pi 5 (8 GB) running the default Raspberry Pi OS. Communication with both the MPU-9250 and the AS5600 encoder was established over the I$^2$C bus at a logic level of 3.3 V. Power for the entire setup was supplied by a 20,000 mAh USB power bank. The integration of these sensing and processing components into the turntable setup is detailed in Subsection~\ref{subsec:turntable_setup}.
+
+\begin{itemize}
+  \item \textbf{IMU:} InvenSense/TDK MPU-9250, tri-axial accelerometer and gyroscope with integrated AK8963 magnetometer, 16-bit ADCs.
+  \item \textbf{Gyroscope ranges:} $\pm$250, $\pm$500, $\pm$1000, and $\pm$2000 dps (default range used).
+  \item \textbf{Accelerometer ranges:} $\pm$2, $\pm$4, $\pm$8, and $\pm$16 g (default range used).
+  \item \textbf{Sample-rate and DLPF settings:} Default sample rate and default digital low-pass filter configuration were used.
+  \item \textbf{Encoder:} AS5600 magnetic angle encoder for ground-truth angular position.
+  \item \textbf{Processor/DAQ:} Raspberry Pi 5 (8 GB) running the default Raspberry Pi OS.
+  \item \textbf{Communication:} I$^2$C bus, 3.3 V supply voltage and logic level.
+  \item \textbf{Power:} 20,000 mAh USB power bank.
+\end{itemize}
+
+
+
+\subsection{Turntable Setup}\label{subsec:turntable_setup}
 
 The experimental turntable was designed in Fusion360 as shown in \autoref{fig:turntable_fusion} and constructed using 3D-printed parts and integrated sensors 
 to provide both actuation and ground-truth angle measurement. The constructed device is shown in \autoref{fig:real turntable} and \autoref{fig:no disk}. 
@@ -556,7 +574,7 @@ which provides standalone operation. The detailed specifications of the turntabl
     \item \textbf{Ground-truth sensing:} AS5600 absolute magnetic encoder with the following characteristics:
         \begin{itemize}
         \item Resolution: 12-bit (4096 positions per revolution, $\approx 0.087^{\circ}$ per step).
-        \item Angular accuracy: typically $\pm 0.4^{\circ}$ as shown \href{https://www.adafruit.com/product/6357}{here}, depending on magnet alignment and air gap.
+        \item Angular accuracy: typically $\pm 0.4^{\circ}$ as shown in\space\cite{AdafruitAS5600}, depending on magnet alignment and air gap.
         \item Maximum angular deviation: up to $\pm 1.4^{\circ}$ worst-case under misalignment or offset conditions.
         \item Latency: on the order of 1–2\,ms (limited by I$^2$C polling rate or PWM readout frequency).
         \item Output interfaces: I$^2$C, PWM, or analog voltage.
@@ -564,36 +582,26 @@ which provides standalone operation. The detailed specifications of the turntabl
 \end{itemize}
 
 
-\subsection{Electronics \& Sensors}
-The inertial sensing subsystem is based on the InvenSense/TDK MPU-9250, which integrates a tri-axial accelerometer, gyroscope, and the AK8963 tri-axial magnetometer. Each sensing axis employs 16-bit ADCs, ensuring adequate dynamic range for motion tracking. The IMU was mounted on a 3D-printed cube positioned at the edge of the turntable disk. Directly beneath the ring connecting the disk to the bearing, the AS5600 magnetic angle encoder was fixed, enabling precise alignment between inertial measurements and ground-truth angular position.
-
-\begin{itemize}
-  \item \textbf{IMU:} InvenSense/TDK MPU-9250, tri-axial accelerometer and gyroscope with integrated AK8963 magnetometer, 16-bit ADCs.
-  \item \textbf{Gyroscope ranges:} $\pm$250, $\pm$500, $\pm$1000, and $\pm$2000 dps (default range used).
-  \item \textbf{Accelerometer ranges:} $\pm$2, $\pm$4, $\pm$8, and $\pm$16 g (default range used).
-  \item \textbf{Sample-rate and DLPF settings:} Default sample rate and default digital low-pass filter configuration were used.
-  \item \textbf{Processor/DAQ:} Raspberry Pi 5 (8 GB) running the default Raspberry Pi OS. Communication with both the MPU-9250 and the AS5600 magnetic encoder was established over 
-                                the I$^2$C bus. Supply voltage and logic level were 3.3 V.
-  \item \textbf{Power:} A 20,000 mAh USB power bank mounted on the disk provided power to the Raspberry Pi, IMU, and encoder.
-\end{itemize}
 
 
 \subsection{Motion Protocols}
 
-The turntable experiments were conducted under three categories of motion: static, quasi-static, and dynamic. The coordinate frames tested were determined by the feasible orientations of the setup: rotation was applied around the $z$-axis and $y$-axis with the positive direction pointing upward, and around the $x$-axis with the positive direction pointing downward. Rotation around the $x$-axis upward was not performed due to mechanical constraints imposed by wiring. The three types of motions are described below:
+The turntable experiments were conducted under three categories of motion: static, quasi-static, and dynamic\cite{godwin2009accuracy}. The coordinate frames tested were determined by the feasible orientations of the setup: rotation was applied around the $z$-axis and $y$-axis with the positive direction pointing upward, and around the $x$-axis with the positive direction pointing downward. Rotation around the $x$-axis upward was not performed due to mechanical constraints imposed by wiring. The three types of motions are described below:
 \begin{itemize}
     \item \textbf{Static:} The system experiences no movement. This condition is used to establish baseline sensor stability and drift characteristics.
     
-    \item \textbf{Quasi-static:} Slow and controlled movements are applied, typically at speeds low enough that inertial effects are negligible. This allows the evaluation of sensor accuracy under gradual angular changes.
+    \item \textbf{Quasi-static:} Slow and controlled movements are applied, typically at speeds low enough that inertial effects are negligible. This allows the evaluation of sensor accuracy under gradual angular changes. The turntable supports motion along only one axis at a time, so results may vary depending on the axis under test.
+
+    \item \textbf{Dynamic:} Continuous and rapid motions are applied, where inertial effects are significant. This tests the system response under sustained rotation and higher angular velocities. Since the turntable provides single-axis rotation only, the evaluation is performed one axis at a time, and outcomes may differ depending on which axis is being tested.
     
-    \item \textbf{Dynamic:} Continuous and rapid motions are applied, where inertial effects are significant. This tests the system response under sustained rotation and higher angular velocities.
+    
 \end{itemize}
 
 \subsection{Software Setup and Result Generation}
 
 The software infrastructure for the experimental turntable was implemented on a Raspberry Pi 5 (8\,GB). The system executes four independent Python scripts corresponding to different orientation estimation algorithms: the proposed filter, the AQUA filter, the Extended Kalman Filter (EKF), and the Madgwick filter. These scripts are coordinated by a parent \texttt{run} script, which launches each of the four filter scripts in separate threads to allow concurrent execution.
 
-Each filter script reads sensor measurements from the MPU-9250 MARG sensor via the I$^2$C protocol, capturing tri-axial accelerometer, gyroscope, and magnetometer data. In parallel, a dedicated script reads angle measurements from the AS5600 magnetic encoder and converts the encoder readings into a ground-truth quaternion representation of the turntable orientation.
+Each filter script reads sensor measurements from the MPU-9250 MARG sensor via the I$^2$C protocol, capturing tri-axial accelerometer, gyroscope, and magnetometer data. Read concurrency exists while reading the data from the sensor, but as the read-time is short, the filters can ultimately run in the required refresh rate parallely. In parallel, a dedicated script reads angle measurements from the AS5600 magnetic encoder and converts the encoder readings into a ground-truth quaternion representation of the turntable orientation.
 
 During runtime, the estimated quaternions from the four filters, along with the ground-truth quaternion, are continuously recorded into CSV files. Post-processing involves computing the quaternion absolute distance metric as in \autoref{appendix:quaternion-distance}, between the ground-truth quaternion and each filter's estimate. These distance metrics are then plotted to visualize and compare the performance of the different orientation filters under various motion conditions. The summarized version
 of the results are shown in \autoref{section:mechanical_platform_result}. The graphs of the results can be found in the appendix. 
@@ -644,11 +652,12 @@ of the results are shown in \autoref{section:mechanical_platform_result}. The gr
 \end{table}
 
 
-\section{Datasets}
+\section{Dataset}
 The dataset was already presented in \autoref{section:dataset}. Based on this the experimental pipeline was generated. The experiment is carried out in 3 parts, in the initial two parts the models for the movement and noise prediction are trained on the BROAD\cite{BROAD} dataset. Then the trained model is used to implement the Modified CF as of \autoref{CFalgo} and the results are reported as absolute distance between the Ground truth and the predicted rotation quaternions\cite{absoluteDistance}.
 
 
-
+\section{Training}
+In this section we provide the methodologies followed to train the models to predict noise and movements.
 \subsection{Training to Predict Movement}
 In this part we discuss the training process of the XGBoost Classifier model to predict movement. The detailed steps:
 \begin{itemize}
@@ -667,7 +676,10 @@ In this part we discuss the training process of the XGBoost Classifier model to 
             \end{tabular}
         \end{adjustbox}
     \end{table}
-    After forming X and y the datasets were split to train and test sets with train set having 20\% of the split.
+    After forming X and y the datasets were split to train and test sets with train set having 80\% of the split.
+
+
+    \item As mentioned in \autoref{subsec:choice_of_model}, we use the XGBoost Classifier model to predict movement.
 
     \item After the formation of \texttt{X} and \texttt{y}, we train an XGBoost Classifier model optimized through the \verb|Oputna Study| library\cite{akiba2019optuna}.The optuna study was constructed to maximize the \texttt{accuracy\_score}\cite{labatut2012accuracy} among the \texttt{y\_test} and the predicted \texttt{y\_pred}. The suggested parameters for the \textit{study} were chosen as in \autoref{tab:xgb_hyperparameters_movement}:
     \begin{table}[htbp]
@@ -687,16 +699,22 @@ In this part we discuss the training process of the XGBoost Classifier model to 
         \end{tabular}
     \end{table}
 
-    \item After running the Optuna Study for \texttt{N=100} iterations, the best hyperparameter was chosen and 
-    the model was trained choosing the best hyperparams.
+    \item After running the Optuna Study for \texttt{N=100} iterations, the best hyperparameters were chosen and 
+    the model was trained with the best hyperparameters.
 \end{itemize}
 
-\subsection{Training to Predict Noise} \label{subsec:predictnoise}
+\subsection{Training to Predict Noise}\label{subsec:predictnoise}
 This subsection focuses on the training of model to predict the noises among the reported sensor readings. Detailed steps:
 \begin{itemize}
-    \item There are 39 recordings in the dataset of BROAD. We choose the recordings \texttt{concat\_list=[0,1,2,3,4,5,6,7,9,10,11,12,13,15,16,18,19,20,21,23, \\ 24,25,26,27,28,29,31,32,33,34,35,36,37,38]}.
+    \item There are 39 (indexed from 0 to 38) recordings in the BROAD dataset. For our experiments, we selected the following subset of recordings, the \texttt{concat\_list} (the set contains the indices):
+    \begin{multline*}
+    \{0,1,2,3,4,5,6,7,9,10,11,12,13,15,16,18,19,20,21, \\
+    23,24,25,26,27,28,29,31,32,33,34,35,36,37,38\}.
+    \end{multline*}
     
-    \item For each recording in \texttt{concat\_list} we follow the procedure mentioned in \autoref{section:noise_removal}. We average the first $N$ entries then generate \texttt{a\_noise} according to \autoref{eqn:acc noise removal} and \texttt{m\_noise} according to \autoref{eqn:mag noise removal} for each record \texttt{i}. Then generate a new .csv dataset for each recording whose columns contain 9 MARG sensor raw values and 6 noise values ( 3 component from \texttt{a\_noise} and 3 component from \texttt{m\_noise}. Doing it for each recording in \texttt{concat\_list} generates 34 new csv datasets. We concatenate all of them to form a large dataset.
+    
+    
+    \item For each recording in \texttt{concat\_list} we follow the procedure mentioned in \autoref{section:noise_removal}. We average the first $N$ entries then generate \texttt{a\_noise} according to \autoref{eqn:acc noise removal} and \texttt{m\_noise} according to \autoref{eqn:mag noise removal} for each record \texttt{i}. Then generate a new csv dataset for each recording whose columns contain 9 MARG sensor raw values and 6 noise values (3 component from \texttt{a\_noise} and 3 component from \texttt{m\_noise}). Doing it for each recording in \texttt{concat\_list} generates 34 new csv datasets. We concatenate all of them to form a large dataset.
     \item Generate \texttt{X} and \texttt{y} from the large dataset according to \autoref{tab:noisevals}
         \begin{table}[H]
         \centering
@@ -712,17 +730,17 @@ This subsection focuses on the training of model to predict the noises among the
             \end{adjustbox}
         \end{table}
     
-    \item Choice of model was \textbf{XGB regressor} but coupled with the \textbf{Random Sample Consensus(RANSAC)}\cite{fischler1981random} algorithm. The ransac algorithm made training the base XGB regressor more robust to outliers and it improved the bias variance tradeoff.
+    \item Choice of model was \textbf{XGB regressor} but coupled with the \textbf{Random Sample Consensus(RANSAC)}\cite{fischler1981random} algorithm. The RANSAC algorithm made training the base XGB regressor more robust to outliers and it improved the bias variance tradeoff.
     
-    \item Split the dataset into train and test sets. Generate an optuna study\cite{akiba2019optuna} where the model is trained 
-    within the study objective on the train set and the objective works to maximize the r2\_score on the test set. The choice of hyperparameters is the same as in \autoref{tab:xgb_ransac_hyperparams}. The study runs for 200 iterations.
+    \item Split the dataset formed by the concatenated dataset (the remaining recording files would be used for validation) into train and test sets with an 80\-20 split ratio. Generate an optuna study\cite{akiba2019optuna} where the model is trained 
+    within the study objective on the train set and the objective works to maximize the $R^2$ score on the test set. The choice of hyperparameters is the same as in \autoref{tab:xgb_ransac_hyperparams}. The study runs for 200 iterations.
     \begin{table}[H]
     \centering
     \caption{Hyperparameter Search Space for XGBoost Regressor with RANSAC}
     \label{tab:xgb_ransac_hyperparams}
 
-        \begin{adjustbox}{max width=0.7\textwidth}
-            \begin{tabular}{|l|c|c|p{0.3\textwidth}|}
+        \begin{adjustbox}{max width=\textwidth}
+            \begin{tabular}{|l|c|c|p{0.4\textwidth}|}
                 \hline
                 \textbf{Hyperparameter} & \textbf{Type} & \textbf{Range} & \textbf{Description} \\
                 \hline
@@ -732,6 +750,7 @@ This subsection focuses on the training of model to predict the noises among the
                 \texttt{n\_estimators} & Integer & [1, 25] & Number of boosting rounds \\
                 \texttt{reg\_alpha} & Float & [0.0, 10.0] & L1 regularization term on weights \\
                 \texttt{reg\_lambda} & Float & [0.0, 10.0] & L2 regularization term on weights \\
+                \hline
                 \texttt{subsample} & Float & [0.6, 1.0] & Subsample ratio of the training instances \\
                 \texttt{min\_samples} & Float & [0.1, 0.9] & Minimum number of samples for a model to be considered valid in RANSAC \\
                 \texttt{residual\_threshold} & Float & [1e-3, 10.0] & Maximum residual for a data point to be classified as an inlier in RANSAC \\
@@ -747,9 +766,12 @@ This subsection focuses on the training of model to predict the noises among the
 
 \end{itemize}
 \subsection{Implementation and Testing of the Modified Complementary Filter} \label{section:impl-and-testing}
-The complementary filter with all its modifications proposed in \autoref{CFalgo} were implemented using \texttt{python}. Separate classes were constructed for the \textit{Toggling Engine} and \textit{Complementary Filter} implementation. Code of the actual implementaion could be found \href{https://github.com/azfarus/NDAG_MARG_THESIS_v2}{here}.
+The complementary filter with all its modifications proposed in \autoref{CFalgo} were implemented using \texttt{python}. Separate classes were constructed for the \textit{Toggling Engine} and \textit{Complementary Filter} implementation. Code of the actual implementaion could be found \href{https://github.com/azfarus/NDAG_MARG_THESIS_v2}{here}\footnotemark{}.
+
+\footnotetext{\url{https://github.com/azfarus/NDAG_MARG_THESIS_v2}}
+
 \par
-After implementation, the filter was fed with sensor readings from  \texttt{cv\_set=[8, 14, 17, 22, 30]}\label{cv_set} where each indexes correspond to the index of the recording file not in the \texttt{train\_set}.The \texttt{cv\_set} is being used for cross-validation. Each of the recording file fed through the filter gave us a quaternion estimation for each iteration, i.e. the file \texttt{01\_undisturbed\_slow\_rotation\_A} has approximately 56,000 sensor readings. Each sensor reading will correspond to a quaternion estimation($q_{esti}$) and a ground truth($q_{gti}$) quaternion. The error metric per iteration stands to be:
+After implementation, the filter was fed with sensor readings from  \texttt{cv\_set}\label{cv_set} containing $\{8, 14, 17, 22, 30\}$ where each value in the set correspond to the index of the recording file not in the \texttt{train\_set}.The \texttt{cv\_set} is being used for cross-validation. Each of the recording file fed through the filter gave us a quaternion estimation for each iteration, i.e. the file \texttt{01\_undisturbed\_slow\_rotation\_A} has approximately 56,000 sensor readings. Each sensor reading will correspond to a quaternion estimation($q_{esti}$) and a ground truth($q_{gti}$) quaternion. The error metric per iteration stands to be:
 \begin{equation}
     e_i = Quat_{abs\_dist}(q_{gti},q_{esti})
 \end{equation}
@@ -762,12 +784,12 @@ The selection of hyperparameters for the proposed filter was carried out through
 \begin{itemize}
     \item \textbf{Alpha ($\alpha$):} This parameter was selected based on the observed gyroscope drift. A lower gyroscope drift allows for a smaller $\alpha$, thereby placing greater trust in the gyroscope signal. In practice, $\alpha$ was tuned in the range $[0.0001,\,0.001]$, with the optimal value determined as $\alpha = 0.001$ for stable performance.
     
-    \item \textbf{Cycles while alpha included,($d_h$):} Determined through grid search, the high-pass filter threshold was optimized to $d_h = 120$. This choice provided the best trade-off between responsiveness to dynamic motion and robustness against noise.
+    \item \textbf{Cycles while alpha included ($d_h$):} Determined through grid search, the high-pass filter threshold was optimized to $d_h = 120$. This choice provided the best trade-off between responsiveness to dynamic motion and robustness against noise.
     
-    \item \textbf{Cycles while alpha excluded,($d_l$):} Similarly, the grid search yielded an optimal value of $d_l = 60$ for the low-pass filter threshold, ensuring smooth filtering of quasi-static orientation components.
+    \item \textbf{Cycles while alpha excluded ($d_l$):} Similarly, the grid search yielded an optimal value of $d_l = 60$ for the low-pass filter threshold, ensuring smooth filtering of quasi-static orientation components.
 \end{itemize}
 
-The results of the grid search procedure used to identify the optimal $d_h$ and $d_l$ parameters are illustrated in \autoref{fig:gridsearch}, which shows the error(in Degrees, metric was defined in \autoref{appendix:quaternion-distance}) surface as a function of the threshold parameters.
+The results of the grid search procedure used to identify the optimal $d_h$ and $d_l$ parameters are illustrated in \autoref{fig:gridsearch}, which shows the error (in Degrees, metric was defined in \autoref{appendix:quaternion-distance}) surface as a function of the threshold parameters.
 
 \begin{figure}[h!]
     \centering
@@ -775,6 +797,15 @@ The results of the grid search procedure used to identify the optimal $d_h$ and 
     \caption{Grid search results for hyperparameter tuning of $d_h$ and $d_l$. The optimal configuration corresponds to $d_h = 120$ and $d_l = 60$.}
     \label{fig:gridsearch}
 \end{figure}
+
+\subsubsection{Dataset Dependence}
+The hyperparameters for the filter selected in \autoref{subsubsec:hyperparams} were optimized using the cross-validation set described in \autoref{cv_set}. While this procedure ensures that the chosen parameters achieve good performance on the available data, it also introduces the risk of dataset dependence. In other words, the filter may be overly tuned to the statistical properties, noise characteristics, or motion patterns specific to the training dataset.  
+
+Such dependence can limit the generalizability of the algorithm when applied to other datasets or real-world scenarios that exhibit different sensor noise profiles, motion dynamics, or environmental disturbances. Moreover, hyperparameters derived from one dataset may not translate directly to physical devices equipped with different sensor hardware. For example, variations in sensor quality, measurement ranges, bias stability, and filtering characteristics between IMUs can cause the optimized parameters to perform suboptimally when deployed on alternative devices.  
+
+ 
+
+
 
 
 
