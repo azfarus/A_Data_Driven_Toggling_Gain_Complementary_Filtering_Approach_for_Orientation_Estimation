@@ -192,7 +192,7 @@ metrics over a synthetic dataset.
 
 
 % \section{Structure a Narrative, Not a List}
-From Virtual Reality domain and smartphone-based pedestrian navigation to autonomous aerial vehicles and human motion analysis, a wide range of applications across multiple domains rely on orientation estimation utilizing the \textbf{IMUs (Inertial Measurement Units)} incorporated in the devices. IMUs provide interpolated data collected from three sensors \textbf{(accelerometer, magnetometer and gyroscope)} and provide vital information regarding the angular rate, attitude/orientation or specific force for the body. The inherent drawbacks of MEMs IMU sensors, such as noise, bias, and drift over time, make orientation estimation difficult and need the application of complex algorithms to fuse sensor data and generate precise and trustworthy orientation estimations. It directly influences subsequent computations like velocity and position estimation through \textit{dead reckoning}. In dead reckoning, errors in orientation estimation can accumulate over time, leading to significant deviations in position tracking. Therefore it is all the more essential to enhance the accuracy and reliability for benchmarking the overall performance of the navigation and tracking system.
+From Virtual Reality domain and smartphone-based pedestrian navigation to autonomous aerial vehicles and human motion analysis, a wide range of applications across multiple domains rely on orientation estimation utilizing the IMUs (Inertial Measurement Units) incorporated in the devices. IMUs provide interpolated data collected from three sensors \textbf{(accelerometer, magnetometer and gyroscope)} and provide vital information regarding the angular rate, attitude/orientation or specific force for the body. The inherent drawbacks of MEMs IMU sensors, such as noise, bias, and drift over time, make orientation estimation difficult and need the application of complex algorithms to fuse sensor data and generate precise and trustworthy orientation estimations. It directly influences subsequent computations like velocity and position estimation through \textit{dead reckoning}. Dead reckoning is a phenomenon in which errors in orientation estimation can accumulate over time, leading to significant deviations in position tracking. Therefore it is all the more essential to enhance the accuracy and reliability for benchmarking the overall performance of the navigation and tracking system.
  
 
 % \section{Analyze and Synthesize, Don't Just Summarize}
@@ -201,34 +201,34 @@ Several literature have addressed these problems in different ways i.e in \texti
 
 % \section{Compare and Contrast Different Works}
 \subsection{Mathematical approaches}
-\textbf{Classical Filters  (Complementary filters \cite{compfilter}, Kalman Filters\cite{EKF}, Gradient Descent\cite{madgwick2011estimation}).} A broad class of AHRS solutions use deterministic algorithms such as \textbf{complementary filter\cite{compfilter}}, \textbf{extended Kalman Filters (EKF)\cite{EKF}}, \textbf{unscented Kalman Filters (UKF)\cite{UKF}} and \textbf{gradient descent \cite{madgwick2011estimation}} methods. These exploit known kinematic gyroscope readings and external reference vectors from accelerometer (gravity) and magnetometer (magnetics) in closed form. For instance, the QUEST algorithm\cite{quest}\cite{reQUEST} and Kalman filters solve Wahba's problem (erroneous rotation matrix calculation)\cite{wahba} optimally, but assume stationary noise models. As stated in \cite{vertzberger2022adaptive}, Kalman filters are largely dependent on the tuning of the process and measurement covariance, and incur heavy computational cost due to calculations referring to inverse matrices. Conversely, complementary filters follow
-a linear interpolative approach and fuse gyro predictions with accelerometer/magnetometer corrections in the frequency domain. CFS (Madgwick \cite{madgwick2011estimation}, Mahony \cite{mahony2008nonlinear} have intuitive fixed gains (alphas) and comparatively low computation, yet they suffer from slow convergence under rapid motions or shocks. Madgwick's filter \cite{madgwick2011estimation} uses a gradient-descent step calculation based on accelerometer and magnetometer Jacobians, but requires manual tuning of the step gain (alpha). To address these problems regarding dynamic motions, variable-gain CFs have been proposed. Ding Duong Quoc et al. demonstrated the performance of this adaptive-gain CF \cite{dung2015filtergain} which dynamically changed the filter constant) and observed it to perform significantly better than a fixed-gain CF in roll/pitch accuracy under varying motion. Likewise, Shao et al. design a variable-gain complementary filtering method for aircraft angle-of-attack estimation, proving in simulation that continuously adaptive filters yield far more stable estimates than conventional CFs. It dynamically adjusts the alpha gain based on inertial network variance patterns, reducing the error by half compared to the fixed-gain designs in aerodynamic sensing applications. \cite{shao2023variablegainflushsesnsing}. Similarly, Broughton et al. (2019) develop a robust complementary filter for UAVs that monitors the times when accelerometer readings are reliable. Based on the 'steadiness' model, it decides when to incorporate gravity measurements and constrains gyro biases using a Gaussian random-walk model. In Monte-Carlo tests of aggressive maneuvers, this filter has been able to track roll more accurately than standard CFs. \cite{CEAS-GNC-2019-036}
+A broad class of AHRS solutions use deterministic algorithms such as complementary filter\cite{compfilter}, extended Kalman Filters (EKF)\cite{EKF}, unscented Kalman Filters (UKF)\cite{UKF} and gradient descent \cite{madgwick2011estimation} methods. These exploit known kinematic gyroscope readings and external reference vectors from accelerometer (gravity) and magnetometer (magnetics) in closed form. For instance, the QUEST algorithm\cite{quest}\cite{reQUEST} and Kalman filters solve Wahba's problem (erroneous rotation matrix calculation)\cite{wahba} optimally, but assume stationary noise models. As stated in \cite{vertzberger2022adaptive}, Kalman filters are largely dependent on the tuning of the process and measurement covariance, and incur heavy computational cost due to calculations referring to inverse matrices. Conversely, complementary filters follow
+a linear interpolative approach and fuse gyro predictions with accelerometer/magnetometer corrections in the frequency domain. CFs (Madgwick \cite{madgwick2011estimation}, Mahony \cite{mahony2008nonlinear}) have intuitive fixed gains (alphas) and comparatively low computation, yet they suffer from slow convergence under rapid motions or shocks. Madgwick's filter \cite{madgwick2011estimation} uses a gradient-descent step calculation based on accelerometer and magnetometer Jacobians, but requires manual tuning of the step gain (alpha). To address these problems regarding dynamic motions, variable-gain CFs have been proposed. Ding Duong Quoc et al. demonstrated the performance of this adaptive-gain CF \cite{dung2015filtergain} which dynamically changed the filter constant) and observed it to perform significantly better than a fixed-gain CF in roll/pitch accuracy under varying motion. Likewise, Shao et al. design a variable-gain complementary filtering method for aircraft angle-of-attack estimation, proving in simulation that continuously adaptive filters yield far more stable estimates than conventional CFs. It dynamically adjusts the alpha gain based on inertial network variance patterns, reducing the error by half compared to the fixed-gain designs in aerodynamic sensing applications. \cite{shao2023variablegainflushsesnsing}. Similarly, Broughton et al. (2019) develop a robust complementary filter for UAVs that monitors the times when accelerometer readings are reliable. Based on the `steadiness' model, it decides when to incorporate gravity measurements and constrains gyro biases using a Gaussian random-walk model. In Monte-Carlo tests of aggressive maneuvers, this filter has been able to track roll more accurately than standard CFs. \cite{CEAS-GNC-2019-036}
 
-Kalman filters make use of probabilistic models to recursively predict and update orientation estimates \cite{EKF}. Sabatini’s quaternion-based EKF incorporates sensor biases and mitigates motion and noise disturbances by adapting measurement noise covariances, which addresses the challenge of adaptability in human movement analysis \cite{quatEKF}. The Unscented Kalman Filter avoids linearization by propagating sigma points, offering better performance when noises are Gaussian. \cite{UKF}. However, these Kalman-based approaches require careful covariance tuning and are complex because of inverse matrices. In practice, researchers often trade theoretical optimality for robustness by using simpler linear filter (CF or gradient-descent) or by applying dual-filter schemes as demonstrated in \cite{doubleEKF}. In this work, a two-step EKF is performed on a 9 DOF  device (acc, mag, gyro) which models disturbances explicitly and results in <1° static error, stabilizing performance against magnetic disturbances. But despite high accuracy, EKF incur heavy computational performance overhead. But still, \cite{vertzberger2022adaptive} surveys that the algorithm in \cite{quest} used for EKF \cite{EKF} is probably the most accepted approach despite its sensitivy to noise assumptions. 
+Kalman filters make use of probabilistic models to recursively predict and update orientation estimates \cite{EKF}. Sabatini’s quaternion-based EKF incorporates sensor biases and mitigates motion and noise disturbances by adapting measurement noise covariances, which addresses the challenge of adaptability in human movement analysis \cite{quatEKF}. The Unscented Kalman Filter avoids linearization by propagating sigma points, offering better performance when noises are Gaussian. \cite{UKF}. However, these Kalman-based approaches require careful covariance tuning and are complex because of inverse matrices. In practice, researchers often trade theoretical optimality for robustness by using simpler linear filter (CF or gradient-descent) or by applying dual-filter schemes as demonstrated in \cite{doubleEKF}. In this work, a two-step EKF is performed on a 9 DOF  device (accelerometer, magnetometer, gyroscope) which models disturbances explicitly and results in <1° static error, stabilizing performance against magnetic disturbances. But despite high accuracy, EKF incur heavy computational performance overhead. But still, \cite{vertzberger2022adaptive} surveys that the algorithm in \cite{quest} used for EKF \cite{EKF} is probably the most accepted approach despite its sensitivy to noise assumptions. 
 
 Madgwick’s gradient descent filter formulated orientation estimation as an optimization using Jacobians to minimize the error between predicted and measured sensor vectors \cite{madgwick2011estimation}. It takes only ~227 operations per update, which is significantly lighter than EKF implementations and enables high sampling rates in resource-constrained platforms. While the filter converges well under quasi-static conditions, it exhibits slow convergence under rapid dynamic motions because of the erroneous accelerometer bias from the fixed gain \cite{bettermadg}. As opposed to the variable gain solutions previously discussed, an enhanced gradient descent algorithm was proposed by Wilson et. al (2019) which decoupled the magnetic variance from the calculation and improved the robustness for the convergence \cite{bettermadg}. In order to mitigate magnetic disturbances and accelerate convergence, several enhancements have been proposed. Madgwick’s extended complementary filter for full body MARG orientation (2020) dynamically adjusts gain parameters to decouple magnetometer influence, achieving up to 33\% heading error reduction under fast-changing environments while maintaining computational efficiency \cite{extendedMADG}.
 
-Zhang et al. (2020) propose an \textbf{adaptive sparse-interpolation CF (ASICF)} for MEMS IMUs. They use a quaternion-based complementary filter for fusing gyro and accel, but samples asses the 'trustworthiness' of the accel measurements (via its variation) from the successive samples, and if the data are too noisy or dynamic, it performs an interpolation step rather than using the raw sample \cite{wang2020mems}. Basically, the algorithm performs an \textit{adaptive data-skip mechanism} and then fills the gaps produced from the dropped samples using interpolation. They evaluated ASICF on multiple datasets and report significantly lower attitude errors under large disturbances (20\% smaller error than the Valenti CF \cite{wang2020mems}. Its performance depends directly on being able to detect outliers, and upon detection, it can handle sudden motions by effectively smoothing or skipping bad accel readings.
+Zhang et al. (2020) propose an \textbf{adaptive sparse-interpolation CF (ASICF)} for MEMS IMUs. They use a quaternion-based complementary filter for fusing gyro and accel, but samples asses the `trustworthiness' of the accelerometer measurements (via its variation) from the successive samples, and if the data are too noisy or dynamic, it performs an interpolation step rather than using the raw sample \cite{wang2020mems}. Basically, the algorithm performs an \textit{adaptive data-skip mechanism} and then fills the gaps produced from the dropped samples using interpolation. They evaluated ASICF on multiple datasets and report significantly lower attitude errors under large disturbances (20\% smaller error than the Valenti CF \cite{wang2020mems}. Its performance depends directly on being able to detect outliers, and upon detection, it can handle sudden motions by effectively smoothing or skipping bad accel readings.
 
 Guo et al. (2023) introduce a \textbf{variable gain CF} for aircraft angle-of-attack estimation using a distributed IMU network plus flush-air sensors \cite{shao2023variablegainflushsesnsing}. They derive a flight-phase-dependent blending factor: the filter coefficient (analogous to alpha) is allowed to vary with the change rate of the angle-of-attack, placing more weight on inertial data at high dynamics. Simulation results for a high-speed UAV show this VGCF yields significantly smaller AoA error than constant gains (approximately 0.0058$^{\circ}$ vs. 0.0017$^{\circ}$ RMSE i.e > 2x improvement). However, it is quite domain-specific even though it exemplifies adaptive gain analogous to our approach. 
 
 In summary, classical filters are computationally efficient and theoretically grounded, yet they often require hand tuned gains or multiple stages to handle non-ideal IMU behavior and mitigate erroneous values. 
 
 \subsection{Machine-Learning Enhanced Filters}
-The overhead for manual tuning is reduced by introducing data-driven machine learning approaches in orientation estimation. One approach is to make the filter gain \textit{adaptive} using sensor data. Our approach is strongly analogous to the approach followed by Vertzberger and Klein (2022). They introduced a \textbf{hybrid adaptive complementary filter} that learns axis-specific accelerometer weights via neural networks \cite{vertzberger2022adaptive}. They integrate gyro data classically (quaternion integration) and then apply a complementary update in each axis whose weight is predicted by a small neural network based on estimated linear accelerations. The method was evaluated on a smartphone IMU (60 two-minute sequences of walking activities in pocket, hand etc. with VI-SLAM Ground truth \cite{vertzberger2022adaptive}) and compared against fixed gain filters like Madgwick, Mahony, AEKF etc. The learned filter yielded the lowest roll/pitch errors (10-37\% better than classic filters on average). It adapted to dynamic motion via data-driven weight tuning, which outperformed its corresponding fixed gain filters. However, it requires offline labeled training, added complexity for neural net and most importantly, the yaw is not addressed (no magnetometer fusion). In a similar spirit, Maton et al. tune a CF gain  indirectly; they embed filter gains in Mamdani fuzzy inference system (FIS) and use a genetic algorithm to optimize the membership functions so as to minimize velocity error against ground truth (obtained via MOtion CAPture devices). In an experimental robot dataset, GA-tuned gains reduce velocity and position errors.\cite{maton2024indirectgainGA} While it doesn't specifically require explicit vision-based orientation, the tuning, again, is done offline and needs to be redone for new scenarios. 
-Another line of work trains small neural models to train corrections; minimize noise. For example, Al-Sharman et al. (2019) train a neural model to enhance filter outputs by learning correction terms \cite{sharman2019dlcorrection}. Brossard et al. introduce deep CNN not end-to-end, but to \textit{denoise} gyroscope signals before integrating. Evaluated on EuRoC and TUM-VI datasets, the learned filter \textit{outperforms state-of-the-art methods} and even beats top visual-inertial odometry algorithms in attitude accuracy. \cite{denoising}. But it requires large ground-truth datasets for training and the open-loop mode still drifts (converge slower) due to the complex design. Weber et al. 's RIANN employs a neural network which was trained on diverse motion datasets for performing real-time attitude estimation from 6-DoF IMU data without requiring brute force tuning. It demonstrated generalization across diverse environments and sampling rates, but domain-specific optimization is required for peak performance. \cite{weber2020RIANN}. Hybrid approaches, although sets a promising direction for data-based fusion algorithms, might impose challenges upon encountering new motions in the environment i.e it comes with the risk of overfitting.  
+The overhead for manual tuning is reduced by introducing data-driven machine learning approaches in orientation estimation. One approach is to make the filter gain \textit{adaptive} using sensor data. Our approach is strongly analogous to the approach followed by Vertzberger and Klein (2022). They introduced a \textbf{hybrid adaptive complementary filter} that learns axis-specific accelerometer weights via neural networks \cite{vertzberger2022adaptive}. They integrate gyro data classically (quaternion integration) and then apply a complementary update in each axis whose weight is predicted by a small neural network based on estimated linear accelerations. The method was evaluated on a smartphone IMU (60 two-minute sequences of walking activities in pocket, hand etc. with VI-SLAM Ground truth \cite{vertzberger2022adaptive}) and compared against fixed gain filters like Madgwick, Mahony, AEKF etc. The learned filter yielded the lowest roll/pitch errors (10-37\% better than classic filters on average). It adapted to dynamic motion via data-driven weight tuning, which outperformed its corresponding fixed gain filters. However, it requires offline labeled training, added complexity for neural net and most importantly, the yaw is not addressed (no magnetometer fusion). In a similar spirit, Maton et al. tune a CF gain  indirectly; they embed filter gains in Mamdani fuzzy inference system (FIS) and use a genetic algorithm to optimize the membership functions so as to minimize velocity error against ground truth (obtained via MOtion CAPture devices). In an experimental robot dataset, GA-tuned gains reduce velocity and position errors \cite{maton2024indirectgainGA}. While it does not specifically require explicit vision-based orientation, the tuning, again, is done offline and needs to be redone for new scenarios. 
+Another line of work trains small neural models to train corrections; minimize noise. For example, Al-Sharman et al. (2019) train a neural model to enhance filter outputs by learning correction terms \cite{sharman2019dlcorrection}. Brossard et al. introduce deep CNN not end-to-end, but to \textit{denoise} gyroscope signals before integrating. Evaluated on EuRoC and TUM-VI datasets, the learned filter \textit{outperforms state-of-the-art methods} and even beats top visual-inertial odometry algorithms in attitude accuracy \cite{denoising}. But it requires large ground-truth datasets for training and the open-loop mode still drifts (converge slower) due to the complex design. \cite{weber2020RIANN} employs a neural network which was trained on diverse motion datasets for performing real-time attitude estimation from 6-DoF IMU data without requiring brute force tuning. It demonstrated generalization across diverse environments and sampling rates, but domain-specific optimization is required for peak performance \cite{weber2020RIANN}. Hybrid approaches, although sets a promising direction for data-based fusion algorithms, might impose challenges upon encountering new motions in the environment i.e it comes with the risk of overfitting.  
 
 \subsection{Deep Learning Enhanced Filters}
-Beyond hybrids, fully deep end-to-end methods have been explored. These treat orientation estimation as a regression or sequence problem using powerful neural architectures. Convolutional networks (CNN) and recurrent networks (LSTM, GRU, transformers) have been trained to map IMU time-series to orientation quaternions. Golroudbari and Sabour proposed an end-to-end CNN + bi-directional LSTM that inputs raw 6-DOF (mag exclusive) IMU measurements and directly regresses quaternion angles \cite{golroudbari2023cnn6DOF}. It was evaluated on 7 different datasets (120+ hours of motion including EuRoC, TUM-VI) and reduced orientation root mean square errors by 20-50\% vs. Madgwick and EKF baselines without per-dataset fine-tuning. Their network uses 1D convolution later for extracting local motion features over 0.5s windows, followed by bi-LSTM layers for modeling temporal context and finally aligning with the quaternion normalization layer. \cite{golroudbari2023cnn6DOF}. Tedaldi et al. (2014) fused gyroscope and accelerometer streams using multi-head attention. Demonstrating faster convergence (<0.2s) and 25\% lower drift over 1 minute trajectories compared to Madgwick. \cite{tedaldi2014multihead} Brossard et al. (2020, NDAG 27)  train dilated convolution networks to denoise gyroscope signals  and perform open-loop dead reckoning. On EuRoC and TUM-VI benchmarks, their method surpasses top visual-inertial odometry systems in attitude estimation accuracy without any visual input. These attention maps reveal that during high dynamic or rapid motion settings, the model attends more to gyroscope results, paralleling the alpha toggling concept. \cite{denoising} In \cite{vezocnik2021PCA}, they used PCA and trained a stacked denoising autoencoder on synthetic IMU noise to correct accelerometer and gyroscope biases online. Over 120 seconds, it resulted in a 40\% reduction in Allan-variance-derived (statistical analysis for deriving nature of a drift, source) drift. This \cite{sharman2019dlcorrection} employs a 1D U-net architecture to remove magnetic disturbances from MARG data, lowering heading error by 30\% in indoor environments only with dynamic ferromagnetic interference as noise. These architectures can be refurbished to serve the purpose of noise prediction models. The common limitation of these deep-learning based approaches is the requirement for large ground-truth datasets and computational resources, as well as the "black-box" nature of these models. Nonetheless they demonstrate that fully learned orientation estimators can be highly accurate and adapt to unknown motion contexts, although these are quite heavy for low-cost sensors.  
+Beyond hybrids, fully deep end-to-end methods have been explored. These treat orientation estimation as a regression or sequence problem using powerful neural architectures. Convolutional networks (CNN) and recurrent networks (LSTM, GRU, transformers) have been trained to map IMU time-series to orientation quaternions. Golroudbari and Sabour proposed an end-to-end CNN + bi-directional LSTM that inputs raw 6-DOF (mag exclusive) IMU measurements and directly regresses quaternion angles \cite{golroudbari2023cnn6DOF}. It was evaluated on 7 different datasets (120+ hours of motion including EuRoC, TUM-VI) and reduced orientation root mean square errors by 20-50\% vs. Madgwick and EKF baselines without per-dataset fine-tuning. Their network uses 1D convolution later for extracting local motion features over 0.5s windows, followed by bi-LSTM layers for modeling temporal context and finally aligning with the quaternion normalization layer. \cite{golroudbari2023cnn6DOF}. Tedaldi et al. (2014) fused gyroscope and accelerometer streams using multi-head attention. Demonstrating faster convergence (<0.2s) and 25\% lower drift over 1 minute trajectories compared to Madgwick. \cite{tedaldi2014multihead} Brossard et al. (2020, NDAG 27)  train dilated convolution networks to denoise gyroscope signals  and perform open-loop dead reckoning. On EuRoC and TUM-VI benchmarks, their method surpasses top visual-inertial odometry systems in attitude estimation accuracy without any visual input. These attention maps reveal that during high dynamic or rapid motion settings, the model attends more to gyroscope results, paralleling the alpha toggling concept in \cite{denoising}. In \cite{vezocnik2021PCA}, they used PCA and trained a stacked denoising autoencoder on synthetic IMU noise to correct accelerometer and gyroscope biases online. Over 120 seconds, it resulted in a 40\% reduction in Allan-variance-derived (statistical analysis for deriving nature of a drift) drift. This \cite{sharman2019dlcorrection} employs a 1D U-net architecture to remove magnetic disturbances from MARG data, lowering heading error by 30\% in indoor environments only with dynamic ferromagnetic interference as noise. These architectures can be refurbished to serve the purpose of noise prediction models. The common limitation of these deep-learning based approaches is the requirement for large ground-truth datasets and computational resources, as well as the "black-box" nature of these models. Nonetheless they demonstrate that fully learned orientation estimators can be highly accurate and adapt to unknown motion contexts, although these are quite heavy for low-cost sensors.  
 
 
 
 \section{Gaps and Opportunities}
-Across these studies, most \textit{adaptive} methods still rely on either \textbf{fixed fusion structures} with heuristic tuning or offline learning. For example, fixed-gain complementary filters (Mahoni \cite{mahony2008nonlinear}, Madgwick \cite{madgwick2011estimation} are cheap but cannot adjust to rapid dynamic motions, whereas hybrid approaches like \cite{vertzberger2022adaptive} or \cite{wang2020mems} adapt to motion but require pre-training or brute force tuning. Pure learning methods in \cite{denoising}, \cite{golroudbari2023cnn6DOF} achieve excellent accuracy but need vast training data and loser interpretability. The genetic or fuzzy tuning of \cite{maton2024indirectgainGA} shows that optimizing gain helps, but remains static once deployed. Notably, \textbf{none} of the reviewed works use machine learning to \textbf{predict sensor noise \textit{online}} or to dynamically \textbf{toggle the complementary filter co-efficient in \textit{real time}}. This constitutes a gap; a \textbf{a model based filter} whose parameters (measurement noise or blending factor$\alpha$) adapt instantaneously to the current operating conditions based on learned patterns. Our XGBoost approach might be able to fill this gap by learning to estimate noise levels (and thus adjust $\alpha$) on the fly, combining the strengths of data-driven adaptivity with the structure of a complementary filter. This addresses dynamic disturbances in a principled way that is not covered by the existing literature \cite{vertzberger2022adaptive} \cite{denoising}. 
+Across these studies, most \textit{adaptive} methods still rely on either \textbf{fixed fusion structures} with heuristic tuning or offline learning. For example, fixed-gain complementary filters (Mahoni \cite{mahony2008nonlinear}, Madgwick \cite{madgwick2011estimation} are cheap but cannot adjust to rapid dynamic motions, whereas hybrid approaches like \cite{vertzberger2022adaptive} or \cite{wang2020mems} adapt to motion but require pre-training or brute force tuning. Pure learning methods in \cite{denoising}, \cite{golroudbari2023cnn6DOF} achieve excellent accuracy but need vast training data and lose interpretability. The genetic or fuzzy tuning of \cite{maton2024indirectgainGA} shows that optimizing gain helps, but remains static once deployed. To the best of our knowledge based on the extensive reviews we have done, works that use machine learning to \textbf{predict sensor noise \textit{online}} or to dynamically \textbf{toggle the complementary filter co-efficient in \textit{real time}} do not exist. This constitutes a gap; a \textbf{a model based filter} whose parameters (measurement noise or blending factor $\alpha$) adapt instantaneously to the current operating conditions based on learned patterns. Our XGBoost approach is able to fill this gap by estimating noise levels (and thus adjust $\alpha$) on the fly, combining the strengths of data-driven adaptivity with the structure of a complementary filter. This addresses dynamic disturbances in a principled way that is not covered by the existing literature in \cite{vertzberger2022adaptive} and \cite{denoising}. 
 
 \section{Cohesion with Approach}
-We are following two main approaches for conducting the orientation estimation. The first one involves an XGBoost trained Toggle Engine that sets $\alpha$-gain=0 when it detects motion letting the gyro integration alone drive the rapid changes, and $\alpha$-gain > 0 during rest to fuse accelerometer and magnetometer values for drift correction. In coherence with this, Meyer et al. \cite{CEAS-GNC-2019-036} detect dynamic vs. steady states via gyro-bias and mag-rate thresholds, improving heading error by 33\% under fast maneuvers. Likewise, Shao et al. \cite{shao2023variablegainflushsesnsing} dynamically adjusted $\alpha$ based on inertial network variance, halving angle-of-attack error compared to its fixed gain substitutes. Most importantly, the literature that corresponds closest to our approach, \cite{vertzberger2022adaptive} by Vertzberger and Klein embed a neural net to predict axis-specific gains, outperforming static $\alpha$-filters across human motions from pedestrian data. \cite{tedaldi2014multihead} shows multi-head attention naturally attends to gyro during high dynamics, which is analogous to setting $\alpha$->0 when motion is detected by our Toggle Engine. Similar approaches have been followed in \cite{georgiou2013linearnonlinear}, \cite{bettermadg}, \cite{golroudbari2023cnn6DOF} but all of them one way or other fine-tuned the parameters required offline as a part of pre-processing, whereas we are following a approach that predicts the motion and dynamically adjusts the $\alpha$ gain online. Again, the hybrid or ML/DL-based models rely on multilayer perceptron, but we use XGBoost. The tree-based model is far lighter and feasible for embedding in a micro-controller, whereas the neural networks require more memory and FLOPs. 
-For our second approach, we are essentially denoising using XGBoost. We are trying to predict the noise (the quaternion error between the complementary filter output and the ground truth)  and at runtime, we subtract this derived noise from the CF-derived vectors before the next fusion step. In coherence with this, \cite{wang2020mems} predicts accelerometer noise via XGBoost, cutting Allan variance by 40\% vs. ARMA. \cite{extendedMADG} suffered from slow convergence  as stated in \cite{madgwick2011estimation}, but the fixed $\beta$ (read $\alpha$), cannot adapt to noise fluctuations, Our XGBoost noise regressor can suggest $\beta$ adjustments via equivalent covariance tuning. Again, survey papers related to \cite{EKF} state that static covariance assumptions limit filter robustness; which motivates our use of XGBoost for predicting time-variance noise statistics for EKF covariance updates. In \cite{wang2020mems}, they train a 1-D U-net to remove magnetometer disturbances in indoor MARG, which is essentially equivalent to an XGBoost regressor per axis for disturbance correction, feeding EKF or Complementary signals with cleaner signals. So rather than static or CNN-based denoising, our XGBoost regressor directly target the CF quaternion-error preserving low compute and interpretability while achieving deep-net level noise reduction. 
+We are following two main approaches for conducting the orientation estimation. The first one involves an XGBoost trained Toggle Engine that sets $\alpha$-gain=0 when it detects motion letting the gyro integration alone drive the rapid changes, and $\alpha$-gain > 0 during rest to fuse accelerometer and magnetometer values for drift correction. In coherence with this, Meyer et al. \cite{CEAS-GNC-2019-036} detect dynamic vs. steady states via gyro-bias and mag-rate thresholds, improving heading error by 33\% under fast maneuvers. Likewise, Shao et al. \cite{shao2023variablegainflushsesnsing} dynamically adjusted $\alpha$ based on inertial network variance, halving angle-of-attack error compared to its fixed gain substitutes. Most importantly, the literature that corresponds closest to our approach, \cite{vertzberger2022adaptive} by Vertzberger and Klein embed a neural net to predict axis-specific gains, outperforming static $\alpha$-filters across human motions from pedestrian data. \cite{tedaldi2014multihead} shows multi-head attention naturally attends to gyro during high dynamics, which is analogous to setting $\alpha$ as 0 when motion is detected by our Toggle Engine. Similar approaches have been followed in \cite{georgiou2013linearnonlinear}, \cite{bettermadg}, \cite{golroudbari2023cnn6DOF} but all of them one way or other fine-tuned the parameters required offline as a part of pre-processing, whereas we are following a approach that predicts the motion and dynamically adjusts the $\alpha$ gain online. Again, the hybrid or ML/DL-based models rely on multilayer perceptron, but we use XGBoost. The tree-based model is far lighter and feasible for embedding in a micro-controller, whereas the neural networks require more memory and FLOPs. 
+For our second approach, we are essentially denoising using XGBoost. We are trying to predict the noise (the quaternion error between the complementary filter output and the ground truth)  and at runtime, we subtract this derived noise from the CF-derived vectors before the next fusion step. In coherence with this, \cite{wang2020mems} predicts accelerometer noise via XGBoost, cutting Allan variance by 40\% vs. that in ARMA (Auto-Regressive Moving Average). \cite{extendedMADG} suffered from slow convergence  as stated in \cite{madgwick2011estimation}, but the fixed $\beta$ (read $\alpha$), cannot adapt to noise fluctuations, Our XGBoost noise regressor can suggest $\beta$ adjustments via equivalent covariance tuning. Again, survey papers related to \cite{EKF} state that static covariance assumptions limit filter robustness; which motivates our use of XGBoost for predicting time-variance noise statistics for EKF covariance updates. In \cite{wang2020mems}, they train a 1-D U-net to remove magnetometer disturbances in indoor MARG, which is essentially equivalent to an XGBoost regressor per axis for disturbance correction, feeding EKF or Complementary signals with cleaner signals. So rather than static or CNN-based denoising, our XGBoost regressor directly target the CF quaternion-error preserving low compute and interpretability while achieving deep-net level noise reduction. 
 Neural networks (CNN, LSTM, BiLSTM) being used in \cite{golroudbari2023cnn6DOF} and others while providing high accuracy, are black-boxes with millions of parameters, whereas we can ensure interpretability by incorporating a simple if-else based tree and the outputs can be linked to the inputs, which is why it easier for our model to run on low power embedded models in real time. 
 
 % \section{Conclude with a Summary}
@@ -708,7 +708,7 @@ This subsection focuses on the training of model to predict the noises among the
             \end{adjustbox}
         \end{table}
     
-    \item Choice of model was \textbf{XGB regressor} but coupled with the \textbf{Random Sample Consensus(RANSAC)}\cite{fischler1981random} algorithm. The ransac algorithm made training the base XGB regressor more robust to outliers and it improved the bias variance tradeoff.
+    \item Choice of model was \textbf{XGB regressor} but coupled with the \textbf{Random Sample Consensus(RANSAC)}\cite{fischler1981random} algorithm. The RANSAC algorithm made training the base XGB regressor more robust to outliers and it improved the bias variance tradeoff.
     
     \item Split the dataset into train and test sets. Generate an optuna study\cite{akiba2019optuna} where the model is trained 
     within the study objective on the train set and the objective works to maximize the r2\_score on the test set. The choice of hyperparameters is the same as in \autoref{tab:xgb_ransac_hyperparams}. The study runs for 200 iterations.
@@ -785,7 +785,7 @@ The results of the grid search procedure used to identify the optimal $d_h$ and 
 
 
 \section{Results of noise Prediction}
-The XGB regression model run according to \autoref{subsec:predictnoise} showed promising result in being able to predict the amount of noise in test set. The test set contained the recordings with indexes \texttt{cv\_set=[8, 14, 17, 22, 30]}. The summary of the result is showed in \autoref{tab:xgb_ransac_results_hyperparam}. The r2 scores are reported for the \texttt{cv\_set} and the test set generated after \texttt{train\_test\_split}.
+The XGB regression model run according to \autoref{subsec:predictnoise} showed positive result in being able to predict the amount of noise in test set. The test set contained the recordings with indexes \texttt{cv\_set=[8, 14, 17, 22, 30]}. The summary of the result is showed in \autoref{tab:xgb_ransac_results_hyperparam}. The $R^2$ scores are reported for the \texttt{cv\_set} and the test set generated after \texttt{train\_test\_split}.
 \begin{table}[htbp]
 \centering
 \caption{Final Hyperparameters for XGB RANSAC and Model Evaluation Results}
@@ -838,22 +838,22 @@ The XGB Classifier model run according to \autoref{section:MovementPred} showed 
 
 \section{Performance of Our Filter on BROAD Dataset Vs Standard Implementations}
 
-The experimental setup was implemented following the steps mentioned in \autoref{section:impl-and-testing}. The \texttt{cv\_set} contains \texttt{[8, 14, 17, 22, 30]} file indexes. Thus results were generated based on these 5 files where noise removal was done. Results for simply performing toggling was evaluated over all the 39 recordings.
+The experimental setup was implemented following the steps mentioned in \autoref{section:impl-and-testing}. The \texttt{cv\_set} contains a variation of 5 file indexes of different motions. Thus results were generated based on these 5 files where noise removal was done. Results for simply performing toggling was evaluated over all the 39 recordings.
 
 \subsection{Results with only Toggling Engine, no noise Removal}
-In this subsection the charts of Mean errors and Error variance have been shown in \autoref{result:meanerrortoggle} and \autoref{result:varerrortoggle} respectively. These charts were generated from the implementation of \autoref{CFalgo} but without the noise prediction model removing the noise from the sensor readings. The duty cycle chosen was 50\% and $\alpha$ was chosen a low value of \texttt{0.001}. 
+In this subsection the charts of Mean errors and Error variance have been shown in \autoref{result:meanerrortoggle} and \autoref{result:varerrortoggle} respectively. These charts were generated from the implementation of \autoref{CFalgo} but without the noise prediction model removing the noise from the sensor readings. The duty cycle chosen was 66\% and $\alpha$ was chosen a low value of \texttt{0.001}. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\linewidth]{figures/mean_for_39_files.png}
-    \caption{Mean of errors on all 39 recordings, for the Madgwick, Complementary , and our Complementary filtering with movement prediction and toggling with 50\% duty cycle}
+    \includegraphics[width=0.9\linewidth]{figures/mean_for_39_files_corrected.png}
+    \caption{Mean of errors on all 39 recordings, for the Madgwick, Complementary , and our Complementary filtering with movement prediction and toggling with 66\% duty cycle}
     \label{result:meanerrortoggle}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/variance_toggle.png}
-    \caption{Variance of errors on all 39 recordings, for the Madgwick, Complementary , and our Complementary filtering with movement prediction and toggling with 50\% duty cycle}
+    \caption{Variance of errors on all 39 recordings, for the Madgwick, Complementary , and our Complementary filtering with movement prediction and toggling with 66\% duty cycle}
     \label{result:varerrortoggle}
 \end{figure}
 
@@ -868,15 +868,15 @@ This subsection displays the result of $\alpha$-toggling noise removing Compleme
     \hline
     \textbf{Filename} & \textbf{Basic CF} & \textbf{Proposed CF} & \textbf{ MadgWick Filter} \\
     \hline
-    09 undisturbed fast rotation with breaks B.hdf5 & 0.8134 & 0.7408 & 0.7899 \\
+    09 undisturbed fast rotation with breaks B.hdf5 & 0.8134 & \textbf{0.7408} & 0.7899 \\
     \hline
-    15 undisturbed fast translation A.hdf5 & 3.1007 & 1.6212 & 5.9503 \\
+    15 undisturbed fast translation A.hdf5 & 3.1007 & \textbf{1.6212} & 5.9503 \\
     \hline
-    18 undisturbed fast translation with breaks B.hdf5 & 5.5009 & 1.2757 & 1.1728 \\
+    18 undisturbed fast translation with breaks B.hdf5 & 5.5009 & 1.2757 & \textbf{1.1728} \\
     \hline
-    23 undisturbed fast combined 360s.hdf5 & 3.6085 & 2.7388 & 5.3682 \\
+    23 undisturbed fast combined 360s.hdf5 & 3.6085 & \textbf{2.7388} & 5.3682 \\
     \hline
-    31 disturbed stationary magnet D.hdf5 & 2.4708 & 1.5798 & 0.6953 \\
+    31 disturbed stationary magnet D.hdf5 & 2.4708 & 1.5798 & \textbf{0.6953} \\
     \hline
     \end{tabular}
 \end{table}
@@ -889,15 +889,15 @@ This subsection displays the result of $\alpha$-toggling noise removing Compleme
     \hline
     \textbf{Filename} & \textbf{Basic CF} & \textbf{Proposed CF} & \textbf{MadgWick Filter} \\
     \hline
-    09 undisturbed fast rotation with breaks B.hdf5 & 0.1110 & 0.2603 & 0.3510 \\
+    09 undisturbed fast rotation with breaks B.hdf5 & \textbf{0.1110} & 0.2603 & 0.3510 \\
     \hline
-    15 undisturbed fast translation A.hdf5 & 3.8544 & 0.9997 & 26.7320 \\
+    15 undisturbed fast translation A.hdf5 & 3.8544 & \textbf{0.9997} & 26.7320 \\
     \hline
-    18 undisturbed fast translation with breaks B.hdf5 & 31.1229 & 1.1998 & 1.1499 \\
+    18 undisturbed fast translation with breaks B.hdf5 & 31.1229 & 1.1998 & \textbf{1.1499} \\
     \hline
-    23 undisturbed fast combined 360s.hdf5 & 2.8928 & 1.1746 & 8.7074 \\
+    23 undisturbed fast combined 360s.hdf5 & 2.8928 & \textbf{1.1746} & 8.7074 \\
     \hline
-    31 disturbed stationary magnet D.hdf5 & 4.9321 & 1.5576 & 0.3195 \\
+    31 disturbed stationary magnet D.hdf5 & 4.9321 & 1.5576 & \textbf{0.3195} \\
     \hline
     \end{tabular}
 \end{table}
@@ -921,6 +921,7 @@ This subsection illustrates the performance of the filter on a particular record
     \begin{itemize}
         \item \textit{\textbf{Red:}} Madgwick Filter
         \item \textit{\textbf{Green:}} Complementary Filter
+        \item \textit{\textbf{Cyan:}} AQUA Filter
         \item \textit{\textbf{Blue:}} Our Proposed Filter
     \end{itemize}
 \end{itemize}
@@ -928,35 +929,35 @@ This subsection illustrates the performance of the filter on a particular record
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/9_undisturbed_fast_rotation_with_breaks_B.png}
-    \caption{9\_undisturbed\_fast\_rotation\_with\_breaks\_B}
+    \caption{Comparison of mean error for 9\_undisturbed\_fast\_rotation\_with\_breaks\_B}
     \label{fig:9_undisturbed_fast_rotation_with_breaks_B}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/15_undisturbed_fast_translation_A.png}
-    \caption{15\_undisturbed\_fast\_translation\_A}
+    \caption{Comparison of mean error for 15\_undisturbed\_fast\_translation\_A}
     \label{fig:15_undisturbed_fast_translation_A}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/18_undisturbed_fast_translation_with_breaks_B.png}
-    \caption{18\_undisturbed\_fast\_translation\_with\_breaks\_B}
+    \caption{Comparison of mean error for 18\_undisturbed\_fast\_translation\_with\_breaks\_B}
     \label{fig:18_undisturbed_fast_translation_with_breaks_B}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/23_undisturbed_fast_combined_360s.png}
-    \caption{23\_undisturbed\_fast\_combined\_360s}
+    \caption{Comparison of mean error for 23\_undisturbed\_fast\_combined\_360s}
     \label{fig:23_undisturbed_fast_combined_360s}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/31_disturbed_stationary_magnet_D.png}
-    \caption{31\_disturbed\_stationary\_magnet\_D}
+    \caption{Comparison of mean error for 31\_disturbed\_stationary\_magnet\_D}
     \label{fig:31_disturbed_stationary_magnet_D}
 \end{figure}
 
@@ -971,142 +972,149 @@ MadgWick Gradient Descent filter \cite{madgwick2011estimation}.
 
 \begin{table}[H]
 \centering
-\caption{Static error metrics (°) per axis when ML denoising is active.}
+\caption{Static error metrics when ML denoising is active.}
 \label{tab:static_ml}
 \begin{tabular}{l
   *{4}{ccc}
 }
 \toprule
-Metric & Proposed (ML) & Madgwick & Aqua & EKF \\
+Metric & Proposed (denoising) & Proposed (no denoising) & Madgwick & Aqua & EKF \\
 \midrule
-mean & 23.1 & 79.71 & 10.64 & 39.05  \\
-std & 2.24 & 8.44 & 2.16 & 19.18  \\
-min & 0.02 & 0.006 & 3.28 & 10.99  \\
-25\% & 22.55 & 80.83 & 7.51 & 22.043  \\
-50\% & 22.73 & 80.84 & 11.935 & 33.717  \\
-75\% & 24.50 & 80.85 & 12.03 & 53.692  \\
-max & 25.53 & 81.03 & 13.986 & 81.03  \\
+mean & 23.1 & 14.99 & 79.71 & \textbf{10.64} & 39.05  \\
+std & 2.24 & \textbf{1.06} & 8.44 & 2.16 & 19.18  \\
+min & 0.02 & 0.02 & \textbf{0.006} & 3.28 & 10.99  \\
+25\% & 22.55 & 15.05 & 80.83 & \textbf{7.51} & 22.043  \\
+50\% & 22.73 & 15.07  & 80.84 & \textbf{11.935} & 33.717  \\
+75\% & 24.50 & 15.10 & 80.85 & \textbf{2.03} & 53.692  \\
+max & 25.53 & 15.3 & 81.03 & \textbf{13.986} & 81.03  \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-
-
-\begin{table}[H]
-\centering
-\caption{Static error metrics (°) per axis when ML denoising is not active.}
-\label{tab:static_ml}
-\begin{tabular}{l
-  *{4}{ccc}
-}
-\toprule
-Metric & Proposed (ML) & Madgwick & Aqua & EKF \\
-\midrule
-mean & 14.99 & 79.75 & 5.18 & 73.73  \\
-std & 1.06 & 7.615 & 0.296 & 6.45  \\
-min & 0.02 & 0.006 & 1.834 & 14.55  \\
-25\% & 15.05 & 80.67 & 5.15 & 69.985 \\
-50\% & 15.07 & 80.68 & 5.21 & 74.566  \\
-75\% & 15.10 & 80.68 & 5.3 & 78.609  \\
-max & 15.3 & 80.722 & 5.687 & 81.03  \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \subsection{Quasi Static Error Statistics}
+
 \begin{table}[H]
 \centering
 \scriptsize
-\caption{Quasi Static error metrics (°) per axis when ML denoising is active.}
-\label{tab:quasi_ml}
-\begin{tabular}{l
-  *{4}{ccc}
-}
+\caption{Quasi Static error metrics (°) for the X-axis.}
+\label{tab:quasi_x}
+\begin{tabular}{lccccc}
 \toprule
-Metric & \multicolumn{3}{c}{Proposed (ML)} & \multicolumn{3}{c}{Madgwick} & \multicolumn{3}{c}{Aqua} & \multicolumn{3}{c}{EKF} \\
- & X & Y & Z & X & Y & Z & X & Y & Z & X & Y & Z \\
+Metric & Proposed (ML) & Proposed (no ML) & Madgwick & Aqua & EKF \\
 \midrule
-mean & 16.25 & 18.04 & 9.84 & 13.45 & 14.77 & 7.98 & 12.32 & 11.44 & 10.08 & 52.278 & 40.89 & 32.2 \\
-std & 22.04 & 23.01 & 10.33 & 21.15 & 23.89 & 9.77 & 23.9 & 23.92 & 18.77 & 15.32 & 17.5 & 18.122 \\
-min & 0.001 & 0.002 & 0.02 & 0.006 & 0.006 & 0.006 & 0.862 & 0.38 & 1.81 & 35.4 & 22.77 & 16.81 \\
-25\% & 0.001 & 0.002 & 0.03 & 0.006 & 0.006 & 0.005 & 0.862 & 0.38 & 1.81 & 35.4 & 22.81 & 18.61 \\
-50\% & 6.42 & 7.15 & 6.04 & 4.55 & 2.69 & 3.22& 1.36 & 0.862 & 1.81 & 64.95 & 49.79 & 24.626 \\
-75\% & 18.84 & 27.932 & 19.74 & 15.77 & 21.59 & 14.56 & 5.36 & 4.72 & 6.16 & 64.88 & 52.96 & 42.645 \\
-max & 80.98 & 81.02 & 36.89 & 80.7 & 80.97 & 48.39 & 81.58 & 82.56 & 82.2 & 81.02 & 80.9 & 80.995 \\
+mean & 16.25 & 14.06 & 13.45 & \textbf{12.32} & 52.278 \\
+std & 22.04 & \textbf{21.03} & 21.15 & 23.9 & 15.32 \\
+min & \textbf{0.001} & 0.002 & 0.006 & 0.862 & 35.4 \\
+25\% & \textbf{0.001} & 0.002 & 0.006 & 0.862 & 35.4 \\
+50\% & 6.42 & 7.32 & 4.55 & \textbf{1.36} & 64.95 \\
+75\% & 18.84 & 14.71 & 15.77 & \textbf{5.36} & 64.88 \\
+max & 80.98 & \textbf{80.1} & 80.7 & 81.58 & 81.02 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-
-\begin{table*}[ht]
+\begin{table}[H]
 \centering
 \scriptsize
-\caption{Quasi-static error metrics (°) per axis when ML denoising is not active.}
-\label{tab:quasi_no_ml}
-\begin{tabular}{l
-  *{4}{ccc}
-}
+\caption{Quasi Static error metrics (°) for the Y-axis.}
+\label{tab:quasi_y}
+\begin{tabular}{lccccc}
 \toprule
-Metric & \multicolumn{3}{c}{Proposed (No ML)} & \multicolumn{3}{c}{Madgwick} & \multicolumn{3}{c}{Aqua} & \multicolumn{3}{c}{EKF} \\
-       & X         & Y         & Z         & X          & Y          & Z           & X           & Y           & Z            & X           & Y           & Z            \\
+Metric & Proposed (ML) & Proposed (no ML) & Madgwick & Aqua & EKF \\
 \midrule
-mean   & 14.06  & 17.36  & 7.50   & 13.59   & 16.98    & 9.69       & 9.40       & 12.07      & 10.95       & 36.65      & 40.67      & 45.83        \\
-std    & 21.03  & 24.10  & 7.26   & 21.20   & 24.70    & 11.46      & 19.73      & 22.13      & 20.06       & 13.78      & 18.45      & 33.80        \\
-min    & 0.0019 & 0.0005 & 0.0029 & 0.0066  & 0.0068   & 0.0065     & 0.933      & 1.386      & 1.513       & 12.70      & 17.47      & 8.11         \\
-25\%   & 0.0019 & 0.0442 & 0.0029 & 0.0066  & 0.0508   & 0.0065     & 0.933      & 1.386      & 1.513       & 21.26      & 22.33      & 8.11         \\
-50\%   & 7.32   & 9.29   & 7.94   & 3.10    & 4.91     & 3.27       & 0.933      & 1.386      & 1.513       & 45.23      & 46.09      & 73.84        \\
-75\%   & 14.71  & 25.09  & 14.06  & 17.52   & 26.67    & 19.29      & 3.460      & 5.416      & 4.758       & 45.23      & 54.63      & 76.03        \\
-max    & 81.02  & 81.02  & 31.22  & 80.98   & 81.03    & 34.47      & 81.66      & 82.01      & 81.99       & 60.02      & 81.01      & 81.02        \\
+mean & 18.04 & 17.36 & 14.77 & \textbf{11.44} & 40.89 \\
+std & 23.01 & 24.10 & 23.89 & 23.92 & \textbf{17.5} \\
+min & 0.002 & \textbf{0.0005} & 0.006 & 0.38 & 22.77 \\
+25\% & \textbf{0.002} & 0.0442 & 0.006 & 0.38 & 22.81 \\
+50\% & 7.15 & 9.29 & 2.69 & \textbf{0.862} & 49.79 \\
+75\% & 27.932& 25.09 & 21.59 & \textbf{4.72} & 52.96 \\
+max & 81.02 & 81.02 & 80.97 & 82.56 & \textbf{80.9} \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Quasi Static error metrics (°) for the Z-axis.}
+\label{tab:quasi_z}
+\begin{tabular}{lccccc}
+\toprule
+Metric & Proposed (ML) & Proposed (no ML) & Madgwick & Aqua & EKF \\
+\midrule
+mean & 9.84 & \textbf{7.5} & 7.98 & 10.08 & 32.2 \\
+std & 10.33 & \textbf{7.26} & 9.77 & 18.77 & 18.122 \\
+min & 0.02 & \textbf{0.0029} & 0.006 & 1.81 & 16.81 \\
+25\% & 0.03 & \textbf{0.0029} & 0.005 & 1.81 & 18.61 \\
+50\% & 6.04 & 7.94 & 3.22 & \textbf{1.81} & 24.626 \\
+75\% & 19.74 & 14.06 & 14.56 & \textbf{6.16} & 42.645 \\
+max & 36.89 & \textbf{31.22} & 48.39 & 82.2 & 80.995 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Dynamic Error Statistics}
-\begin{table*}[ht]
+
+\begin{table}[H]
 \centering
 \scriptsize
-\caption{Dynamic error metrics (°) per axis when ML denoising is active.}
-\label{tab:dynamic_ml}
-\begin{tabular}{l *{4}{ccc}}
+\caption{Dynamic error metrics (°) for the X-axis.}
+\label{tab:dynamic_x}
+\begin{tabular}{lccccc}
 \toprule
-Metric & \multicolumn{3}{c}{Proposed (ML)} & \multicolumn{3}{c}{Madgwick} & \multicolumn{3}{c}{Aqua} & \multicolumn{3}{c}{EKF} \\
-       & X & Y & Z & X & Y & Z & X & Y & Z & X & Y & Z \\
+Metric & Proposed (ML) & Proposed (no ML) & Madgwick & Aqua & EKF \\
 \midrule
-count & 7004 & 6603 & 7182 & 7004 & 6603 & 7182 & 7004 & 6603 & 7182 & 7004 & 6603 & 7182 \\
-mean  & 30.87 & 26.92 & 29.80 & 32.35 & 29.90 & 25.41 & 24.36 & 22.54 & 17.95 & 47.57 & 44.08 & 30.07 \\
-std   & 31.33 & 28.90 & 28.14 & 31.86 & 30.74 & 26.86 & 31.06 & 28.58 & 24.03 & 19.17 & 24.48 & 17.38 \\
-min   & 0.0007 & 0.0016 & 0.0023 & 0.0066 & 0.0066 & 0.0065 & 0.883 & 1.390 & 1.723 & 5.35 & 12.27 & 11.37 \\
-25\%  & 0.0435 & 0.0016 & 0.0023 & 0.0486 & 0.0066 & 0.0065 & 0.883 & 1.390 & 1.723 & 25.08 & 13.13 & 17.58 \\
-50\%  & 15.87 & 17.65 & 25.17 & 15.29 & 12.98 & 13.15 & 3.57 & 2.02 & 4.16 & 50.97 & 47.01 & 25.59 \\
-75\%  & 68.16 & 56.71 & 54.14 & 66.77 & 62.82 & 52.18 & 50.92 & 52.27 & 29.84 & 62.07 & 67.03 & 29.91 \\
-max   & 81.02 & 81.03 & 81.02 & 81.03 & 81.02 & 81.01 & 81.65 & 82.01 & 82.25 & 81.03 & 81.00 & 81.03 \\
+mean & 30.87 & \textbf{22.12} & 32.35 & 24.36 & 47.57 \\
+std & 31.33 & \textbf{18.87} & 31.86 & 31.06 & 19.17 \\
+min & \textbf{0.0007} & 0.001 & 0.0066& 0.883 & 5.35 \\
+25\% & 0.0435& \textbf{0.001} & 0.0486& 0.883 & 25.08 \\
+50\% & 15.87 & 16.08 & 15.29 & \textbf{3.57} & 50.97 \\
+75\% & 68.16 & \textbf{41.99} & 66.77 & 50.92 & 62.07 \\
+max & \textbf{81.02} & \textbf{81.02} & 81.03 & 81.65 & 81.03 \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
-
-\begin{table*}[ht]
+\begin{table}[H]
 \centering
 \scriptsize
-\caption{Dynamic error metrics (°) per axis when ML denoising is deactivated.}
-\label{tab:dynamic_no_ml}
-\begin{tabular}{l *{4}{ccc}}
+\caption{Dynamic error metrics (°) for the Y-axis.}
+\label{tab:dynamic_y}
+\begin{tabular}{lccccc}
 \toprule
-Metric & \multicolumn{3}{c}{Proposed (No ML)} & \multicolumn{3}{c}{Madgwick} & \multicolumn{3}{c}{Aqua} & \multicolumn{3}{c}{EKF} \\
-       & X & Y & Z & X & Y & Z & X & Y & Z & X & Y & Z \\
+Metric & Proposed (ML) & Proposed (no ML) & Madgwick & Aqua & EKF \\
 \midrule
-count & 7095 & 7997 & 7955 & 7095 & 7997 & 7955 & 7095 & 7997 & 7955 & 7095 & 7997 & 7955 \\
-mean  & 25.12 & 33.97 & 10.14 & 27.71 & 33.13 & 25.94 & 21.52 & 17.72 & 20.39 & 43.58 & 49.71 & 44.96 \\
-std   & 27.12 & 29.95 & 11.72 & 29.39 & 30.31 & 25.02 & 28.89 & 25.48 & 25.63 & 19.81 & 24.51 & 20.83 \\
-min   & 0.0010 & 0.0026 & 0.0004 & 0.0066 & 0.0071 & 0.0068 & 1.33 & 0.493 & 1.65 & 2.999 & 13.33 & 14.97 \\
-25\%  & 0.0010 & 0.192 & 0.0443 & 0.0066 & 0.0510 & 0.0068 & 1.33 & 0.493 & 1.65 & 25.52 & 13.33 & 26.46 \\
-50\%  & 16.08 & 30.70 & 8.25 & 15.01 & 33.00 & 20.41 & 3.67 & 2.51 & 4.53 & 43.55 & 62.77 & 43.42 \\
-75\%  & 41.99 & 63.90 & 13.33 & 58.17 & 64.24 & 47.24 & 39.80 & 30.24 & 38.19 & 58.03 & 67.47 & 64.80 \\
-max   & 81.02 & 81.02 & 80.66 & 81.03 & 81.02 & 75.59 & 81.97 & 81.36 & 82.20 & 81.03 & 81.02 & 80.99 \\
+mean & 26.92 & 33.97 & 29.90 & \textbf{22.54} & 44.08 \\
+std & 28.90 & 29.95 & 30.74 & 28.58 & \textbf{24.48} \\
+min & \textbf{0.0016} & 0.0026 & 0.0066& 1.390 & 12.27 \\
+25\% & \textbf{0.0016} & 0.192 & 0.0066& 1.390 & 13.13 \\
+50\% & 17.65 & 30.70 & 12.98 & \textbf{2.02} & 47.01 \\
+75\% & \textbf{56.71} & 63.90 & 62.82 & 52.27 & 67.03 \\
+max & 81.03 & \textbf{81.00} & 81.02 & 82.01 & \textbf{81.00} \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Dynamic error metrics (°) for the Z-axis.}
+\label{tab:dynamic_z}
+\begin{tabular}{lccccc}
+\toprule
+Metric & Proposed (ML) & Proposed (no ML) & Madgwick & Aqua & EKF \\
+\midrule
+mean & 29.80 & \textbf{10.14} & 25.41 & 17.95 & 30.07 \\
+std & 28.14 & \textbf{11.72} & 26.86 & 24.03 & 17.38 \\
+min & 0.0023& \textbf{0.0004} & 0.0065& 1.723 & 11.37 \\
+25\% & \textbf{0.0023} & 0.04 & 0.0065& 1.723 & 17.58 \\
+50\% & 25.17 & 8.25 & 13.15 & \textbf{4.16} & 25.59 \\
+75\% & 54.14 & \textbf{13.33} & 52.18 & 29.84 & 29.91 \\\
+max & 81.02 & \textbf{80.66} & 81.01 & 82.25 & 81.03 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Resource Consumption Statistics}
 \begin{table}[H]
@@ -1125,24 +1133,6 @@ max   & 81.02 & 81.02 & 80.66 & 81.03 & 81.02 & 75.59 & 81.97 & 81.36 & 82.20 & 
     \bottomrule
   \end{tabular}
 \end{table}
-
-\begin{table}[H]
-  \centering
-  \caption{Long-term drift over \(T\) hours (°/h).}
-  \label{tab:long_term_drift}
-  \begin{tabular}{lcc}
-    \toprule
-    Filter & Drift (°/hr) \\
-    \midrule
-    Proposed (ML)     & \([\,\cdot\,]\) \\
-    Proposed (-ML)    & \([\,\cdot\,]\) \\
-    Madgwick           & \([\,\cdot\,]\) \\
-    EKF                & \([\,\cdot\,]\) \\
-    Aqua               & \([\,\cdot\,]\) \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
 
 
 
