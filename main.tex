@@ -100,6 +100,7 @@ fusion of sensor data suffers from linear accelerations and constant gain proble
 to solve the aforementioned issues in a data driven approach. Our thesis proposes a data driven toggling
 scheme for the gain parameter and also proposes a data driven noise removal approach, either of which is implemented through tree based
 machine learning models. In this work, we introduce two contributions for robust orientation estimation using raw inertial and magnetic sensor data. First, we propose a tree-based Extreme Gradient Boosting (XGB) model that effectively denoises raw gyroscope, accelerometer, and magnetometer signals. Second, we present a tree-based movement detection model that dynamically adapts fusion process through $\alpha$-toggling, enabling improved robustness to linear accelerations and magnetic interference. Together, these contributions establish a data-driven fusion framework that enhances reliability beyond traditional fixed-gain filters. The proposed approach is validated on a real-world dataset and further evaluated using a custom-built mechanical turntable, providing controlled testing conditions for systematic performance assessment.
+\end{abstract}
 
 %-------------------------- MAIN BODY --------------------------%
 % Switch to arabic page numbering
@@ -1150,7 +1151,7 @@ max & 81.02 & \textbf{80.66} & 81.01 & 82.25 & 81.03 \\
 \bottomrule
 \end{tabular}
 \end{table}
-\end{table}
+
 
 \subsection{Resource Consumption Statistics}
 \begin{table}[H]
@@ -1426,9 +1427,10 @@ The AHRS Python library used in this thesis has not been fully validated with re
 \sloppy  % Make the spacing more flexible to prevent overfull boxes
 % Print the references used throughout the document, mandatory
 \printbib
-
 % You may attach chapter as appendices inside the following environment
-\begin{appendices}
+
+
+
 
 \chapter{Quaternion} 
 
@@ -1704,8 +1706,9 @@ Quaternion Absolute Distance is frequently used in:
 \end{figure}
 
 
-\end{appendices}
 
 \end{document}
+
+
 
 
