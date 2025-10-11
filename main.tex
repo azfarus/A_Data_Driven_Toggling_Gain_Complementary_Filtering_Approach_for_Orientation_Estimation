@@ -193,7 +193,7 @@ metrics over a synthetic dataset.
 
 
 % \section{Structure a Narrative, Not a List}
-From Virtual Reality domain and smartphone-based pedestrian navigation to autonomous aerial vehicles and human motion analysis, a wide range of applications across multiple domains rely on orientation estimation utilizing the IMUs (Inertial Measurement Units) incorporated in the devices. IMUs provide interpolated data collected from three sensors \textbf{(accelerometer, magnetometer and gyroscope)} and provide vital information regarding the angular rate, attitude/orientation or specific force for the body. The inherent drawbacks of MEMs IMU sensors, such as noise, bias, and drift over time, make orientation estimation difficult and need the application of complex algorithms to fuse sensor data and generate precise and trustworthy orientation estimations. It directly influences subsequent computations like velocity and position estimation through \textit{dead reckoning}. Dead reckoning is a phenomenon in which errors in orientation estimation can accumulate over time, leading to significant deviations in position tracking. Therefore it is all the more essential to enhance the accuracy and reliability for benchmarking the overall performance of the navigation and tracking system.
+From Virtual Reality domain and smartphone-based pedestrian navigation to auto\-nomous aerial vehicles and human motion analysis, a wide range of applications across multiple domains rely on orientation estimation utilizing the IMUs (Inertial Measurement Units) incorporated in the devices. IMUs provide interpolated data collected from three sensors \textbf{(accelerometer, magnetometer and gyroscope)} and provide vital information regarding the angular rate, attitude/orientation or specific force for the body. The inherent drawbacks of MEMs IMU sensors, such as noise, bias, and drift over time, make orientation estimation difficult and need the application of complex algorithms to fuse sensor data and generate precise and trustworthy orientation estimations. It directly influences subsequent computations like velocity and position estimation through \textit{dead reckoning}. Dead reckoning is a phenomenon in which errors in orientation estimation can accumulate over time, leading to significant deviations in position tracking. Therefore it is all the more essential to enhance the accuracy and reliability for benchmarking the overall performance of the navigation and tracking system.
  
 
 % \section{Analyze and Synthesize, Don't Just Summarize}
@@ -965,7 +965,8 @@ This subsection illustrates the performance of the filter on a particular record
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/9_undisturbed_fast_rotation_with_breaks_B.png}
-    \caption{Comparison of mean error for 9\_undisturbed\_fast\_rotation\_with\_breaks\_B}
+    % \caption{Comparison of mean error for 9\_undisturbed\_fast\_rotation\_with\_breaks\_B}
+    \caption[Mean error for 9\_undisturbed\_fast\_rotation\_with\_breaks\_B]{Comparison of mean error for 9\_undisturbed\_fast\_rotation\_with\_breaks\_B}
     \label{fig:9_undisturbed_fast_rotation_with_breaks_B}
 \end{figure}
 
@@ -979,7 +980,8 @@ This subsection illustrates the performance of the filter on a particular record
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/18_undisturbed_fast_translation_with_breaks_B.png}
-    \caption{Comparison of mean error for 18\_undisturbed\_fast\_translation\_with\_breaks\_B}
+    % \caption{Comparison of mean error for 18\_undisturbed\_fast\_translation\_with\_breaks\_B}
+    \caption[Mean error for 18\_undisturbed\_fast\_translation\_with\_breaks\_B]{Comparison of mean error for 18\_undisturbed\_fast\_translation\_with\_breaks\_B}
     \label{fig:18_undisturbed_fast_translation_with_breaks_B}
 \end{figure}
 
@@ -1008,8 +1010,7 @@ MadgWick Gradient Descent filter \cite{madgwick2011estimation}.
 
 \begin{table}[H]
 \centering
-\caption{Static error metrics when ML denoising is active.}
-\label{tab:static_ml}
+\caption{Static error metrics.}\label{tab:static_ml}
 \begin{tabular}{l
   *{4}{ccc}
 }
@@ -1175,16 +1176,16 @@ max & 81.02 & \textbf{80.66} & 81.01 & 82.25 & 81.03 \\
 
 \chapter{Interpretation Of Results} \label{chapter:discussion}
 
-In this chapter, the results achieved in \autoref{chapter:results} will be interpreted in detail. The results we have acheived so far is promising, and it is able to outperform standard Madgwick filter implementation in fast motion scenarios which was one of our goals initially. But the promising results come with compromises. The results are promising only in the dataset simulations and also fail 
-to reasonably convert in the tests run on the mechanical platform as shown in \autoref{section:mechanical_platform_result}. 
+In this chapter, the results achieved in \autoref{chapter:results} will be interpreted in detail. The results we have acheived so far is promising, and it is able to outperform standard Madgwick filter implementation in fast motion scenarios. However, these promising results come with compromises. The results are promising only in the dataset simulations and also fail 
+to reasonably converge in the tests run on the mechanical platform as shown in \autoref{section:mechanical_platform_result}. 
 
 \section{Results on the BROAD Dataset}
 \subsection{Results Without Denoising}
-In \autoref{result:meanerrortoggle} and \autoref{result:varerrortoggle} we can observe spikes in the orange line graph
-which represent the Madgwick Filter. Our proposed filter (in Green) is able to avoid high spikes in files \texttt{15\_undisturbed\_fast\_translation\_A},\texttt{23\_undisturbed\_fast\_combined\_360s} and in \texttt{27\_disturbed\_phone\_vibration\_B} 
+In \autoref{result:meanerrortoggle} and \autoref{result:varerrortoggle} we can observe spikes in the orange line graphs
+which represent the Madgwick Filter. Our proposed filter (in Green) is able to avoid high spikes in files \path{15_undisturbed_fast_translation_A}, \path{23_undisturbed_fast_combined_360s} and in \path{27_disturbed_phone_vibration_B} 
 in comparisions of mean error in \autoref{result:meanerrortoggle}. This indicates that in fast motion scenarios the toggling of $\alpha$ 
 has a positive effect on the error in our proposed filter avoiding higher mean error. In case of variance comparison
-in \autoref{result:varerrortoggle} we see that our proposed(Green line) has the least variance among all three.
+in \autoref{result:varerrortoggle} we see that our proposed method (green line) usually has the lowest variance compared to the other two, but there are a few cases where it does not.
 
 \subsubsection{Intuitive Reasoning Backed by Emperical Evidence}
 Here we suggest why $\alpha$-toggling might result in a better performance.
@@ -1204,10 +1205,10 @@ In case of variance of errors in \autoref{tab:error_statistics_cvset_variance}, 
 filters often exceed and reach a variance 10x or 20x of our proposed filter.
 
 From the tables, it is observed that in \autoref{tab:error_statistics_cvset_mean}, the best performance of
-our filter is visible in entries 2 and 4 which correspond to the files \texttt{15\_undisturbed\_fast\_translation\_A} and \texttt{23\_undisturbed\_fast\_combined\_360s} respectively.
+our filter is visible in entries 2 and 4 which correspond to the files \path{15_undisturbed_fast_translation_A} and \path{23_undisturbed_fast_combined_360s} respectively.
 Thus our filter is able to outperform the standard Madgwick filter implementation in fast motion scenarios.
 
-If we observe the error graphed vs iterations for \texttt{15\_undisturbed\_fast\_translation\_A} in \autoref{fig:15_undisturbed_fast_translation_A} in \autoref{subsec:individualFiles}, we observe that the
+If we observe the error graphed vs iterations for \path{15_undisturbed_fast_translation_A} in \autoref{fig:15_undisturbed_fast_translation_A} in \autoref{subsec:individualFiles}, we observe that the
 Madgwick Filter's error steadily rises where our proposed complementary filter stays close to zero. For the file \autoref{fig:18_undisturbed_fast_translation_with_breaks_B},
 we observe that Madgwick filter performs marginally better.
 
@@ -1223,10 +1224,10 @@ we observe that Madgwick filter performs marginally better.
 
 \section{Results of Tests on the Turntable}
 
-The results obtained from experiments on the physical turntable were less promising compared to those generated using the dataset. As discussed in \autoref{section:mechanical_platform_result}, the proposed filter performs comparably to other contemporary orientation filters. However, it exhibits a significantly higher computational cost (see \autoref{tab:resource_consumption}) due to the incorporation of machine learning (ML) based algorithms.
+The results obtained from experiments on the physical turntable were less promising compared to those generated using the dataset. As discussed in \autoref{section:mechanical_platform_result}, the proposed filter performs comparably to other contemporary orientation filters. However, it exhibits a significantly higher computational cost (see \autoref{tab:resource_consumption_static}) due to the incorporation of machine learning (ML) based algorithms.
 
 \begin{itemize}
-    \item With the ML module enabled, the filter achieves a performance level similar to the version with ML disabled. 
+    \item With the ML module enabled, the filter performs close to the version with ML disabled, though the results indicate it is slightly worse. 
     \item The toggle ML algorithm appears to fail in reliably predicting motion events, which limits its effectiveness in reducing computational overhead.
     \item Our algorithm performs similar in all the three movement scenarios described in Table \ref{tab:motion_protocols}. 
     \item Our proposed filter performs comparatively better with a lower $\alpha$ value.
@@ -1234,7 +1235,7 @@ The results obtained from experiments on the physical turntable were less promis
 
 \subsection{Results without ML}\label{subsec:withoutML}
 
-The tests without the machine learning module provides important insights into the comparative performance of different filters. The results have been summarized in \autoref{tab:dynamic_no_ml},\autoref{tab:quasi_no_ml} and \autoref{tab:static_no_ml}. The observations can be summarized as follows:
+The tests without the machine learning module provides important insights into the comparative performance of different filters. The results for both with and without ML are summarized in~\autoref{tab:static_ml}--\autoref{tab:dynamic_z}. The observations can be summarized as follows:
 
 \begin{itemize}
     \item \textbf{Proposed Toggling Engine:} 
@@ -1264,7 +1265,7 @@ The tests without the machine learning module provides important insights into t
 
 \subsection{Results with ML}
 
-The evaluation with the machine learning (ML) based noise removal enabled reveals a different trend compared to the results without ML. The results have been summarized in \autoref{tab:dynamic_ml},\autoref{tab:quasi_ml} and \autoref{tab:static_ml}. The observations can be summarized as follows:
+The evaluation with the machine learning (ML) based noise removal enabled reveals a different trend compared to the results without ML\@. The same tables~\autoref{tab:static_ml}--\autoref{tab:dynamic_z} also include the ML results. The observations can be summarized as follows:
 
 \begin{itemize}
     \item \textbf{Proposed Filter with ML:}
@@ -1291,7 +1292,7 @@ The evaluation with the machine learning (ML) based noise removal enabled reveal
 
 \subsection{CPU and Memory Usage}
 
-The computational demands of the proposed filter are noticeably higher compared to traditional orientation filters.Summary of the computational statistics is found in \autoref{tab:resource_consumption}. This limitation arises from multiple contributing factors:
+The computational demands of the proposed filter are noticeably higher compared to traditional orientation filters.Summary of the computational statistics is found in \autoref{tab:resource_consumption_static}. This limitation arises from multiple contributing factors:
 
 \begin{itemize}
     \item \textbf{Impact of Machine Learning Models:}  
