@@ -1,3 +1,4 @@
+# LaTeX intermediate files
 *.aux
 *.log
 *.bbl
@@ -11,5 +12,10 @@
 *.out
 *.run.xml
 *.synctex.gz
-main.bbl-SAVE-ERROR
+
+
+# Error artifacts
+*-SAVE-ERROR
+
 svg-inkscape/
+.latexmk

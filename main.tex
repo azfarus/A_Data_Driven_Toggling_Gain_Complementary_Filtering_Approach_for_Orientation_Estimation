@@ -44,16 +44,16 @@
 %-------------------------- FRONT MATTER --------------------------%
 
 % Generate cover page of the report to be printed on the hard cover
-\coverpage
+\coverpage\
 
 % Switch to roman page numbering
 \pagenumbering{roman}
 
 % Generate the title leaf, mandatory
-\titlepage
+\titlepage\
 
 % Auto generate declaration of candidate based on previous info, mandatory
-\declarationofcandidate
+\declarationofcandidate\
 
 % Dedicate report to someone. You may add more sentences to it.
 \dedicatedto{the cats of IUT}
@@ -109,16 +109,16 @@ machine learning models. In this work, we introduce two contributions for robust
 \chapter{Introduction}
 
 
-\section{Inertial Navigation} \label{introINS}
-Inertial Navigation refers to the process of determining the \textit{position}, \textit{velocity}, and \textit{orientation} of an object relative to its initial navigation parameters, without relying on any externally located position-fixing devices \cite{el2020inertial}. Any system that estimates these quantities using inertial sensing is referred to as an Inertial Navigation System (INS).  
+\section{Inertial Navigation}\label{introINS}
+Inertial Navigation refers to the process of determining the \textit{position}, \textit{velocity}, and \textit{orientation} of an object relative to its initial navigation parameters, without relying on any externally located position-fixing devices~\cite{el2020inertial}. Any system that estimates these quantities using inertial sensing is referred to as an Inertial Navigation System (INS).
 
 An INS offers continuous and self-contained navigation capability, making it highly valuable in environments where external references such as GPS are unavailable, unreliable, or intentionally denied. This includes underwater operations, subterranean exploration, and urban canyons where signal blockage is common.  
 
 However, the performance of INS is significantly limited by inherent challenges. Since the system operates by integrating motion information over time, even small measurement errors accumulate, leading to a gradual but inevitable degradation of accuracy. This phenomenon, commonly referred to as \textit{drift}, causes the estimates of position, velocity, and orientation to diverge from the true values. Low-cost implementations are especially vulnerable, as their sensors are prone to noise, bias instability, and other disturbances that exacerbate long-term error growth. These limitations make error mitigation and robustness central concerns in the design of practical INS solutions.
 
 
-\section{Inertial Navigation and MARG Sensors} \label{introMARG}
-To address the challenges of error accumulation in Inertial Navigation, modern systems often employ multiple sensors to jointly estimate position, velocity, and orientation. Two sensors are common to almost all such systems: the accelerometer, which measures the direction of the gravitational acceleration vector, and the gyroscope, which measures angular velocity. Additionally, some systems incorporate a magnetometer to sense the direction of magnetic north\cite{nawrat2012inertial}. Together, these three sensors form the \textbf{MARG} (\textbf{M}agnetometer \textbf{A}ccelerometer \textbf{R}ate-\textbf{G}yro) sensor suite.  
+\section{Inertial Navigation and MARG Sensors}\label{introMARG}
+To address the challenges of error accumulation in Inertial Navigation, modern systems often employ multiple sensors to jointly estimate position, velocity, and orientation. Two sensors are common to almost all such systems: the accelerometer, which measures the direction of the gravitational acceleration vector, and the gyroscope, which measures angular velocity. Additionally, some systems incorporate a magnetometer to sense the direction of magnetic north~\cite{nawrat2012inertial}. Together, these three sensors form the \textbf{MARG} (\textbf{M}agnetometer \textbf{A}ccelerometer \textbf{R}ate-\textbf{G}yro) sensor suite.
 
 Each of these sensors contributes unique information, but also comes with inherent limitations. Gyroscopes provide accurate short-term orientation changes, but suffer from drift over time. Accelerometers, on the other hand, offer a stable long-term reference by sensing gravity, yet are easily corrupted by linear accelerations, making it difficult to separate gravitational effects from translational motion. Magnetometers provide an absolute reference for heading estimation relative to magnetic north, but are highly susceptible to distortions caused by nearby ferromagnetic materials and electromagnetic interference.  
 
@@ -126,10 +126,10 @@ By fusing the outputs of these sensors, a MARG-based system can leverage their c
  
 
 
-\section{Orientation Estimation and MARG Sensors} \label{orientationMARG}
-Orientation estimation is one of the three fundamental challenges (\emph{position},\emph{velocity}, and \emph{orientation estimation}) that an Inertial Navigation System (INS) must address. The orientation of a 3D object can be mathematically expressed using Euler angles, rotation matrices, or quaternions \cite{attitudeREpresntation}. An orientation estimation algorithm processes the raw measurements from MARG sensors and produces an orientation estimate in one of these representations.  
+\section{Orientation Estimation and MARG Sensors}\label{orientationMARG}
+Orientation estimation is one of the three fundamental challenges (\emph{position},\emph{velocity}, and \emph{orientation estimation}) that an Inertial Navigation System (INS) must address. The orientation of a 3D object can be mathematically expressed using Euler angles, rotation matrices, or quaternions~\cite{attitudeREpresntation}. An orientation estimation algorithm processes the raw measurements from MARG sensors and produces an orientation estimate in one of these representations.  
 
-As discussed in Section~\ref{introMARG}, individual MARG sensors suffer from inherent limitations such as drift, noise, linear acceleration sensitivity, and magnetic disturbances. To overcome these issues, orientation estimation relies on sensor fusion filters that combine the complementary strengths of the sensors while compensating for their weaknesses. Standard algorithms such as the Madgwick filter \cite{madgwick2011estimation}, Mahony filter \cite{mahony2008nonlinear}, Extended Kalman Filter (EKF) \cite{EKF}, and Complementary filter \cite{compfilter} are widely used in practice. Each employs a distinct methodology to fuse sensor data and mitigate the effects of disturbances, thereby improving orientation estimation accuracy and robustness.  
+As discussed in Section~\ref{introMARG}, individual MARG sensors suffer from inherent limitations such as drift, noise, linear acceleration sensitivity, and magnetic disturbances. To overcome these issues, orientation estimation relies on sensor fusion filters that combine the complementary strengths of the sensors while compensating for their weaknesses. Standard algorithms such as the Madgwick filter~\cite{madgwick2011estimation}, Mahony filter~\cite{mahony2008nonlinear}, Extended Kalman Filter (EKF)~\cite{EKF}, and Complementary filter~\cite{compfilter} are widely used in practice. Each employs a distinct methodology to fuse sensor data and mitigate the effects of disturbances, thereby improving orientation estimation accuracy and robustness.   
 
 In this thesis, we build upon these established approaches by proposing a data-driven fusion filter. Instead of relying solely on analytical models of sensor error, our method leverages machine learning techniques to learn the patterns of noise and disturbances directly from data. By doing so, we aim to enhance orientation estimation performance beyond the capabilities of standard model-based fusion filters.
 
@@ -137,7 +137,7 @@ In this thesis, we build upon these established approaches by proposing a data-d
 \section{Orientation Estimation through Complementary Fusion}\label{section:CF}
 
 The Complementary Filter (CF) is one of the most basic forms of sensor fusion, where the orientation estimates from the angular rate gyroscopes are combined with the estimates generated from the accelerometer and, if available, the magnetometer.  
-The basic complementary filtering approach \cite{forbes2015fundamentals, euston2008complementary} is represented as:  
+The basic complementary filtering approach~\cite{forbes2015fundamentals, euston2008complementary} is represented as:  
 
 \begin{equation}
     R = (1 - \alpha)R_g + \alpha R_{am}
@@ -189,7 +189,7 @@ metrics over a synthetic dataset.
 
 
 
-\chapter{Related Works} \label{chapter:RelatedWorks}
+\chapter{Related Works}\label{chapter:RelatedWorks}
 
 
 % \section{Structure a Narrative, Not a List}
@@ -235,17 +235,17 @@ Neural networks (CNN, LSTM, BiLSTM) being used in \cite{golroudbari2023cnn6DOF} 
 % \section{Conclude with a Summary}
 
 
-\chapter{Proposed Methodology} \label{chapter:proposed}
+\chapter{Proposed Methodology}\label{chapter:proposed}
 In this chapter, we propose a data-driven methodology designed to overcome the limitations of the Complementary Filter (CF). Thus the following section will correspond to chronological steps executed to improve the $\alpha$ prediction and noise elimination.
 
 \section{Research Design}
 We will go through six steps, where we introduce our mathematical background for the filter design and model training. The steps are listed below:
 \begin{itemize}
-    \item Modified Complementary Filter Design based on the works of \cite{vertzberger2022adaptive}.
+    \item Modified Complementary Filter Design based on the works of~\cite{vertzberger2022adaptive}.
     \item Training Dataset
     \item Training the ML model for movement prediction
     \item Training the ML model for noise prediction
-    \item Evaluation of the proposed filter on the BROAD \cite{BROAD} dataset.
+    \item Evaluation of the proposed filter on the BROAD~\cite{BROAD} dataset.
     \item Evaluation of the proposed filter on the Mechanical Turntable platform as described in \autoref{section:turntable}.
 \end{itemize}
 
@@ -255,7 +255,7 @@ These steps are elaborated in later sections.
 
 For our research, it is critical that the models run in every iteration to both denoise sensor readings and predict movement. This requirement necessitates models with very low inference time, making tree-based approaches particularly well-suited for our needs.  
 
-Additionally, it is essential that the models maintain a favorable bias-variance tradeoff and demonstrate robustness to outliers. While tree-based models can be prone to overfitting\cite{overfitTrees}, employing a robust learning strategy is necessary to mitigate this risk. In this work, we adopt the RANSAC (Random Sample Consensus) algorithm \cite{fischler1981random} to enhance the robustness of the XGBoost trees. 
+Additionally, it is essential that the models maintain a favorable bias-variance tradeoff and demonstrate robustness to outliers. While tree-based models can be prone to overfitting~\cite{overfitTrees}, employing a robust learning strategy is necessary to mitigate this risk. In this work, we adopt the RANSAC (Random Sample Consensus) algorithm~\cite{fischler1981random} to enhance the robustness of the XGBoost trees. 
 
 A detailed discussion of the reasoning behind the choice of these models is provided later in this section.
 
@@ -264,23 +264,23 @@ A detailed discussion of the reasoning behind the choice of these models is prov
 XGBoost (Extreme Gradient Boosting) has become a preferred choice for both regression and classification tasks due to its robust performance, scalability, and advanced regularization techniques. The key reasons include:
 
 \begin{itemize}
-    \item \textbf{High Predictive Accuracy:} XGBoost consistently achieves impressive performance on structured/tabular datasets in both academic benchmarks and real-world competitions due to its ability to minimize bias and variance simultaneously \cite{chen2016xgboost}. Such accuracy is required for our experimentation for accurate movement prediction.
+    \item \textbf{High Predictive Accuracy:} XGBoost consistently achieves impressive performance on structured/tabular datasets in both academic benchmarks and real-world competitions due to its ability to minimize bias and variance simultaneously~\cite{chen2016xgboost}. Such accuracy is required for our experimentation for accurate movement prediction.
     
-    \item \textbf{Regularization Capabilities:} Unlike traditional gradient boosting, XGBoost includes L1 and L2 regularization terms, which help prevent overfitting—a common issue in high-dimensional data \cite{chen2016xgboost}.
+    \item \textbf{Regularization Capabilities:} Unlike traditional gradient boosting, XGBoost includes L1 and L2 regularization terms, which help prevent overfitting—a common issue in high-dimensional data~\cite{chen2016xgboost}.
     
-    \item \textbf{Handling of Missing Values:} XGBoost can handle missing data internally during training without requiring preprocessing imputation, improving ease of use and robustness \cite{chen2016xgboost}.
+    \item \textbf{Handling of Missing Values:} XGBoost can handle missing data internally during training without requiring preprocessing imputation, improving ease of use and robustness~\cite{chen2016xgboost}.
     
-    \item \textbf{Efficient Computation:} With its use of histogram-based algorithms and parallel processing, XGBoost is highly efficient and scalable to large datasets \cite{ke2017lightgbm}. BROAD dataset with almost 2,400,000 records combined, needs a highly efficient and paralellizable model training process.
+    \item \textbf{Efficient Computation:} With its use of histogram-based algorithms and parallel processing, XGBoost is highly efficient and scalable to large datasets~\cite{ke2017lightgbm}. BROAD dataset with almost 2,400,000 records combined, needs a highly efficient and paralellizable model training process.
     
-    \item \textbf{Flexibility:} It supports a variety of objective functions and custom loss functions, making it suitable for a wide range of regression and classification problems \cite{chen2016xgboost}.
+    \item \textbf{Flexibility:} It supports a variety of objective functions and custom loss functions, making it suitable for a wide range of regression and classification problems~\cite{chen2016xgboost}.
 \end{itemize}
 
 \subsection{Choice of Random Sample Consensus (RANSAC) for Regression}
 
-Random Sample Consensus (RANSAC) is an iterative algorithm designed to estimate the parameters of a mathematical model from a dataset that may contain outliers. RANSAC operates by selecting random subsets of the data to fit a model and then determining the number of inliers—data points that fit the model within a predefined tolerance. The model with the highest number of inliers is considered the best fit. The Random Sample Consensus (RANSAC) algorithm is effective in producing stable model estimates by focusing on a consensus subset of the data\cite{fischler1981random}. In terms of variance in the BROAD dataset, this approach reduces the variability of parameter estimates, leading to more reliable and robust models that better capture the underlying data distribution.
+Random Sample Consensus (RANSAC) is an iterative algorithm designed to estimate the parameters of a mathematical model from a dataset that may contain outliers. RANSAC operates by selecting random subsets of the data to fit a model and then determining the number of inliers—data points that fit the model within a predefined tolerance. The model with the highest number of inliers is considered the best fit. The Random Sample Consensus (RANSAC) algorithm is effective in producing stable model estimates by focusing on a consensus subset of the data~\cite{fischler1981random}. In terms of variance in the BROAD dataset, this approach reduces the variability of parameter estimates, leading to more reliable and robust models that better capture the underlying data distribution.
 
 
- XGBoost can be sensitive to outliers in the training data, which may lead to overfitting and reduced generalization performance. Integrating RANSAC with an XGBoost regressor combines the strengths of both methodologies to enhance model robustness and predictive performance. The regression training pipeline with RANSAC is visualized in \autoref{fig:ransac_pipeline}:
+ XGBoost can be sensitive to outliers in the training data, which may lead to overfitting and reduced generalization performance. Integrating RANSAC with an XGBoost regressor combines the strengths of both methodologies to enhance model robustness and predictive performance. The regression training pipeline with RANSAC is visualized in~\autoref{fig:ransac_pipeline}:
 
 \begin{figure}
     \centering
@@ -297,36 +297,32 @@ Random Sample Consensus (RANSAC) is an iterative algorithm designed to estimate 
     \item \textbf{Complementary Strengths}: While XGBoost excels at capturing complex, non-linear relationships in data, RANSAC provides a mechanism to mitigate the influence of outliers, resulting in a more robust and accurate model.
 \end{itemize}
 
-This hybrid approach has been explored in \cite{lopez2017ransac}, demonstrating its effectiveness in improving model performance in the presence of outliers.
+This hybrid approach has been explored in~\cite{lopez2017ransac}, demonstrating its effectiveness in improving model performance in the presence of outliers.
     
 
-\section{Modified Complementary Filter Design} \label{section:MDCF}
-The complementary filter algorithm we incorporated in our thesis is described in this section. The CF filter featured here incorporates a gain parameter $\alpha$ which would be generated by a \textit{Toggling Engine} mentioned in \autoref{section:MovementPred}. The algorithm also supports noise removal if a trained model is provided\cite{denoising}.The algorithm represents orientation using vector-based measurements from the accelerometer and magnetometer. The raw accelerometer vectors are fused with the gyroscope-based rotation from the previous estimate, following the approach in \cite{vertzberger2022adaptive}. In contrast to this prior work, we extend the method by incorporating magnetometer readings, refining the prediction of the fusion parameter $\alpha$, and introducing a dedicated noise removal step.The full algorithm description of our proposed filter can be found in algorithm-\ref{CFalgo}. Some information about the algorithm:
-\begin{itemize}
-    \item The algorithm uses the $a_{pred}$ and $m_{pred}$ (predicted gravity and north vectors respectively) to describe the orientation. This representation can be interchanged to quaternion or a rotation matrix\cite{black1964passive}\cite{cariow2016hardware}. 
+\section{Modified Complementary Filter Design}~\cite{black1964passive}\cite{cariow2016hardware}. 
     \item The sensor readings are formatted as $(3,1)$ column vectors:
     \begin{itemize}
         \item Gravitational Vector from the accelerometer: $a_i = (a_{ix},a_{iy},a_{iz})$
         \item Magnetic North Vector from the magnetometer: $m_i = (m_{ix},m_{iy},m_{iz})$
         \item Gyro angular rates on 3 axis: $g_i = (g_{ix},g_{iy},g_{iz})$
     \end{itemize}
-    \item  The rotation matrix generated in the iteration $i$ from the angular rates \cite{zhao2016time} is:
+    \item  The rotation matrix generated in the iteration $i$ from the angular rates~\cite{zhao2016time} is:
     \begin{equation}
         R_g = e^{(\Omega_{\times}(g_i)\delta t)}
     \end{equation}
     Where $\Omega_{\times}$ is the skew-symmetric operator and $\delta t$ is the sampling rate.
 \end{itemize}
 
-The algorithm is represented through the flow diagram in \autoref{Filter Diagram} 
+The algorithm is represented through the flow diagram in \autoref{Filter_Diagram}
 
 \begin{figure}
     \centering
     \includesvg[width=0.8\linewidth]{figures/filter_diagram.svg}
-    \caption{Filter Diagram\footnotemark{} for our proposed Data Driven Toggling Gain CF.}
-    \label{Filter Diagram}
+    \caption[Filter Diagram for the proposed Data Driven Toggling Gain CF]{Filter Diagram\footnotemark{} for our proposed Data Driven Toggling Gain CF.}\label{Filter_Diagram}
 \end{figure}
 
-\section{Dataset Description} \label{section:dataset}
+\section{Dataset Description}\label{section:dataset}
 This section describes the dataset we are currently utilizing to train our models. The dataset we are using is the Berlin Robust Orientation Estimation Assessment Dataset (BROAD)\cite{BROAD}. 
 
 The BROAD dataset contains 39 recordings or trial. Each of the trial contains a time series of MARG sensor data readings along with the boolean parameter \texttt{movement} and the position\texttt{(opt\_pos)} and the orientation\texttt{(opt\_quat)} information of each timestamp gathered from the Optitrack OMC system at 120Hz. 
@@ -336,8 +332,7 @@ The MARG sensor readings come from a custom 3D printed device on which an Inerti
 
 \begin{table}[htbp]
     \centering
-    \caption{Categorization of BROAD Dataset Trials}
-    \label{tab:broad_trial_categories}
+    \caption{Categorization of BROAD Dataset Trials}\label{tab:broad_trial_categories}
     \begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|l|}
         \hline
         \textbf{Motion Type} & \textbf{Speed} & \textbf{Trial/recording Indexes}  \\
@@ -451,7 +446,7 @@ Append $a_{pred}$ and $m_{pred}$ to $orientationEstimates$\\
 
 
 \newpage
-\section{Gain($\alpha$) Estimation through Movement Prediction} \label{section:MovementPred}
+\section{Gain($\alpha$) Estimation through Movement Prediction}\label{section:MovementPred}
 
 Here we describe the working principle of the \textit{Toggling Engine}. The $\alpha$ parameter is initially set to be a constant value. The toggling engine is responsible for toggling the alpha in presence of movement. Detailed steps:
 \begin{itemize}
@@ -1344,8 +1339,8 @@ During the evaluation of the orientation filters on the mechanical turntable, se
 \begin{itemize}
     \item \textbf{Quaternion Initialization:} The tested filters do not employ a standardized method for initializing the quaternion estimate at startup. Differences in initialization strategies can introduce systematic biases in the early stages of estimation, particularly affecting filters such as the EKF, which rely heavily on linearization around the initial state \cite{maybeck1982stochastic}. A careful analysis of consistent initialization methods is required to reduce the initial error and improve comparability between filters.
     
-    \item \textbf{Mismatch in Training Data for ML Models:} The machine learning models were trained using data generated following the methodologies outlined by the authors of the BROAD dataset \cite{BROAD}. However, discrepancies between this dataset and the live data acquired from the Raspberry Pi–based experimental platform may have led to poor generalization. Sensor noise characteristics, sampling rates, and motion profiles can differ significantly between datasets and live experiments, leading to unreliable inference. Future work should focus on domain adaptation techniques or re-training the models using data collected directly from the experimental hardware.
-    
+    \item \textbf{Mismatch in Training Data for ML Models:} The machine learning models were trained using data generated following the methodologies outlined by the authors of the BROAD dataset \cite{BROAD}. However, discrepancies between this dataset, as well as variations across different sensor units and the live data acquired from the Raspberry Pi–based experimental platform, may have led to poor generalization. Differences in sensor noise characteristics, sampling rates, and motion profiles across datasets and hardware units can result in unreliable inference. Future work should focus on domain adaptation techniques or re-training the models using data collected directly from the experimental hardware. In particular, domain adaptation aims to reduce the performance gap that arises when a model trained on one data source (e.g. simulated or pre-recorded data) is applied to another with different characteristics (e.g. real sensor data from the Raspberry Pi setup).
+
     \item \textbf{Trust in the AHRS Python Library:} The AHRS Python library \cite{ahrs_doc} was used to implement several of the orientation filters, including AQUA, EKF, and Madgwick. While the library is well-documented and widely adopted for research prototyping, there is a lack of independent validation studies confirming that its implementations are consistent with the original algorithm specifications. Without rigorous benchmarking against reference implementations, there remains uncertainty regarding the correctness of the results produced by these filters.
     
     \item \textbf{Rigidity of the Absolute Distance Metric:} The evaluation employed the quaternion absolute distance metric to quantify the deviation of estimated orientations from the ground-truth quaternion. While this metric is mathematically sound and commonly used in orientation estimation research \cite{markley2007quaternion}, it may be overly strict in practice. Small angular discrepancies can result in disproportionately large values under this metric, potentially exaggerating the reported errors across all filters. Alternative evaluation metrics, such as angular difference about specific axes or application-dependent error tolerances, may provide a more nuanced picture of filter performance.
@@ -1357,11 +1352,11 @@ During the evaluation of the orientation filters on the mechanical turntable, se
 
 \chapter{Future Works} \label{chapter:futureWorks}
 
-This thesis has explored and implemented data-driven orientation estimation methods by combining machine learning models with complementary filtering techniques. Although the results have shown clear improvements compared to traditional approaches, there remain several limitations. This chapter discusses the challenges found and suggests possible directions for future research to improve the system’s performance, ease of use, and real-world relevance.
+This thesis has explored and implemented data-driven orientation estimation methods by combining machine learning models with complementary filtering techniques. Although the results indicate partial but clear improvements over traditional approaches, several limitations still remain. This chapter discusses the challenges found and suggests possible directions for future research to improve the system’s performance, ease of use, and real-world relevance.
 
-\section{Areas for Improvement}
+\section{Potential Directions for Enhancement}
 
-Some of the shortcomings were mentioned in \autoref{chapter:shortcomings}. The areas for improvement are highlighted in this section and in the latter section we propose some improvement pathways moving forward.
+Some of the limitations discussed in \autoref{chapter:shortcomings} highlight opportunities for further refinement. This section outlines the potential directions for enhancement that could address these shortcomings and improve the overall system performance. In the subsequent section, we propose specific strategies and methodologies to pursue these improvements in future work.
 
 \textbf{Algorithm and Computational Efficiency:}  
 The tree-based models we use, like XGBoost, require significant memory and processing power. This can be a problem, especially on small devices with limited resources. Also, matrix exponentiation used for orientation calculations needs a lot of computation, making real-time operation difficult on embedded platforms.
@@ -1383,21 +1378,13 @@ To better suit embedded and low-power devices, work should focus on reducing mem
 
 \subsection{Online and Adaptive Learning}
 
-Currently, models are trained once offline and not updated during use. Future research might explore online learning, where models continually update themselves based on new sensor data. This would help the system adapt to sensor aging, changing environments, or new types of motion, making it more robust and reducing the need for manual retraining. Adaptive algorithms that adjust parameters in real time based on sensor readings may further improve long-term performance.
-
-\subsection{Multi-Sensor Fusion}
-
-Adding other sensors to the system could increase accuracy and robustness. For example, GPS or ultra-wideband sensors can provide absolute position and heading to help correct drift. Cameras or depth sensors can offer environmental context useful for navigation and avoiding occlusions. Barometric pressure sensors might improve altitude estimation, indirectly helping orientation estimation. Future work should investigate fusion methods that weigh sensor data intelligently depending on context and sensor reliability.
+Currently, models are trained offline and remain static during deployment. Future research could investigate online learning approaches, where models continuously update in response to incoming sensor data. Such methods would enable the system to adapt to sensor degradation, environmental changes, or novel motion patterns, enhancing robustness and reducing reliance on manual retraining. In particular, exploring adaptive algorithms that adjust model parameters in real time based on sensor inputs could improve long-term performance and maintain accuracy under dynamic conditions. Research could also evaluate strategies for balancing adaptation speed with stability, ensuring reliable learning without introducing instability from noisy or inconsistent data.
 
 \subsection{Better Noise and Disturbance Models}
 
 Although noise has been reduced using regression models, there's still room for improvement, especially for time-dependent noise patterns.
 
 Techniques like recurrent neural networks or probabilistic models may capture temporal correlations better. Domain-specific noise, such as vibrations in drones or magnetic interference in factories, should also be studied. Combining robust statistics and outlier detection with sensor fusion algorithms might reduce unwanted noise even more.
-
-\subsection{Deep Learning End-to-End Models}
-
-Instead of hybrid systems, future research could look at deep learning models that directly map raw sensor inputs to orientation estimates. Models such as convolutional neural networks, recurrent neural networks, or transformers are promising, but they need large labeled datasets and heavy computing power. Hybrid models that combine deep learning with classical filtering might deliver a good balance between accuracy and computational cost while maintaining interpretability.
 
 \subsection{Comprehensive Benchmarking and Evaluation}
 
@@ -1427,7 +1414,7 @@ The AHRS Python library used in this thesis has not been fully validated with re
 
 \sloppy  % Make the spacing more flexible to prevent overfull boxes
 % Print the references used throughout the document, mandatory
-\printbib
+\printbib\
 % You may attach chapter as appendices inside the following environment
 
 
