@@ -658,9 +658,13 @@ The dataset was already presented in \autoref{section:dataset}. Based on this th
 \section{Training}
 In this section we provide the methodologies followed to train the models to predict noise and movements.
 \subsection{Training to Predict Movement}
-In this part we discuss the training process of the XGBoost Classifier model to predict movement. The detailed steps:
+This subsection focuses on the training of the model to predict the movement states from the reported sensor readings. Detailed steps:
 \begin{itemize}
-    \item BROAD dataset has 39 recordings. All the 39 recordings are concatenated one after another and a concatenated dataset containing all records from 39 recordings are formed. The setup for input features \verb|X| and the output feature \verb|y| goes as: \\
+    \item There are 39 (indexed from 0 to 38) recordings in the BROAD dataset. For our experiments, we selected the following subset of recordings, the \texttt{concat\_list} (the set contains the indices):
+    \begin{multline*}
+    \{0,1,2,3,4,5,6,7,9,10,11,12,13,15,16,18,19,20,21, \\
+    23,24,25,26,27,28,29,31,32,33,34,35,36,37,38\}.
+    \end{multline*}
     \begin{table}[htbp]
     \centering
     \caption{Dataset Generation to Predict Movement}
@@ -675,13 +679,16 @@ In this part we discuss the training process of the XGBoost Classifier model to 
             \end{tabular}
         \end{adjustbox}
     \end{table}
-    After forming X and y the datasets were split to train and test sets with train set having 80\% of the split.
+
+    \item For each recording in \texttt{concat\_list}, we follow the procedure described in \autoref{section:MovementPred} to extract the MARG sensor readings along with the corresponding movement labels. Each processed recording generates a new CSV dataset whose columns contain the $9$ raw MARG sensor readings and the associated movement label. Repeating this process for all recordings in \texttt{concat\_list} produces $34$ new CSV datasets.
+    \item All $34$ datasets are then concatenated to form one large dataset. From this concatenated dataset, the input features \texttt{X} and output labels \texttt{y} are generated according to \autoref{tab:sensor_readings}.
+    \item The dataset formed by the concatenation of recordings in \texttt{concat\_list} is divided into training and testing sets with an 80--20 split ratio. The remaining recordings (those not included in \texttt{concat\_list}) are reserved and used for validation.
 
 
-    \item As mentioned in \autoref{subsec:choice_of_model}, we use the XGBoost Classifier model to predict movement.
+    \item The choice of model for this task was the XGBoost Classifier, as introduced in \autoref{subsec:choice_of_model}. This model was chosen for its efficiency and scalability in handling large datasets and its strong performance on tabular sensor data.
 
-    \item After the formation of \texttt{X} and \texttt{y}, we train an XGBoost Classifier model optimized through the \verb|Oputna Study| library\cite{akiba2019optuna}.The optuna study was constructed to maximize the \texttt{accuracy\_score}\cite{labatut2012accuracy} among the \texttt{y\_test} and the predicted \texttt{y\_pred}. The suggested parameters for the \textit{study} were chosen as in \autoref{tab:xgb_hyperparameters_movement}:
-    \begin{table}[htbp]
+    \item To further enhance the performance of the classifier, an \verb|Oputna Study| library\cite{akiba2019optuna} was used for hyperparameter optimization. The study objective was to maximize the \texttt{accuracy\_score}\cite{labatut2012accuracy} between the predicted movement labels \texttt{y\_pred} and the ground-truth labels \texttt{y\_test} on the test set. The hyperparameter search space for the XGBoost Classifier is shown in \autoref{tab:xgb_hyperparameters_movement}:
+    \begin{table}[H]
     \centering
     \caption{Choice of Ranges of Hyperparams for \textit{Optuna Study(For Movement)} }
     \label{tab:xgb_hyperparameters_movement}
@@ -698,8 +705,8 @@ In this part we discuss the training process of the XGBoost Classifier model to 
         \end{tabular}
     \end{table}
 
-    \item After running the Optuna Study for \texttt{N=100} iterations, the best hyperparameters were chosen and 
-    the model was trained with the best hyperparameters.
+    \item The Optuna study was executed for \texttt{N=100} iterations, during which the model was trained within the study objective using the training subset. The study selected the best combination of hyperparameters that maximized the classification accuracy.
+    \item Finally, the XGBoost Classifier was retrained using the best hyperparameters returned from the study object, forming the final trained model for predicting movement states from raw MARG sensor readings.
 \end{itemize}
 
 \subsection{Training to Predict Noise}\label{subsec:predictnoise}
@@ -731,7 +738,7 @@ This subsection focuses on the training of model to predict the noises among the
     
     \item Choice of model was \textbf{XGB regressor} but coupled with the \textbf{Random Sample Consensus(RANSAC)}\cite{fischler1981random} algorithm. The RANSAC algorithm made training the base XGB regressor more robust to outliers and it improved the bias variance tradeoff.
     
-    \item Split the dataset formed by the concatenated dataset (the remaining recording files would be used for validation) into train and test sets with an 80\-20 split ratio. Generate an optuna study\cite{akiba2019optuna} where the model is trained 
+    \item Split the dataset formed by the concatenated dataset (the remaining recording files would be used for validation) into train and test sets with an 80--20 split ratio. Generate an optuna study\cite{akiba2019optuna} where the model is trained 
     within the study objective on the train set and the objective works to maximize the $R^2$ score on the test set. The choice of hyperparameters is the same as in \autoref{tab:xgb_ransac_hyperparams}. The study runs for 200 iterations.
     \begin{table}[H]
     \centering
@@ -855,13 +862,13 @@ The XGB Classifier model run according to \autoref{section:MovementPred} showed 
         \multicolumn{2}{|c||}{\textbf{Hyperparameters}} & \multicolumn{2}{c|}{\textbf{Test Results}} \\
         \hline
         \texttt{degree} & 1 &  &  \\
-        \texttt{colsample\_bytree} & 0.9382 &  & \\
-        \texttt{learning\_rate} & 0.6043 & & \\
-        \texttt{max\_depth} & 15 & & \\
-        \texttt{n\_estimators} & 22 & & \\
-        \texttt{reg\_alpha} & 2.02025 & \texttt{Movement Prediction accuracy over the test split} & 0.996 \\
-        \texttt{reg\_lambda} & 2.8650 & & \\
-        \texttt{subsample} & 0.9198 & & \\
+        \texttt{colsample\_bytree} & 0.9065 &  & \\
+        \texttt{learning\_rate} & 0.7544 & & \\
+        \texttt{max\_depth} & 10 & & \\
+        \texttt{n\_estimators} & 10 & & \\
+        \texttt{reg\_alpha} & 2.10847 & \texttt{Movement Prediction accuracy over the test split} & 0.996 \\
+        \texttt{reg\_lambda} & 9.1995 & & \\
+        \texttt{subsample} & 0.99949 & & \\
         \texttt{min\_samples} & 0.7556 & & \\
         \texttt{residual\_threshold} & 2.3906 & & \\
         \texttt{max\_trials} & 136 & & \\
