@@ -21,7 +21,7 @@
 
 % Use the \supervisor command to define the supervisor with name, designation, and department
 % There needs to be one and only one supervisor
-\supervisor{Dr.\ Abu Raihan Md.\ Mostafa Kamal}{Professor}{Department of Computer Science and Engineering}
+\supervisor{Dr.\ Abu Raihan Mostafa Kamal}{Professor}{Department of Computer Science and Engineering}
 
 % Use the \addcosupervisor command to add a cosupervisor. There might be no cosupervisor at all
 % In that case, just remove all of the \addcosupervisor commands.
@@ -75,6 +75,7 @@
     \abbr{RANSAC}{RANdom SAmple Consensus}
     \abbr{IMU}{Inertial Measurement Unit}
     \abbr{MEMS}{Micro-Electro-Mechanical Systems}
+    \abbr{AHRS}{Attitude and Heading Reference System}
 
 \end{abbreviations}
 
@@ -97,9 +98,11 @@ a body under motion based on given accelerometer, magnetometer and angular rate 
 is one of the most robust, mathematically simple and fast algorithms for fusing the accelerometer,
 magnetometer and angular rate gyroscope readings to estimate the 3D orientation. But complementary
 fusion of sensor data suffers from linear accelerations and constant gain problems. This thesis aims 
-to solve the aforementioned issues in a data driven approach. Our thesis proposes a data driven toggling
-scheme for the gain parameter and also proposes a data driven noise removal approach, either of which is implemented through tree based
-machine learning models. In this work, we introduce two contributions for robust orientation estimation using raw inertial and magnetic sensor data. First, we propose a tree-based Extreme Gradient Boosting (XGB) model that effectively denoises raw gyroscope, accelerometer, and magnetometer signals. Second, we present a tree-based movement detection model that dynamically adapts fusion process through $\alpha$-toggling, enabling improved robustness to linear accelerations and magnetic interference. Together, these contributions establish a data-driven fusion framework that enhances reliability beyond traditional fixed-gain filters. The proposed approach is validated on a real-world dataset and further evaluated using a custom-built mechanical turntable, providing controlled testing conditions for systematic performance assessment.
+to solve the aforementioned issues in a data driven approach. In this work, we introduce two contributions for robust 
+orientation estimation using raw inertial and magnetic sensor data. First, we propose a tree-based Extreme Gradient 
+Boosting (XGB) model that effectively denoises raw gyroscope, accelerometer, and magnetometer signals. Second, we 
+present a tree-based movement detection model that dynamically adapts fusion process through $\alpha$-toggling, 
+enabling improved robustness to linear accelerations and magnetic interference. Together, these contributions establish a data-driven fusion framework that enhances reliability beyond traditional fixed-gain filters. The proposed approach is validated on a real-world dataset and further evaluated using a custom-built mechanical turntable, providing controlled testing conditions for systematic performance assessment.
 \end{abstract}
 
 %-------------------------- MAIN BODY --------------------------%
@@ -129,7 +132,7 @@ By fusing the outputs of these sensors, a MARG-based system can leverage their c
 \section{Orientation Estimation and MARG Sensors}\label{orientationMARG}
 Orientation estimation is one of the three fundamental challenges (\emph{position},\emph{velocity}, and \emph{orientation estimation}) that an Inertial Navigation System (INS) must address. The orientation of a 3D object can be mathematically expressed using Euler angles, rotation matrices, or quaternions~\cite{attitudeREpresntation}. An orientation estimation algorithm processes the raw measurements from MARG sensors and produces an orientation estimate in one of these representations.  
 
-As discussed in Section~\ref{introMARG}, individual MARG sensors suffer from inherent limitations such as drift, noise, linear acceleration sensitivity, and magnetic disturbances. To overcome these issues, orientation estimation relies on sensor fusion filters that combine the complementary strengths of the sensors while compensating for their weaknesses. Standard algorithms such as the Madgwick filter~\cite{madgwick2011estimation}, Mahony filter~\cite{mahony2008nonlinear}, Extended Kalman Filter (EKF)~\cite{EKF}, and Complementary filter~\cite{compfilter} are widely used in practice. Each employs a distinct methodology to fuse sensor data and mitigate the effects of disturbances, thereby improving orientation estimation accuracy and robustness.   
+As discussed in Section~\ref{introMARG}, individual MARG sensors suffer from inherent limitations such as drift, noise, linear acceleration sensitivity, and magnetic disturbances. To overcome these issues, orientation estimation relies on sensor fusion filters that combine the complementary strengths of the sensors while compensating for their weaknesses. Standard algorithms such as the Madgwick filter~\cite{madgwick2011estimation}, Mahony filter~\cite{mahony2008nonlinear}, Extended Kalman Filter (EKF)~\cite{EKF}, Algebraic Quaternion Algorithm (AQUA) filter~\cite{valenti2015keeping} and Complementary filter~\cite{compfilter} are widely used in practice. Each employs a distinct methodology to fuse sensor data and mitigate the effects of disturbances, thereby improving orientation estimation accuracy and robustness.   
 
 In this thesis, we build upon these established approaches by proposing a data-driven fusion filter. Instead of relying solely on analytical models of sensor error, our method leverages machine learning techniques to learn the patterns of noise and disturbances directly from data. By doing so, we aim to enhance orientation estimation performance beyond the capabilities of standard model-based fusion filters.
 
@@ -164,9 +167,9 @@ Complementary filters (CF) provide a simple and computationally efficient method
 The main contributions of this thesis are as follows:  
 
 \begin{itemize}
+    \item \textbf{Adaptive Alpha Fusion via Movement Prediction:} We propose a data-driven approach to dynamically toggle the CF parameter $\alpha$. A decision tree-based predictor detects periods of movement, and based on its output, $\alpha$ is modulated: it is turned off for certain iterations and kept on for others, effectively translating the alpha variation into the frequency domain. This adaptive fusion strategy allows the filter to respond optimally to both static and dynamic conditions, enhancing accuracy and stability.  
     \item \textbf{Noise Compensation via XGB Ensemble:} We introduce an Extreme Gradient Boosting (XGB) based ensemble model to predict and remove noise from gyroscope and normalized accelerometer-magnetometer (AccelMag) data. While tree-based models have been extensively used in other domains, their application for denoising MARG sensor data in orientation estimation is novel. The model efficiently learns complex noise patterns, providing a clean input for the complementary filter.  
 
-    \item \textbf{Adaptive Alpha Fusion via Movement Prediction:} We propose a data-driven approach to dynamically toggle the CF parameter $\alpha$. A decision tree-based predictor detects periods of movement, and based on its output, $\alpha$ is modulated: it is turned off for certain iterations and kept on for others, effectively translating the alpha variation into the frequency domain. This adaptive fusion strategy allows the filter to respond optimally to both static and dynamic conditions, enhancing accuracy and stability.  
 \end{itemize}  
 
 Together, these contributions place the complementary filter on a data-driven foundation, mitigating its traditional weaknesses and making it a more robust and competitive algorithm for real-world orientation estimation tasks.
@@ -193,7 +196,7 @@ metrics over a synthetic dataset.
 
 
 % \section{Structure a Narrative, Not a List}
-From Virtual Reality domain and smartphone-based pedestrian navigation to auto\-nomous aerial vehicles and human motion analysis, a wide range of applications across multiple domains rely on orientation estimation utilizing the IMUs (Inertial Measurement Units) incorporated in the devices. IMUs provide interpolated data collected from three sensors \textbf{(accelerometer, magnetometer and gyroscope)} and provide vital information regarding the angular rate, attitude/orientation or specific force for the body. The inherent drawbacks of MEMs IMU sensors, such as noise, bias, and drift over time, make orientation estimation difficult and need the application of complex algorithms to fuse sensor data and generate precise and trustworthy orientation estimations. It directly influences subsequent computations like velocity and position estimation through \textit{dead reckoning}. Dead reckoning is a phenomenon in which errors in orientation estimation can accumulate over time, leading to significant deviations in position tracking. Therefore it is all the more essential to enhance the accuracy and reliability for benchmarking the overall performance of the navigation and tracking system.
+From Virtual Reality domain and smartphone-based pedestrian navigation to auto\-nomous aerial vehicles and human motion analysis, a wide range of applications across multiple domains rely on orientation estimation utilizing the IMUs (Inertial Measurement Units) incorporated in the devices. IMUs provide interpolated data collected from three sensors \textbf{(accelerometer, magnetometer and gyroscope)} and provide vital information regarding the angular rate, attitude/orientation or specific force for the body. The inherent drawbacks of MEMS (Micro-Electro-Mechanical-Systems) IMU sensors, such as noise, bias, and drift over time, make orientation estimation difficult and need the application of complex algorithms to fuse sensor data and generate precise and trustworthy orientation estimations. It directly influences subsequent computations like velocity and position estimation through \textit{dead reckoning}. Dead reckoning is a phenomenon in which errors in orientation estimation can accumulate over time, leading to significant deviations in position tracking. Therefore it is all the more essential to enhance the accuracy and reliability for benchmarking the overall performance of the navigation and tracking system.
  
 
 % \section{Analyze and Synthesize, Don't Just Summarize}
@@ -202,14 +205,14 @@ Several literature have addressed these problems in different ways i.e in \texti
 
 % \section{Compare and Contrast Different Works}
 \subsection{Mathematical approaches}
-A broad class of AHRS solutions use deterministic algorithms such as complementary filter\cite{compfilter}, extended Kalman Filters (EKF)\cite{EKF}, unscented Kalman Filters (UKF)\cite{UKF} and gradient descent \cite{madgwick2011estimation} methods. These exploit known kinematic gyroscope readings and external reference vectors from accelerometer (gravity) and magnetometer (magnetics) in closed form. For instance, the QUEST algorithm\cite{quest}\cite{reQUEST} and Kalman filters solve Wahba's problem (erroneous rotation matrix calculation)\cite{wahba} optimally, but assume stationary noise models. As stated in \cite{vertzberger2022adaptive}, Kalman filters are largely dependent on the tuning of the process and measurement covariance, and incur heavy computational cost due to calculations referring to inverse matrices. Conversely, complementary filters follow
+AHRS is an electronic system that provides information on an object's orientation, specifically pitch, roll, and yaw. A broad class of AHRS solutions use deterministic algorithms such as complementary filter\cite{compfilter}, extended Kalman Filters (EKF)\cite{EKF}, unscented Kalman Filters (UKF)\cite{UKF} and gradient descent \cite{madgwick2011estimation} methods. These exploit known kinematic gyroscope readings and external reference vectors from accelerometer (gravity) and magnetometer (magnetics) in closed form. For instance, the QUEST algorithm\cite{quest}\cite{reQUEST} and Kalman filters solve Wahba's problem (erroneous rotation matrix calculation)\cite{wahba} optimally, but assume stationary noise models. As stated in \cite{vertzberger2022adaptive}, Kalman filters are largely dependent on the tuning of the process and measurement covariance, and incur heavy computational cost due to calculations referring to inverse matrices. Conversely, complementary filters follow
 a linear interpolative approach and fuse gyro predictions with accelerometer/magnetometer corrections in the frequency domain. CFs (Madgwick \cite{madgwick2011estimation}, Mahony \cite{mahony2008nonlinear}) have intuitive fixed gains (alphas) and comparatively low computation, yet they suffer from slow convergence under rapid motions or shocks. Madgwick's filter \cite{madgwick2011estimation} uses a gradient-descent step calculation based on accelerometer and magnetometer Jacobians, but requires manual tuning of the step gain (alpha). To address these problems regarding dynamic motions, variable-gain CFs have been proposed. Ding Duong Quoc et al. demonstrated the performance of this adaptive-gain CF \cite{dung2015filtergain} which dynamically changed the filter constant) and observed it to perform significantly better than a fixed-gain CF in roll/pitch accuracy under varying motion. Likewise, Shao et al. design a variable-gain complementary filtering method for aircraft angle-of-attack estimation, proving in simulation that continuously adaptive filters yield far more stable estimates than conventional CFs. It dynamically adjusts the alpha gain based on inertial network variance patterns, reducing the error by half compared to the fixed-gain designs in aerodynamic sensing applications. \cite{shao2023variablegainflushsesnsing}. Similarly, Broughton et al. (2019) develop a robust complementary filter for UAVs that monitors the times when accelerometer readings are reliable. Based on the `steadiness' model, it decides when to incorporate gravity measurements and constrains gyro biases using a Gaussian random-walk model. In Monte-Carlo tests of aggressive maneuvers, this filter has been able to track roll more accurately than standard CFs. \cite{CEAS-GNC-2019-036}
 
 Kalman filters make use of probabilistic models to recursively predict and update orientation estimates \cite{EKF}. Sabatini’s quaternion-based EKF incorporates sensor biases and mitigates motion and noise disturbances by adapting measurement noise covariances, which addresses the challenge of adaptability in human movement analysis \cite{quatEKF}. The Unscented Kalman Filter avoids linearization by propagating sigma points, offering better performance when noises are Gaussian. \cite{UKF}. However, these Kalman-based approaches require careful covariance tuning and are complex because of inverse matrices. In practice, researchers often trade theoretical optimality for robustness by using simpler linear filter (CF or gradient-descent) or by applying dual-filter schemes as demonstrated in \cite{doubleEKF}. In this work, a two-step EKF is performed on a 9 DOF  device (accelerometer, magnetometer, gyroscope) which models disturbances explicitly and results in <1° static error, stabilizing performance against magnetic disturbances. But despite high accuracy, EKF incur heavy computational performance overhead. But still, \cite{vertzberger2022adaptive} surveys that the algorithm in \cite{quest} used for EKF \cite{EKF} is probably the most accepted approach despite its sensitivy to noise assumptions. 
 
 Madgwick’s gradient descent filter formulated orientation estimation as an optimization using Jacobians to minimize the error between predicted and measured sensor vectors \cite{madgwick2011estimation}. It takes only ~227 operations per update, which is significantly lighter than EKF implementations and enables high sampling rates in resource-constrained platforms. While the filter converges well under quasi-static conditions, it exhibits slow convergence under rapid dynamic motions because of the erroneous accelerometer bias from the fixed gain \cite{bettermadg}. As opposed to the variable gain solutions previously discussed, an enhanced gradient descent algorithm was proposed by Wilson et. al (2019) which decoupled the magnetic variance from the calculation and improved the robustness for the convergence \cite{bettermadg}. In order to mitigate magnetic disturbances and accelerate convergence, several enhancements have been proposed. Madgwick’s extended complementary filter for full body MARG orientation (2020) dynamically adjusts gain parameters to decouple magnetometer influence, achieving up to 33\% heading error reduction under fast-changing environments while maintaining computational efficiency \cite{extendedMADG}.
 
-Zhang et al. (2020) propose an \textbf{adaptive sparse-interpolation CF (ASICF)} for MEMS IMUs. They use a quaternion-based complementary filter for fusing gyro and accel, but samples asses the `trustworthiness' of the accelerometer measurements (via its variation) from the successive samples, and if the data are too noisy or dynamic, it performs an interpolation step rather than using the raw sample \cite{wang2020mems}. Basically, the algorithm performs an \textit{adaptive data-skip mechanism} and then fills the gaps produced from the dropped samples using interpolation. They evaluated ASICF on multiple datasets and report significantly lower attitude errors under large disturbances (20\% smaller error than the Valenti CF \cite{wang2020mems}. Its performance depends directly on being able to detect outliers, and upon detection, it can handle sudden motions by effectively smoothing or skipping bad accel readings.
+Zhang et al. (2020) propose an \textbf{adaptive sparse-interpolation CF (ASICF)} for MEMS IMUs. They use a quaternion-based complementary filter for fusing gyroscope and accelerometer, but samples assesses the `trustworthiness' of the accelerometer measurements (via its variation) from the successive samples, and if the data are too noisy or dynamic, it performs an interpolation step rather than using the raw sample \cite{wang2020mems}. Basically, the algorithm performs an \textit{adaptive data-skip mechanism} and then fills the gaps produced from the dropped samples using interpolation. They evaluated ASICF on multiple datasets and report significantly lower attitude errors under large disturbances (20\% smaller error than the Valenti CF \cite{wang2020mems}. Its performance depends directly on being able to detect outliers, and upon detection, it can handle sudden motions by effectively smoothing or skipping bad accel readings.
 
 Guo et al. (2023) introduce a \textbf{variable gain CF} for aircraft angle-of-attack estimation using a distributed IMU network plus flush-air sensors \cite{shao2023variablegainflushsesnsing}. They derive a flight-phase-dependent blending factor: the filter coefficient (analogous to alpha) is allowed to vary with the change rate of the angle-of-attack, placing more weight on inertial data at high dynamics. Simulation results for a high-speed UAV show this VGCF yields significantly smaller AoA error than constant gains (approximately 0.0058$^{\circ}$ vs. 0.0017$^{\circ}$ RMSE i.e > 2x improvement). However, it is quite domain-specific even though it exemplifies adaptive gain analogous to our approach. 
 
@@ -453,7 +456,7 @@ Append $a_{pred}$ and $m_{pred}$ to $orientationEstimates$\\
 
 Here we describe the working principle of the \textit{Toggling Engine}. The $\alpha$ parameter is initially set to be a constant value. The toggling engine is responsible for toggling the alpha in presence of movement. Detailed steps:
 \begin{itemize}
-    \item Train an XGBoost Tree Classifier\cide{chen2016xgboost} model on the input features $X$ where $X$ contains the raw sensor readings of the MARG sensors and output class label $y$ where $y$ contains the boolean variable movement.
+    \item Train an XGBoost Tree Classifier\cite{chen2016xgboost} model on the input features $X$ where $X$ contains the raw sensor readings of the MARG sensors and output class label $y$ where $y$ contains the boolean variable movement.
     \item Use the trained Model in the \textit{Toggling Engine} according to the \autoref{algo:toggling engine}.
 \end{itemize}
 
@@ -525,7 +528,7 @@ The evaluation on the mechanical turntable follows the same metrics as the datas
 The evaluation procedure can be summarized as follows:
 \begin{itemize}
     \item \textbf{Ground Truth Acquisition:} The AS5600 absolute magnetic encoder is used to record the turntable angle. These measurements are transformed into ground-truth quaternions. 
-    \item \textbf{Parallel Filter Execution:} Multiple orientation filters were executed simultaneously, including AQUA \cite{aqua_ref}, EKF \cite{maybeck1982stochastic}, Madgwick \cite{madgwick2011estimation}, and the proposed filter. Each filter estimated orientation from the MPU-9250 MARG sensor data acquired through a Raspberry Pi. 
+    \item \textbf{Parallel Filter Execution:} Multiple orientation filters were executed simultaneously, including AQUA \cite{valenti2015keeping}, EKF \cite{ekf_ref}, Madgwick \cite{madgwick2011estimation}, and the proposed filter. Each filter estimated orientation from the MPU-9250 MARG sensor data acquired through a Raspberry Pi. 
     \item \textbf{Error Metric:} For each filter, the quaternion absolute distance (see Appendix~\ref{appendix:quaternion-distance}) was computed between the estimated quaternion $\hat{q}$ and the ground-truth quaternion $q_{gt}$. This scalar error, expressed in radians, quantifies the rotational difference. 
     \item \textbf{Result Visualization:} The error traces over time were plotted and are reported in the Results section (Section~\ref{section:mechanical_platform_result}), enabling direct comparison of filter performance. 
 \end{itemize}
@@ -682,7 +685,7 @@ This subsection focuses on the training of the model to predict the movement sta
 
     \item For each recording in \texttt{concat\_list}, we follow the procedure described in \autoref{section:MovementPred} to extract the MARG sensor readings along with the corresponding movement labels. Each processed recording generates a new CSV dataset whose columns contain the $9$ raw MARG sensor readings and the associated movement label. Repeating this process for all recordings in \texttt{concat\_list} produces $34$ new CSV datasets.
     \item All $34$ datasets are then concatenated to form one large dataset. From this concatenated dataset, the input features \texttt{X} and output labels \texttt{y} are generated according to \autoref{tab:sensor_readings}.
-    \item The dataset formed by the concatenation of recordings in \texttt{concat\_list} is divided into training and testing sets with an 80--20 split ratio. The remaining recordings (those not included in \texttt{concat\_list}) are reserved and used for validation.
+    \item The dataset formed by the concatenation of recordings in \texttt{concat\_list} is divided into training and testing sets with an 80--20 split ratio. The remaining recordings (those not included in \texttt{concat\_list}) are reserved and used for validation. The choices of indices have been made in such a way so that a variety of motions can be included. 
 
 
     \item The choice of model for this task was the XGBoost Classifier, as introduced in \autoref{subsec:choice_of_model}. This model was chosen for its efficiency and scalability in handling large datasets and its strong performance on tabular sensor data.
@@ -777,7 +780,7 @@ The complementary filter with all its modifications proposed in \autoref{CFalgo}
 \footnotetext{\url{https://github.com/azfarus/NDAG_MARG_THESIS_v2}}
 
 \par
-After implementation, the filter was fed with sensor readings from  \texttt{cv\_set}\label{cv_set} containing $\{8, 14, 17, 22, 30\}$ where each value in the set correspond to the index of the recording file not in the \texttt{train\_set}.The \texttt{cv\_set} is being used for cross-validation. Each of the recording file fed through the filter gave us a quaternion estimation for each iteration, i.e. the file \texttt{01\_undisturbed\_slow\_rotation\_A} has approximately 56,000 sensor readings. Each sensor reading will correspond to a quaternion estimation($q_{esti}$) and a ground truth($q_{gti}$) quaternion. The error metric per iteration stands to be:
+After implementation, the filter was fed with sensor readings from  \texttt{cv\_set}\label{cv_set} containing $\{8, 14, 17, 22, 30\}$ where each value in the set correspond to the index of the recording file not in the \texttt{train\_set}.The \texttt{cv\_set} is being used for validation. Each of the recording file fed through the filter gave us a quaternion estimation for each iteration, i.e. the file \texttt{01\_undisturbed\_slow\_rotation\_A} has approximately 56,000 sensor readings. Each sensor reading will correspond to a quaternion estimation($q_{esti}$) and a ground truth($q_{gti}$) quaternion. The error metric per iteration stands to be:
 \begin{equation}
     e_i = Quat_{abs\_dist}(q_{gti},q_{esti})
 \end{equation}
@@ -825,7 +828,7 @@ Such dependence can limit the generalizability of the algorithm when applied to 
 
 
 
-\section{Results of noise Prediction}
+\section{Results of Noise Prediction}
 The XGB regression model run according to \autoref{subsec:predictnoise} showed positive result in being able to predict the amount of noise in test set. The test set contained the recordings with indexes \texttt{cv\_set=[8, 14, 17, 22, 30]}. The summary of the result is showed in \autoref{tab:xgb_ransac_results_hyperparam}. The $R^2$ scores are reported for the \texttt{cv\_set} and the test set generated after \texttt{train\_test\_split}.
 \begin{table}[htbp]
 \centering
@@ -899,7 +902,7 @@ In this subsection the charts of Mean errors and Error variance have been shown 
 \end{figure}
 
 \subsection{Results of CF with $\alpha$-toggling and Noise removal}
-This subsection displays the result of $\alpha$-toggling noise removing Complementary filter which is the complete realization of \autoref{CFalgo}. The charts only compare the results on 5 files of the \texttt{cv\_set} containing \texttt{[8, 14, 17, 22, 30]}, as the other files were used to train the noise removal model. The mean and variance results are shown in \autoref{tab:error_statistics_cvset_mean} and \autoref{tab:error_statistics_cvset_variance} respectively. The chart in \autoref{fig:chart_rmnoise_comparison} shows a comparision between the noise removal approach with other filters.
+This subsection displays the result of $\alpha$-toggling noise removing Complementary filter which is the complete realization of \autoref{CFalgo}. The charts only compare the results on 5 files of the \texttt{cv\_set} containing \texttt{[8, 14, 17, 22, 30]}, as the other files were used to train the noise removal model. The mean and variance results are shown in \autoref{tab:error_statistics_cvset_mean} and \autoref{tab:error_statistics_cvset_variance} respectively, where lower values denote better performance. The chart in \autoref{fig:chart_rmnoise_comparison} shows a comparision between the noise removal approach with other filters.
 
 \begin{table}[H]
 \centering
@@ -1006,7 +1009,7 @@ This subsection illustrates the performance of the filter on a particular record
 
 \section{Performance of Proposed Filter against other filters on the Mechanical Platform} \label{section:mechanical_platform_result}
 Here the results of running our proposed filter is tested along with the performaces of 
-other standard existing filters - \emph{AQUA} \cite{aqua_ref}, \emph{EKF} \cite{ekf_ref} and the 
+other standard existing filters - \emph{AQUA} \cite{valenti2015keeping}, \emph{EKF} \cite{ekf_ref} and the 
 MadgWick Gradient Descent filter \cite{madgwick2011estimation}. 
 
 
@@ -1168,8 +1171,8 @@ max & 81.02 & \textbf{80.66} & 81.01 & 82.25 & 81.03 \\
     \toprule
     Filter & CPU Usage (\%) & Memory Usage (MB) \\
     \midrule
-    Proposed (ML)     & 58.6 & 145.65 \\
-    Proposed (-ML)    & 54.5 & 120.35 \\
+    Proposed (denoising)     & 58.6 & 145.65 \\
+    Proposed (no denoising)    & 54.5 & 120.35 \\
     Madgwick           & 1.75 & 59.75 \\
     EKF                & 3.12 & 59.77 \\
     Aqua               & 2.32 & 59.69 \\
@@ -1179,7 +1182,7 @@ max & 81.02 & \textbf{80.66} & 81.01 & 82.25 & 81.03 \\
 
 
 
-\chapter{Interpretation Of Results} \label{chapter:discussion}
+\chapter{Interpretation of Results} \label{chapter:discussion}
 
 In this chapter, the results achieved in \autoref{chapter:results} will be interpreted in detail. The results we have acheived so far is promising, and it is able to outperform standard Madgwick filter implementation in fast motion scenarios. However, these promising results come with compromises. The results are promising only in the dataset simulations and also fail 
 to reasonably converge in the tests run on the mechanical platform as shown in \autoref{section:mechanical_platform_result}. 
@@ -1347,7 +1350,7 @@ In addition to the experimental shortcomings, the proposed approach faces severa
 During the evaluation of the orientation filters on the mechanical turntable, several limitations and open issues were identified. These are discussed below:
 
 \begin{itemize}
-    \item \textbf{Quaternion Initialization:} The tested filters do not employ a standardized method for initializing the quaternion estimate at startup. Differences in initialization strategies can introduce systematic biases in the early stages of estimation, particularly affecting filters such as the EKF, which rely heavily on linearization around the initial state \cite{maybeck1982stochastic}. A careful analysis of consistent initialization methods is required to reduce the initial error and improve comparability between filters.
+    \item \textbf{Quaternion Initialization:} The tested filters do not employ a standardized method for initializing the quaternion estimate at startup. Differences in initialization strategies can introduce systematic biases in the early stages of estimation, particularly affecting filters such as the EKF, which rely heavily on linearization around the initial state \cite{ekf_ref}. A careful analysis of consistent initialization methods is required to reduce the initial error and improve comparability between filters.
     
     \item \textbf{Mismatch in Training Data for ML Models:} The machine learning models were trained using data generated following the methodologies outlined by the authors of the BROAD dataset \cite{BROAD}. However, discrepancies between this dataset, as well as variations across different sensor units and the live data acquired from the Raspberry Pi–based experimental platform, may have led to poor generalization. Differences in sensor noise characteristics, sampling rates, and motion profiles across datasets and hardware units can result in unreliable inference. Future work should focus on domain adaptation techniques or re-training the models using data collected directly from the experimental hardware. In particular, domain adaptation aims to reduce the performance gap that arises when a model trained on one data source (e.g. simulated or pre-recorded data) is applied to another with different characteristics (e.g. real sensor data from the Raspberry Pi setup).
 
